@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@fontsource/montserrat": "^5.0.18",
+    "@mui/icons-material": "^5.16.4",
     "@react-three/drei": "^9.108.1",
     "@react-three/fiber": "^8.16.8",
     "@testing-library/jest-dom": "^5.17.0",
