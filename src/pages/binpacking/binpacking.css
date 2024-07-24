@@ -1,6 +1,26 @@
 .container{
-    width: 100%;
     height: 100vh;
     background-color: black;
-    
+    max-width: 100%;
+    margin: auto;
+    display: flex;
+    /* align-items: center; */
+    gap: 50px;
+    overflow: hidden;
+}
+.leftcard{
+    float:left;
+    height: 100vh;
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+.rightcard{
+    float:left;
+    height: 100vh;
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }
