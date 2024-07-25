@@ -1,0 +1,133 @@
+.container {
+    flex: 1;
+    display: flex;
+    flex-direction: row-reverse;
+    gap: 20px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.card {
+    background-color: #2d2f36;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+.card-package,
+.card-items {
+    background-color: #202225;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.packaging {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.packaging h1 {
+    color: #ffffff;
+    font-size: 24px;
+}
+
+.btn-add {
+    background-color: #007bff;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.package-body {
+    background-color: #2c2f33;
+    border-radius: 8px;
+    padding: 15px;
+    margin: 15px 0px 15px 0px;
+}
+
+.row {
+    display: flex;
+    flex-wrap: wrap; /* Cho phép các phần tử con gập xuống dòng mới khi cần */
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+}
+
+.col {
+    max-width: 100%; /* Đảm bảo chiều rộng không vượt quá vùng chứa */
+}
+
+.col-demension {
+    flex: 2;
+}
+
+.color {
+    background: rgb(255, 255, 255);
+    width: 1rem;
+    height: 1rem;
+    min-width: 1rem;
+    margin-top: 30px;
+    border-radius: 50%;
+}
+
+.label-package {
+    display: flex;
+    margin-bottom: 10px;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.label {
+    color: #ffffff;
+    font-size: 14px;
+}
+
+.input-group {
+    display: flex;
+    flex-wrap: wrap; /* Cho phép các input xuống dòng khi cần */
+    gap: 10px;
+}
+
+.input-group input {
+    flex: 1;
+    min-width: 100px; /* Đặt kích thước tối thiểu cho các input */
+    padding: 10px;
+    border: 1px solid #555;
+    border-radius: 5px;
+    background-color: #3b3e45;
+    color: #ffffff;
+}
+.input-group input:disabled {
+    background-color: #2d2f36;
+}
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+.btn-delete {
+    background-color: transparent;
+    border: 1px solid red;
+    opacity: 0.9;
+    border-radius: 10px;
+    cursor: pointer;
+    margin-top: 30px;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+}
+
+.btn-delete img {
+    width: 30px;
+    height: 30px;
+    opacity: 0.9;
+
+}
