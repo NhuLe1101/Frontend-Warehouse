@@ -12,7 +12,10 @@ const Navbar = () => {
   return (
     <div className="navbar">
       <div className="logo">
-        <Link to="/">Logo</Link>
+        <Link to="/">
+          <img src="logo_navbar.png" alt="" width={'50px'} />
+          This is logo
+        </Link>
       </div>
       <div className="menu-icon" onClick={toggleMenu}>
         <img src="icon_menu.png" alt="" />
@@ -30,10 +33,16 @@ const Navbar = () => {
         <li>
           <Link to="/">Kho hàng</Link>
         </li>
-        <li>
-          <Link to="/">Đăng nhập</Link>
-        </li>
+        {showMenu && (
+          <li>
+            <Link to="/">Đăng nhập</Link>
+          </li>
+        )}
       </ul>
+      <div className='login'>
+          <Link to="/">Đăng nhập</Link>
+      </div>
+
     </div>
   );
 }

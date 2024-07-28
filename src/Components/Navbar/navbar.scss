@@ -4,9 +4,13 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 20px;
+    padding: 0 4rem;
     
     .logo {
+
+      display: flex;
+      justify-content: center;
+
       a {
         color: #FFFFFF;
         text-decoration: none;
@@ -20,9 +24,10 @@
       list-style-type: none;
       margin: 0;
       padding: 0;
-      
+      justify-content: space-between;
+
       li {
-        margin: 0 10px;
+        margin: 0 2rem;
         
         a {
           color: #FFFFFF;
@@ -50,6 +55,10 @@
           display: block; 
         }
         
+        .login{
+          display: none;
+        }
+
         .nav-links {
           display: none; 
           flex-direction: column;

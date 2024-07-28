@@ -4,7 +4,11 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 20px;
+  padding: 0 4rem;
+}
+.navbar .logo {
+  display: flex;
+  justify-content: center;
 }
 .navbar .logo a {
   color: #FFFFFF;
@@ -17,9 +21,10 @@
   list-style-type: none;
   margin: 0;
   padding: 0;
+  justify-content: space-between;
 }
 .navbar .nav-links li {
-  margin: 0 10px;
+  margin: 0 2rem;
 }
 .navbar .nav-links li a {
   color: #FFFFFF;
@@ -39,6 +44,9 @@
 @media (max-width: 768px) {
   .navbar .menu-icon {
     display: block;
+  }
+  .navbar .login {
+    display: none;
   }
   .navbar .nav-links {
     display: none;
