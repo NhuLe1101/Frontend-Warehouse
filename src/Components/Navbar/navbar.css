@@ -1,10 +1,14 @@
 .navbar {
+  width: 100%;
   height: 56px;
   background-color: #1E1E2C;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 0 4rem;
+  position: fixed;
+  top: 0;
+  z-index: 1000;
 }
 .navbar .logo {
   display: flex;
@@ -22,6 +26,7 @@
   margin: 0;
   padding: 0;
   justify-content: space-between;
+  height: 100%;
 }
 .navbar .nav-links li {
   margin: 0 2rem;
@@ -29,9 +34,35 @@
 .navbar .nav-links li a {
   color: #FFFFFF;
   text-decoration: none;
+  line-height: 56px;
+  padding: 0 8px;
 }
 .navbar .nav-links li a:hover {
-  text-decoration: underline;
+  text-decoration: none;
+}
+.navbar .nav-links li.active {
+  background-color: orange;
+}
+.navbar .nav-links li.active a {
+  color: #FFFFFF;
+}
+.navbar .login {
+  text-decoration: none;
+  color: #FFFFFF;
+}
+.navbar li {
+  text-decoration: none;
+  line-height: 56px;
+  list-style-type: none;
+}
+.navbar li a {
+  padding: 0 8px;
+}
+.navbar li.active {
+  background-color: orange;
+}
+.navbar li.active a {
+  color: #FFFFFF;
 }
 .navbar .menu-icon {
   display: none;

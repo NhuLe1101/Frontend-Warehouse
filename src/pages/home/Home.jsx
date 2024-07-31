@@ -3,7 +3,7 @@ import './home.css';
 
 const Home = () => {
   return (
-    <div className='home'>
+    <div className='home' style={{marginTop:'56px'}}>
       <p>HOME PAGE</p>  
     </div>
   )

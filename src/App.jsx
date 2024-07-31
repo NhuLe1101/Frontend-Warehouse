@@ -8,6 +8,9 @@ import {
 } from "react-router-dom";
 import Home from './pages/home/Home';
 import BinPacking from './pages/binpacking/BinPacking';
+import Warehouse from './pages/warehouse/Warehouse';
+import Login from './pages/login/Login';
+import Booking from './pages/booking/Booking';
 import Navbar from './Components/Navbar/Navbar';
 import Footer from './Components/Footer/Footer';
 const App = () => {
@@ -37,7 +40,19 @@ const App = () => {
           {
             path: "/",
             element: <Home />,
-          }
+          },
+          {
+            path: "/booking",
+            element: <Booking />,
+          },
+          {
+            path: "/warehouse",
+            element: <Warehouse />,
+          },
+          {
+            path: "/login",
+            element: <Login />,
+          },
         ],
       },
       {
