@@ -1,0 +1,16 @@
+.home {
+  height: 800px;
+  background-color: #262838;
+}
+.home p {
+  position: absolute;
+  font-size: 40px;
+  font-weight: bold;
+  color: #fff;
+  text-align: center;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/*# sourceMappingURL=home.css.map */

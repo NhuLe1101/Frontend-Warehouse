@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import './navbar.css'; 
 
 const Navbar = () => {
   const [showMenu, setShowMenu] = useState(false);
+  const location = useLocation();
   
   const toggleMenu = () => {
     setShowMenu(!showMenu);
@@ -12,28 +13,35 @@ const Navbar = () => {
   return (
     <div className="navbar">
       <div className="logo">
-        <Link to="/">Logo</Link>
+        <Link to="/">
+          <img src="logo_navbar.png" alt="" width={'112px'} /> 
+        </Link>
       </div>
       <div className="menu-icon" onClick={toggleMenu}>
         <img src="icon_menu.png" alt="" />
       </div>
       <ul className={`nav-links ${showMenu ? 'active' : ''}`}>
-        <li>
+        <li className={location.pathname === '/' ? 'active' : ''}>
           <Link to="/">Trang chủ</Link>
         </li>
-        <li>
-          <Link to="/">Booking</Link>
+        <li className={location.pathname === '/booking' ? 'active' : ''}>
+          <Link to="/booking">Booking</Link>
         </li>
-        <li>
+        <li className={location.pathname === '/binpacking' ? 'active' : ''}>
           <Link to="/binpacking">Sắp xếp</Link>
         </li>
-        <li>
-          <Link to="/">Kho hàng</Link>
+        <li className={location.pathname === '/warehouse' ? 'active' : ''}>
+          <Link to="/warehouse">Kho hàng</Link>
         </li>
-        <li>
-          <Link to="/">Đăng nhập</Link>
-        </li>
+        {showMenu && (
+          <li className={location.pathname === '/login' ? 'active' : ''}>
+            <Link to="/login">Đăng nhập</Link>
+          </li>
+        )}
       </ul>
+      <li className={location.pathname === '/login' ? 'active' : ''}>
+        <Link className='login' to="/login">Đăng nhập</Link>
+      </li>
     </div>
   );
 }

@@ -1,0 +1,27 @@
+.footer {
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+  padding: 16px 20px;
+  background-color: #1E1E2C;
+}
+.footer .content {
+  display: flex;
+  justify-content: space-around;
+}
+.footer .content .content_1 {
+  width: 42%;
+}
+.footer .content .content_2 {
+  width: 30%;
+}
+.footer .copyright {
+  margin-top: 16px;
+  text-align: center;
+}
+.footer p, .footer h3 {
+  color: #fff;
+  line-height: 2.5;
+}
+
+/*# sourceMappingURL=footer.css.map */
