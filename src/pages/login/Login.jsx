@@ -44,15 +44,15 @@ const Login = () => {
   };
 
   return (
-    <div className="login">
-      <div className="card">
-        <div className="left">
+    <div className="login-page">
+      <div className="card-login">
+        <div className="left-login">
           <h1 className="welcome">Welcome to WareHouse</h1>
           <p className="desc">
             Hãy bắt đầu dùng trang Warehouse bằng cách đăng nhập. Nếu bạn chưa có tài khoản vui lòng liên hệ admin!
           </p>
         </div>
-        <div className="right">
+        <div className="right-login">
           <div className="title">LOGIN</div>
           <Form onSubmit={handleLogin} ref={form} className="form">
             <div className="form__group field">
@@ -84,7 +84,7 @@ const Login = () => {
                   : <img className='card-img' src="/icons/icons8-show-48.png" alt="show" width="30" height="30" />}
               </div>
             </div>
-            <button className="btn" disabled={loading}>
+            <button className="btn-login" disabled={loading}>
               {loading && <i className="fa fa-circle-o-notch fa-spin"></i>}
               <span>Login</span>
             </button>

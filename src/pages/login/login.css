@@ -1,4 +1,4 @@
-.login {
+.login-page {
     height: 100vh;
     background-color: white;
     display: flex;
@@ -6,7 +6,7 @@
     justify-content: center;
 }
 
-.card {
+.card-login {
     width: 60%;
     display: flex;
     background-color: white;
@@ -18,7 +18,7 @@
     position: relative;
 }
 
-.left {
+.left-login {
     flex: 1;
     background: linear-gradient(rgba(37, 119, 201, 0.5), rgba(11, 75, 107, 0.5)),
         url("/public/images/background-login.gif") center;
@@ -31,7 +31,7 @@
 }
 
 
-.btn {
+.btn-login {
     width: 50%;
     height: 45px;
     border-radius: 20px;
@@ -64,7 +64,7 @@
     color: grey;
 }
 
-.right {
+.right-login {
     flex: 1;
     padding: 50px;
     display: flex;
