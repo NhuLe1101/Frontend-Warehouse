@@ -1,5 +1,5 @@
 import './rightcard.css';
-import React, {useContext} from 'react'
+import React, { useContext } from 'react'
 import { useState } from 'react';
 import { PackageContext } from '../PackageProvider/PackageProvider';
 const RightCard = () => {
@@ -49,56 +49,56 @@ const RightCard = () => {
             </button>
           </div>
           {packages.map((pkg, index) => (
-        <div className='package-body' key={pkg.id}>
-          <div className='row'>
-            <div className='col'>
-              <div className='color'></div>
-            </div>
-            <div className='col col-demension'>
-              <div className='label-package'>
-                <div className='label'>Kích thước(IN)</div>
-                <div className='label'>Trọng lượng: {pkg.percentWeight} kg</div>
+            <div className='package-body' key={pkg.id}>
+              <div className='row'>
+                <div className='col'>
+                  <div className='color'></div>
+                </div>
+                <div className='col col-demension'>
+                  <div className='label-package'>
+                    <div className='label'>Kích thước(IN)</div>
+                    <div className='label'>Trọng lượng: {pkg.percentWeight} kg</div>
+                  </div>
+                  <div className='input-group'>
+                    <input
+                      type='number'
+                      placeholder='chiều dài'
+                      name='length'
+                      value={pkg.length}
+                      onChange={(e) => handleInputChange(index, e)}
+                    />
+                    <input
+                      type='number'
+                      placeholder='chiều rộng'
+                      name='width'
+                      value={pkg.width}
+                      onChange={(e) => handleInputChange(index, e)}
+                    />
+                    <input
+                      type='number'
+                      placeholder='chiều cao'
+                      name='height'
+                      value={pkg.height}
+                      onChange={(e) => handleInputChange(index, e)}
+                    />
+                    <input
+                      type='number'
+                      placeholder='trọng lượng'
+                      name='weight'
+                      value={pkg.weight}
+                      onChange={(e) => handleInputChange(index, e)}
+                      disabled
+                    />
+                  </div>
+                </div>
+                <div className='col'>
+                  <button className='btn-delete' onClick={() => deletePackage(index)}>
+                    <img src='/icons/icons8-delete-48.png' alt='' />
+                  </button>
+                </div>
               </div>
-              <div className='input-group'>
-                <input
-                  type='number'
-                  placeholder='chiều dài'
-                  name='length'
-                  value={pkg.length}
-                  onChange={(e) => handleInputChange(index, e)}
-                />
-                <input
-                  type='number'
-                  placeholder='chiều rộng'
-                  name='width'
-                  value={pkg.width}
-                  onChange={(e) => handleInputChange(index, e)}
-                />
-                <input
-                  type='number'
-                  placeholder='chiều cao'
-                  name='height'
-                  value={pkg.height}
-                  onChange={(e) => handleInputChange(index, e)}
-                />
-                <input
-                  type='number'
-                  placeholder='trọng lượng'
-                  name='weight'
-                  value={pkg.weight}
-                  onChange={(e) => handleInputChange(index, e)}
-                  disabled
-                />
-              </div>
             </div>
-            <div className='col'>
-              <button className='btn-delete' onClick={() => deletePackage(index)}>
-                <img src='/icons/icons8-delete-48.png' alt='' />
-              </button>
-            </div>
-          </div>
-        </div>
-      ))}
+          ))}
 
         </div>
         <div className="card-items">

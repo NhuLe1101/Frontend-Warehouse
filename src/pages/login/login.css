@@ -32,7 +32,7 @@
 
 
 .btn-login {
-    width: 50%;
+    width: 40%;
     height: 45px;
     border-radius: 20px;
     background-color: #1CB3D9;
@@ -75,7 +75,8 @@
 
 .welcome {
     color: #555;
-
+    font-weight: 600;
+    font-size: 22px;
 }
 
 .form-box {
@@ -86,14 +87,12 @@
 
 .title {
     font-size: 40px;
-    font-weight: 900;
+    font-weight: 700;
 }
 
 .desc {
-    font-size: 22px;
+    font-size: 18px;
 }
-
-
 
 .form__group {
     position: relative;
@@ -189,6 +188,7 @@
     right: 0px;
     font-size: 16px;
     position: absolute;
+    font-weight: 600;
 }
 
 .fa {
