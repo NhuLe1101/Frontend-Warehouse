@@ -1,0 +1,90 @@
+.booking{
+    width: 100%;
+    height: 100vh;
+    background-color: #262838;
+    padding: 0 5rem;
+
+    .booking_title{
+        color: #fff;
+        text-align: center;
+        padding: 1rem;
+    }
+
+    .booking_add_button{
+        padding: 1rem 0;
+
+        .add_button_container{
+            display: flex;
+            align-items: center;
+            padding: 8px 12px;
+            border-radius: 12px;
+        }
+
+        a{
+            text-decoration: none;
+            font-size: 12px;
+        }
+    }
+
+    .booking_table{
+
+        .booking_table_stt{
+            width: 10%;
+            text-align: center;
+        }
+        .booking_table_email{
+            width: 20%;
+        }
+        .booking_table_sodienthoai{
+            width: 20%;
+        }
+        .booking_table_hovaten{
+            width: 20%;
+        }
+        .booking_table_fileexcel{
+            width: 20%;
+        }
+        .booking_table_sua{
+            width: 5%;
+        }
+        .booking_table_xoa{
+            width: 5%;
+        }
+
+        .booking_table_title{
+            background-color: #312E4A;
+            color: #fff;
+            display: flex;
+            justify-content: space-around;
+            height: 60px;
+            align-items: center;
+
+            p{
+                font-weight: bold;
+            }
+
+        }
+
+        .booking_table_items{
+
+            .booking_table_item{
+                background-color: #3C3A54;
+                color: #fff;
+                display: flex;
+                justify-content: space-around;
+                height: 50px;
+                align-items: center;
+
+                .booking_table_sua, .booking_table_xoa{
+
+                    button{
+                        display: flex;
+                        align-items: center;
+                        padding: 2px 8px;
+                        border-radius: 12px;
+                    }
+                }
+            }
+        }
+    }
+}

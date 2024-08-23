@@ -1,11 +1,13 @@
 import React from 'react'
-
-const Warehouse = () => {
+import './product.css';
+const Product = () => {
   return (
-    <div className='warehouse' style={{marginTop:'56px'}}>
-      <p>PRODUCT PAGE</p>  
+    <div className='product' style={{marginTop:'56px'}}>
+      <div className='product_page_title'>
+        <p style={{fontSize:'32px'}}>QUẢN LÝ SẢN PHẨM</p>
+      </div>  
     </div>
   )
 }
 
-export default Warehouse
+export default Product
