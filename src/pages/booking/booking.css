@@ -17,6 +17,7 @@
   align-items: center;
   padding: 8px 12px;
   border-radius: 12px;
+  border-width: 0;
 }
 .booking .booking_add_button a {
   text-decoration: none;
@@ -68,6 +69,7 @@
   align-items: center;
   padding: 2px 8px;
   border-radius: 12px;
+  border-width: 0;
 }
 
 /*# sourceMappingURL=booking.css.map */
