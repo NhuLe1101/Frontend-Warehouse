@@ -1,3 +1,4 @@
+// eslint-disable-next-line
 import './App.css';
 import './hello.css';
 import {
@@ -11,6 +12,7 @@ import BinPacking from './pages/binpacking/BinPacking';
 import Warehouse from './pages/warehouse/Warehouse';
 import Login from './pages/login/Login';
 import Booking from './pages/booking/Booking';
+import Product from './pages/product/Product';
 import Navbar from './Components/Navbar/Navbar';
 import Footer from './Components/Footer/Footer';
 const App = () => {
@@ -44,6 +46,10 @@ const App = () => {
           {
             path: "/booking",
             element: <Booking />,
+          },
+          {
+            path: "/product",
+            element: <Product />,
           },
           {
             path: "/warehouse",
