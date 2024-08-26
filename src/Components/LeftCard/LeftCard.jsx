@@ -48,7 +48,6 @@ const LeftCard = () => {
     }
   }
 
-  
   useEffect(() => {
     if (packages.length == 0) return;
     let position = [0, -Math.max(...packages.map(pkg => pkg.width / 2)), 0];
@@ -58,12 +57,10 @@ const LeftCard = () => {
     marginBox(0, 'length', 5);
   }, [packages]);
 
-
-  // var count = 0;
-  // var centerOffsetX = packages.length > 0 ? centerXCordinate() : 0;
-
   const items = [
     // { id: '1', color: 'green', position: [0, 0, 0], dimensions: [5, 4, 3] },
+    // { id: '2', color: 'pink', position: [5, 10, 11], dimensions: [5, 4, 3] },
+
     // Thêm các item khác vào đây
   ];
   const boxDimensions = [16, 8, 16]; // Định nghĩa boxDimensions ở đây
