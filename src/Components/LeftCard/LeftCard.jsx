@@ -3,7 +3,7 @@ import Grid from '../Grid/Grid';
 import Package from '../Packaging/Package';
 import { Canvas } from '@react-three/fiber';
 import { OrbitControls, PerspectiveCamera } from '@react-three/drei';
-import { PackageContext } from './../PackageProvider/PackageProvider';
+import { PackageContext } from '../../contexts/PackageProvider/PackageProvider';
 import { useContext, useEffect, useState } from 'react';
 import CenteredGroup from './CenteredGroup';
 

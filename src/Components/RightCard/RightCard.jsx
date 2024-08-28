@@ -1,7 +1,7 @@
 import './rightcard.css';
 import React, { useContext } from 'react'
 import { useState } from 'react';
-import { PackageContext } from '../PackageProvider/PackageProvider';
+import { PackageContext } from '../../contexts/PackageProvider/PackageProvider';
 const RightCard = () => {
   const [weight, setWeight] = useState(0);
   const [percentWeight, setPercentWeight] = useState(0);

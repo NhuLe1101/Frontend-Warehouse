@@ -5,6 +5,7 @@
   flex-direction: column;
   padding: 16px 20px;
   background-color: #1E1E2C;
+  width: 100%;
 }
 .footer .content {
   display: flex;

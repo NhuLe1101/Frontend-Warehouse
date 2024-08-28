@@ -2,8 +2,7 @@ import React from 'react'
 import './binpacking.css'
 import LeftCard from '../../Components/LeftCard/LeftCard'
 import RightCard from '../../Components/RightCard/RightCard'
-import PackageProvider from '../../Components/PackageProvider/PackageProvider'
-
+import PackageProvider from '../../contexts/PackageProvider/PackageProvider'
 const BinPacking = () => {
   return (
     <PackageProvider>

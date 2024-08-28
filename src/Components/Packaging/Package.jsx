@@ -1,6 +1,6 @@
 import React from 'react'
 import * as THREE from 'three';
-import Items from '../Items/Items';
+import Items from '../../Components/Items/Items';
 const Package = ({ dimensions, items, position }) => {
     return (
         <group position={position}>

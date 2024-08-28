@@ -1,10 +1,9 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useContext } from 'react';
 import Form from 'react-validation/build/form';
-import Input from 'react-validation/build/input';
 import CheckButton from 'react-validation/build/button';
 import './login.css';
-import { isEmpty } from 'validator';
-
+import AuthService from '../../api/auth-login';
+import { useNavigate } from 'react-router-dom';
 const required = (value) => {
   if (!value) {
     return (
@@ -17,6 +16,7 @@ const required = (value) => {
 const Login = () => {
   const form = useRef();
   const checkBtn = useRef();
+  const navigate = useNavigate();
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -52,8 +52,18 @@ const Login = () => {
 
     form.current.validateAll();
 
-    if (this.checkBtn.context._errors.length === 0) {
-      alert('success');
+    if (checkBtn.current.context._errors.length === 0) {
+      AuthService.login(username, password).then(
+        () => {
+          navigate('/'); 
+          window.location.reload();
+        },
+        (error) => {
+          const resMessage = (error.response.data.message)
+          setLoading(false);
+          setMessage(resMessage);
+        }
+      );
     } else {
       setLoading(false);
     }
@@ -110,7 +120,7 @@ const Login = () => {
             </button>
             {message && (
               <div className="message">
-                <div className="alert" role="alert">
+                <div className="alert-login" role="alert">
                   {message}
                 </div>
               </div>

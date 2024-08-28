@@ -16,6 +16,7 @@
     border-radius: 25px;
     box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 0px 10px rgba(0, 0, 0, 0.22);
     position: relative;
+    margin-top: 40px;
 }
 
 .left-login {
@@ -199,4 +200,17 @@
     position: absolute;
     top: 30px;
     right: 0px;
+}
+@media (max-width: 768px) {
+    .card-login{
+        width: 90%;
+        margin-top: 30px;
+        height: 50%;    
+    }
+    .btn-login{
+        width: 50%;
+    }
+}
+.alert-login{
+    color: red;
 }

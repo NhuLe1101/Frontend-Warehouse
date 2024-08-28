@@ -15,6 +15,7 @@ import Booking from './pages/booking/Booking';
 import Product from './pages/product/Product';
 import Navbar from './Components/Navbar/Navbar';
 import Footer from './Components/Footer/Footer';
+import PrivateRoute from './Components/PrivateRoute/PrivateRoute';
 const App = () => {
   {
     const Layout = () => {
@@ -45,15 +46,27 @@ const App = () => {
           },
           {
             path: "/booking",
-            element: <Booking />,
+            element: (
+              <PrivateRoute>
+                <Booking />
+              </PrivateRoute>
+            ),
           },
           {
             path: "/product",
-            element: <Product />,
+            element: (
+              <PrivateRoute>
+                <Product />
+              </PrivateRoute>
+            ),
           },
           {
             path: "/warehouse",
-            element: <Warehouse />,
+            element: (
+              <PrivateRoute>
+                <Warehouse />
+              </PrivateRoute>
+            ),
           },
           {
             path: "/login",
@@ -67,8 +80,12 @@ const App = () => {
         children: [
           {
             path: "/binpacking",
-            element: <BinPacking />,
-          }
+            element: (
+              <PrivateRoute>
+                <BinPacking />
+              </PrivateRoute>
+            ),
+          },
         ],
       },
     ]);
