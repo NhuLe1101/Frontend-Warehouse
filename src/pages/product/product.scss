@@ -27,9 +27,10 @@
             padding: 1rem;
             justify-content: space-between;
             .search_product_container{
-                width: 45%;
+                width: 50%;
+                display: flex;
                 input{
-                    width: 80%;
+                    width: 70%;
                     padding: 4px;
                     border-radius: 12px;
                     border-width: 0;
@@ -40,6 +41,10 @@
                     border-radius: 12px;
                     border-width: 0;
                     margin-left: 1%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    cursor: pointer;
                 }
                 
             }
@@ -61,10 +66,20 @@
                     display: flex;
                     justify-content: center;
                     align-items: center;
+                    cursor: pointer;
                     img{
                         width: 16px;
                     }
                 }
+
+                .active_btn_date{
+                    display: flex;
+                }
+                .hidden_btn_date{
+                    display: none;
+                }
+
+
             }
         }
     }

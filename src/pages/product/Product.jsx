@@ -1,6 +1,25 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react';
 import './product.css';
 const Product = () => {
+  const [ngaynhapUp, setNgayNhapUp] = useState(false);
+  const [ngayxuatUp, setNgayXuatUp] = useState(false);
+  const ngaynhapClicked = () => {
+    setNgayNhapUp(!ngaynhapUp);
+    if(ngaynhapUp == true)
+      window.alert('Giảm dần nè!');
+    else
+    window.alert('Tăng dần nè!');
+  }
+  const ngayxuatClicked = () => {
+    setNgayXuatUp(!ngayxuatUp);
+    if(ngayxuatUp == true)
+      window.alert('Giảm dần nè!');
+    else
+    window.alert('Tăng dần nè!');
+  }
+  const searchProduct = () => {
+    window.alert('Oh no! Nút này chưa chạy được đâu!')
+  };
   return (
     <div className='product' style={{marginTop:'56px'}}>
       <div className='product_page_title'>
@@ -14,12 +33,16 @@ const Product = () => {
         <div className='search_and_filter_product_wrapper'>
           <div className='search_product_container'>
             <input type="text" name="search_info" id="" placeholder='Tên kệ'/>
-            <button>Tìm kiếm</button>
+            <button id='btn_search_product' onClick={searchProduct}>
+              <img src="icons/icons8-search-24.png" alt="" width={'18px'}/>
+            </button>
           </div>
           <div className='filter_product_container'>
             <p>Sắp xếp theo</p>
-            <button>Ngày nhập <img src="icons/icons8-down-24.png" alt="" /></button>
-            <button>Ngày xuất <img src="icons/icons8-down-24.png" alt="" /></button>
+            <button id='btn_ngaynhapDown' onClick={ngaynhapClicked} className={ngaynhapUp === true? 'hidden_btn_date' : 'active_btn_date'}>Ngày nhập <img src="icons/icons8-down-24.png" alt="" /></button>
+            <button id='btn_ngaynhapUp' onClick={ngaynhapClicked}  className={ngaynhapUp === false ? 'hidden_btn_date' : 'active_btn_date'}>Ngày nhập <img src="icons/icons8-up-24.png" alt="" /></button>
+            <button id='btn_ngayxuatDown' onClick={ngayxuatClicked} className={ngayxuatUp === true? 'hidden_btn_date' : 'active_btn_date'}>Ngày xuất <img src="icons/icons8-down-24.png" alt="" /></button>
+            <button id='btn_ngayxuatUp' onClick={ngayxuatClicked} className={ngayxuatUp === false ? 'hidden_btn_date' : 'active_btn_date'}>Ngày xuất <img src="icons/icons8-up-24.png" alt="" /></button>
           </div>
         </div>
       </div>

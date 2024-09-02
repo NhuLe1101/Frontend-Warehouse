@@ -25,10 +25,11 @@
   justify-content: space-between;
 }
 .product .search_and_filter_product_container .search_and_filter_product_wrapper .search_product_container {
-  width: 45%;
+  width: 50%;
+  display: flex;
 }
 .product .search_and_filter_product_container .search_and_filter_product_wrapper .search_product_container input {
-  width: 80%;
+  width: 70%;
   padding: 4px;
   border-radius: 12px;
   border-width: 0;
@@ -39,6 +40,10 @@
   border-radius: 12px;
   border-width: 0;
   margin-left: 1%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
 }
 .product .search_and_filter_product_container .search_and_filter_product_wrapper .filter_product_container {
   position: relative;
@@ -59,44 +64,16 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
 }
 .product .search_and_filter_product_container .search_and_filter_product_wrapper .filter_product_container button img {
   width: 16px;
 }
-.product .search_and_filter_product_container .search_and_filter_product_wrapper .filter_product_container .options_ngaynhap_filter_product {
-  position: absolute;
-  background-color: #fff;
-  padding: 1rem;
-  border-radius: 12px;
-  border-width: 0;
-  width: 30%;
-  right: 0;
-  top: 0;
+.product .search_and_filter_product_container .search_and_filter_product_wrapper .filter_product_container .active_btn_date {
+  display: flex;
+}
+.product .search_and_filter_product_container .search_and_filter_product_wrapper .filter_product_container .hidden_btn_date {
   display: none;
-}
-.product .search_and_filter_product_container .search_and_filter_product_wrapper .filter_product_container .options_ngaynhap_filter_product ul {
-  display: flex;
-  flex-direction: column;
-}
-.product .search_and_filter_product_container .search_and_filter_product_wrapper .filter_product_container .options_ngaynhap_filter_product li {
-  list-style-type: none;
-}
-.product .search_and_filter_product_container .search_and_filter_product_wrapper .filter_product_container .options_ngayxuat_filter_product {
-  position: absolute;
-  background-color: #fff;
-  padding: 1rem;
-  border-radius: 12px;
-  border-width: 0;
-  width: 30%;
-  left: 0;
-  bottom: -76px;
-}
-.product .search_and_filter_product_container .search_and_filter_product_wrapper .filter_product_container .options_ngayxuat_filter_product ul {
-  display: flex;
-  flex-direction: column;
-}
-.product .search_and_filter_product_container .search_and_filter_product_wrapper .filter_product_container .options_ngayxuat_filter_product li {
-  list-style-type: none;
 }
 .product .products_container {
   background-color: #1E1E2C;
