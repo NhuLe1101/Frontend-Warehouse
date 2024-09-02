@@ -19,6 +19,7 @@
             padding: 8px 12px;
             border-radius: 12px;
             border-width: 0;
+            cursor: pointer;
         }
 
         a{
@@ -30,20 +31,23 @@
     .booking_table{
 
         .booking_table_stt{
-            width: 10%;
+            width: 5%;
             text-align: center;
         }
         .booking_table_email{
             width: 20%;
         }
         .booking_table_sodienthoai{
-            width: 20%;
+            width: 15%;
         }
         .booking_table_hovaten{
             width: 20%;
         }
         .booking_table_fileexcel{
-            width: 20%;
+            width: 15%;
+        }
+        .booking_table_delivery{
+            width: 15%;
         }
         .booking_table_sua{
             width: 5%;
@@ -84,6 +88,7 @@
                         padding: 2px 8px;
                         border-radius: 12px;
                         border-width: 0;
+                        cursor: pointer;
                     }
                 }
             }

@@ -1,4 +1,3 @@
-import { Padding } from '@mui/icons-material'
 import React from 'react'
 import './booking.css';
 
@@ -11,7 +10,7 @@ const Booking = () => {
       <div className='booking_add_button'>
         <button type="button" className='add_button_container'>
           <img src="icons/icons8-attachment-50.png" alt="" width={24}/>
-          <a href="https://www.appsheet.com/newshortcut/1aa24261-b440-4ca3-b224-75c16a5b2800">Thêm mới</a>
+          <a href="https://www.appsheet.com/newshortcut/1aa24261-b440-4ca3-b224-75c16a5b2800" target="_blank" rel="noopener noreferrer">Thêm mới</a>
         </button>
       </div>
       <div className='booking_table'>
@@ -31,6 +30,9 @@ const Booking = () => {
           <div className='booking_table_fileexcel'>
             <p>File Excel</p>
           </div>
+          <div className='booking_table_delivery'>
+            <p>Delivery</p>
+          </div>
           <div className='booking_table_sua'>
              <p></p>
           </div>
@@ -41,7 +43,7 @@ const Booking = () => {
         <div className='booking_table_items'>
           <div className='booking_table_item'>
             <div className='booking_table_stt'>
-              <p>#1</p>
+              <p>1</p>
             </div>
             <div className='booking_table_email'>
               <p>nva111@gmail.com</p>
@@ -54,6 +56,9 @@ const Booking = () => {
             </div>
             <div className='booking_table_fileexcel'>
               <p>abcd.xlsx</p>
+            </div>
+            <div className='booking_table_delivery'>
+              <p>Null</p>
             </div>
             <div className='booking_table_sua'>
                <button type="button">
@@ -68,7 +73,7 @@ const Booking = () => {
           </div>
           <div className='booking_table_item'>
             <div className='booking_table_stt'>
-              <p>#2</p>
+              <p>2</p>
             </div>
             <div className='booking_table_email'>
               <p>nva111@gmail.com</p>
@@ -81,6 +86,9 @@ const Booking = () => {
             </div>
             <div className='booking_table_fileexcel'>
               <p>abcd.xlsx</p>
+            </div>
+            <div className='booking_table_delivery'>
+              <p>Null</p>
             </div>
             <div className='booking_table_sua'>
                <button type="button">
@@ -95,6 +103,7 @@ const Booking = () => {
           </div>
         </div>
       </div>
+
     </div>
   )
 }
