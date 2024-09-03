@@ -11,6 +11,7 @@
 }
 .booking .booking_add_button {
   padding: 1rem 0;
+  display: flex;
 }
 .booking .booking_add_button .add_button_container {
   display: flex;
@@ -20,9 +21,19 @@
   border-width: 0;
   cursor: pointer;
 }
+.booking .booking_add_button .add_button_container p {
+  font-size: 14px;
+}
+.booking .booking_add_button .add_button_container img {
+  margin-left: 4px;
+}
+.booking .booking_add_button .btn_create_file {
+  margin-left: 1rem;
+}
 .booking .booking_add_button a {
   text-decoration: none;
-  font-size: 12px;
+  font-size: 14px;
+  color: #000;
 }
 .booking .booking_table .booking_table_stt {
   width: 5%;
@@ -50,6 +61,7 @@
   width: 5%;
 }
 .booking .booking_table .booking_table_title {
+  border-radius: 12px 12px 0px 0px;
   background-color: #312E4A;
   color: #fff;
   display: flex;
@@ -75,6 +87,9 @@
   border-radius: 12px;
   border-width: 0;
   cursor: pointer;
+}
+.booking .booking_table .booking_table_items .booking_table_item:last-child {
+  border-radius: 0px 0px 12px 12px;
 }
 
 /*# sourceMappingURL=booking.css.map */

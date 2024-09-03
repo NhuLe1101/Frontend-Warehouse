@@ -1,16 +1,24 @@
+import { useState, useEffect } from 'react';
 import React from 'react'
 import './booking.css';
 
 const Booking = () => {
+  const addNewBooking = () => {
+      window.alert('Chưa dùng được đâu!');
+  }
   return (
     <div className='booking' style={{marginTop:'56px'}}>
       <div className='booking_title'>
         <p style={{fontSize:'32px'}}>QUẢN LÝ BOOKING</p>
       </div>
       <div className='booking_add_button'>
-        <button type="button" className='add_button_container'>
-          <img src="icons/icons8-attachment-50.png" alt="" width={24}/>
-          <a href="https://www.appsheet.com/newshortcut/1aa24261-b440-4ca3-b224-75c16a5b2800" target="_blank" rel="noopener noreferrer">Thêm mới</a>
+        <button type="button" className='btn_add_new_line add_button_container' onClick={addNewBooking}>
+          <p>Thêm mới</p>
+          <img src="icons/icons8-add-24.png" alt="" width={'18px'}/>
+        </button>
+        <button type="button" className='btn_create_file add_button_container'>
+          <a href="https://www.appsheet.com/newshortcut/1aa24261-b440-4ca3-b224-75c16a5b2800" target="_blank" rel="noopener noreferrer">Công cụ tạo file Excel</a>
+          <img src="icons/icons8-excel-24.png" alt="" width={'18px'}/>
         </button>
       </div>
       <div className='booking_table'>
