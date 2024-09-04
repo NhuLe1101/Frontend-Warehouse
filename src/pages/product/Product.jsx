@@ -5,14 +5,14 @@ const Product = () => {
   const [ngayxuatUp, setNgayXuatUp] = useState(false);
   const ngaynhapClicked = () => {
     setNgayNhapUp(!ngaynhapUp);
-    if(ngaynhapUp == true)
+    if(ngaynhapUp === true)
       window.alert('Giảm dần nè!');
     else
     window.alert('Tăng dần nè!');
   }
   const ngayxuatClicked = () => {
     setNgayXuatUp(!ngayxuatUp);
-    if(ngayxuatUp == true)
+    if(ngayxuatUp === true)
       window.alert('Giảm dần nè!');
     else
     window.alert('Tăng dần nè!');
@@ -38,7 +38,15 @@ const Product = () => {
             </button>
           </div>
           <div className='filter_product_container'>
-            <p>Sắp xếp theo</p>
+            <p>Sắp xếp theo:</p>
+            <div className='check_kien_hang_wrapper'>
+              <p>Kiện hàng trống</p>
+              <input type="checkbox" name="checkbox_kienhangrong" id="" />
+            </div>
+            <div className='check_ke_hang_wrapper'>
+              <p>Kệ hàng trống</p>
+              <input type="checkbox" name="checkbox_kehangrong" id="" />
+            </div>
             <button id='btn_ngaynhapDown' onClick={ngaynhapClicked} className={ngaynhapUp === true? 'hidden_btn_date' : 'active_btn_date'}>Ngày nhập <img src="icons/icons8-down-24.png" alt="" /></button>
             <button id='btn_ngaynhapUp' onClick={ngaynhapClicked}  className={ngaynhapUp === false ? 'hidden_btn_date' : 'active_btn_date'}>Ngày nhập <img src="icons/icons8-up-24.png" alt="" /></button>
             <button id='btn_ngayxuatDown' onClick={ngayxuatClicked} className={ngayxuatUp === true? 'hidden_btn_date' : 'active_btn_date'}>Ngày xuất <img src="icons/icons8-down-24.png" alt="" /></button>
@@ -69,10 +77,10 @@ const Product = () => {
               <p>SỐ LƯỢNG</p>
             </div>
             <div className='products_table_location'>
-              <p>VỊ TRÍ</p>
+              <p>KIỆN HÀNG</p>
             </div>
             <div className='products_table_shelfName'>
-              <p>TÊN KỆ</p>
+              <p>KỆ HÀNG</p>
             </div>
             <div className='products_table_checkin'>
               <p>NGÀY NHẬP</p>
