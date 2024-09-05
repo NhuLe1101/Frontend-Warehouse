@@ -63,7 +63,6 @@ const LeftCard = () => {
 
     // Thêm các item khác vào đây
   ];
-  const boxDimensions = [16, 8, 16]; // Định nghĩa boxDimensions ở đây
   return (
     <div className='container'>
       <Canvas>

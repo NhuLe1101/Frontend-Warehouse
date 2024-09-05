@@ -5,7 +5,6 @@ import {
   createBrowserRouter,
   RouterProvider,
   Outlet,
-  Link,
 } from "react-router-dom";
 import Home from './pages/home/Home';
 import BinPacking from './pages/binpacking/BinPacking';
@@ -47,17 +46,17 @@ const App = () => {
           {
             path: "/booking",
             element: (
-              <PrivateRoute>
+              // <PrivateRoute>
                 <Booking />
-              </PrivateRoute>
+              // </PrivateRoute>
             ),
           },
           {
             path: "/product",
             element: (
-              <PrivateRoute>
+              // <PrivateRoute>
                 <Product />
-              </PrivateRoute>
+              // </PrivateRoute>
             ),
           },
           {
@@ -81,9 +80,9 @@ const App = () => {
           {
             path: "/binpacking",
             element: (
-              <PrivateRoute>
+              // <PrivateRoute>
                 <BinPacking />
-              </PrivateRoute>
+              // </PrivateRoute>
             ),
           },
         ],

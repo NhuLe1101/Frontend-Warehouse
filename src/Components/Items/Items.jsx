@@ -1,7 +1,7 @@
 import React from 'react'
 import * as THREE from 'three';
 
-const Items = ({ id, color, position, dimensions }) => {
+const Items = ({ id, color, position, dimensions, weight }) => {
     return (
         <group position={[position[0], position[1] + dimensions[1] / 2, position[2]]}>
             <ambientLight intensity={0.5} />

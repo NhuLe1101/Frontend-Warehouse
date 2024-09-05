@@ -20,7 +20,6 @@ const RightCard = () => {
       height: 16,
       weight: 0,
       percentWeight: 0,
-      // position: [packages.length * 20, 0, 0],
     };
     const updatedPackages = [...packages, newPackage];
     setPackages(updatePositions(updatedPackages));
@@ -44,9 +43,14 @@ const RightCard = () => {
         <div className="card-package">
           <div className='packaging'>
             <h1>KIỆN HÀNG</h1>
-            <button className='btn-add' onClick={addPackage}>
-              THÊM
-            </button>
+            <div className='top-packaging'>
+              <button className='btn-add' onClick={addPackage}>
+                THÊM
+              </button>
+              <button className='btn-add-excel'>
+                THÊM VÀO KHO
+              </button>
+            </div>
           </div>
           {packages.map((pkg, index) => (
             <div className='package-body' key={pkg.id}>
@@ -104,9 +108,14 @@ const RightCard = () => {
         <div className="card-items">
           <div className='packaging'>
             <h1>HÀNG HÓA</h1>
-            <button className='btn-add'>
-              THÊM
-            </button>
+            <div className='top-packaging'>
+              <button className='btn-add'>
+                THÊM
+              </button>
+              <button className='btn-add-excel'>
+                THÊM TỪ CSDL
+              </button>
+            </div>
           </div>
           <div className='package-body'>
             <div className='row'>
