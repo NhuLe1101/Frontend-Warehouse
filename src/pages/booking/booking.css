@@ -3,6 +3,7 @@
   height: 100vh;
   background-color: #262838;
   padding: 0 5rem;
+  position: relative;
 }
 .booking .booking_title {
   color: #fff;
@@ -29,6 +30,58 @@
 }
 .booking .booking_add_button .btn_create_file {
   margin-left: 1rem;
+}
+.booking .booking_add_button .active_form_create_new_booking {
+  display: block;
+}
+.booking .booking_add_button .hide_form_create_new_booking {
+  display: none;
+}
+.booking .booking_add_button .form_create_new_booking {
+  padding: 1rem;
+  background-color: #ccc;
+  border-radius: 12px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+.booking .booking_add_button .form_create_new_booking #close_form_create_new_booking {
+  width: 24px;
+  height: 24px;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  border-width: 0;
+  margin-left: calc(100% - 24px);
+  cursor: pointer;
+}
+.booking .booking_add_button .form_create_new_booking #close_form_create_new_booking p {
+  font-size: 14px;
+}
+.booking .booking_add_button .form_create_new_booking form {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.booking .booking_add_button .form_create_new_booking form p {
+  margin-bottom: 0.3rem;
+}
+.booking .booking_add_button .form_create_new_booking form input {
+  margin-bottom: 1rem;
+}
+.booking .booking_add_button .form_create_new_booking form .title_form_create_new_booking {
+  font-weight: bold;
+  text-align: center;
+}
+.booking .booking_add_button .form_create_new_booking form #btn_submit_form_create_new_booking {
+  width: fit-content;
+  padding: 4px;
+  margin-left: 50%;
+  transform: translateX(-50%);
 }
 .booking .booking_add_button a {
   text-decoration: none;

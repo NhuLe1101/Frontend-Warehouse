@@ -3,7 +3,7 @@
     height: 100vh;
     background-color: #262838;
     padding: 0 5rem;
-
+    position: relative;
     .booking_title{
         color: #fff;
         text-align: center;
@@ -30,6 +30,61 @@
 
         .btn_create_file{
             margin-left: 1rem;
+        }
+
+        .active_form_create_new_booking{
+            display: block;
+        }
+        .hide_form_create_new_booking{
+            display: none;
+        }
+        .form_create_new_booking{
+            padding: 1rem;
+            background-color: #ccc;
+            border-radius: 12px;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%,-50%);
+            #close_form_create_new_booking{
+                width: 24px;
+                height: 24px;
+                padding: 4px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border-radius: 4px;
+                border-width: 0;
+                margin-left: calc(100% - 24px);
+                cursor: pointer;
+                p{
+                    font-size: 14px;
+                }
+            }
+
+            form{
+                padding: 1rem;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                p{
+                    margin-bottom: .3rem;
+                }
+                input{
+                    margin-bottom: 1rem;
+                }
+                .title_form_create_new_booking{
+                    font-weight: bold;
+                    text-align: center;
+                }
+                #btn_submit_form_create_new_booking{
+                    width: fit-content;
+                    padding: 4px;
+                    margin-left: 50%;
+                    transform: translateX(-50%);
+                }
+
+            }
         }
 
         a{

@@ -27,7 +27,7 @@
             padding: 1rem;
             justify-content: space-between;
             .search_product_container{
-                width: 50%;
+                width: 40%;
                 display: flex;
                 input{
                     width: 70%;
@@ -50,16 +50,17 @@
             }
             .filter_product_container{
                 position: relative;
-                width: 40%;
+                width: 60%;
                 display: flex;
                 justify-content: space-evenly;
                 align-items: center;
                 p{
                     color: #fff;
-                    font-size: 16px;
+                    font-size: 14px;
+                    font-weight: bold;
                 }
                 button{
-                    width: 30%;
+                    width: 20%;
                     padding: 4px;
                     border-radius: 12px;
                     border-width: 0;
@@ -79,7 +80,22 @@
                     display: none;
                 }
 
-
+                .check_kien_hang_wrapper{
+                    display: flex;
+                    p{
+                        font-size: 14px;
+                        font-weight: normal;
+                        padding: 0 4px 0 0;
+                    }
+                }
+                .check_ke_hang_wrapper{
+                    display: flex;
+                    p{
+                        font-size: 14px;
+                        font-weight: normal;
+                        padding: 0 4px 0 0;
+                    }
+                }
             }
         }
     }

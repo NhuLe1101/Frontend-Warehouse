@@ -3,8 +3,12 @@ import React from 'react'
 import './booking.css';
 
 const Booking = () => {
+  const [activeForm, setActiveForm] = useState(false);
   const addNewBooking = () => {
-      window.alert('Chưa dùng được đâu!');
+    setActiveForm(!activeForm);
+  }
+  const active_form_create_new_booking = () =>{
+    setActiveForm(!activeForm);
   }
   return (
     <div className='booking' style={{marginTop:'56px'}}>
@@ -16,6 +20,25 @@ const Booking = () => {
           <p>Thêm mới</p>
           <img src="icons/icons8-add-24.png" alt="" width={'18px'}/>
         </button>
+        <div className={`form_create_new_booking ${activeForm === true ? 'active_form_create_new_booking' : 'hide_form_create_new_booking'}`} >
+          <button id='close_form_create_new_booking' onClick={active_form_create_new_booking} >
+            <p>x</p>
+          </button>
+          <form action="">
+            <p className='title_form_create_new_booking'>THÔNG TIN BOOKING</p>
+            <p>Email</p>
+            <input type="text" required/>
+            <p>Số điện thoại</p>
+            <input type="number" required/>
+            <p>Họ và tên</p>
+            <input type="text" required/>
+            <p>File Excel</p>
+            <input type="file" name="" id="" required/>
+            <p>Delivery</p>
+            <input type="text" required/>
+            <button type="submit" id='btn_submit_form_create_new_booking'>Thêm mới</button>
+          </form>
+        </div>
         <button type="button" className='btn_create_file add_button_container'>
           <a href="https://www.appsheet.com/newshortcut/1aa24261-b440-4ca3-b224-75c16a5b2800" target="_blank" rel="noopener noreferrer">Công cụ tạo file Excel</a>
           <img src="icons/icons8-excel-24.png" alt="" width={'18px'}/>
