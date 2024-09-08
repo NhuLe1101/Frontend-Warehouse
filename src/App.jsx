@@ -62,9 +62,9 @@ const App = () => {
           {
             path: "/warehouse",
             element: (
-              <PrivateRoute>
+              // <PrivateRoute>
                 <Warehouse />
-              </PrivateRoute>
+              // </PrivateRoute>
             ),
           },
           {

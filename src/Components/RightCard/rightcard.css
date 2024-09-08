@@ -36,7 +36,17 @@
     color: #ffffff;
     font-size: 24px;
 }
+.items {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
 
+.items h1 {
+    color: #ffffff;
+    font-size: 24px;
+}
 .btn-add {
     background-color: #0c68cb;
     color: #ffffff;
@@ -47,7 +57,15 @@
     margin: 0px 10px;
 
 }
-.btn-add-excel{
+.btn-add-shelf{
+    background-color: #0c68cb;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.btn-add-product{
     background-color: #0c68cb;
     color: #ffffff;
     border: none;
@@ -61,7 +79,12 @@
     padding: 15px;
     margin: 15px 0px 15px 0px;
 }
-
+.items-body {
+    background-color: #2c2f33;
+    border-radius: 8px;
+    padding: 15px;
+    margin: 15px 0px 15px 0px;
+}
 .row {
     display: flex;
     flex-wrap: wrap; /* Cho phép các phần tử con gập xuống dòng mới khi cần */
@@ -86,8 +109,13 @@
     margin-top: 30px;
     border-radius: 50%;
 }
-
 .label-package {
+    display: flex;
+    margin-bottom: 10px;
+    justify-content: space-between;
+    align-items: center;
+}
+.label-item {
     display: flex;
     margin-bottom: 10px;
     justify-content: space-between;
@@ -123,6 +151,16 @@ input[type="number"]::-webkit-outer-spin-button {
     -webkit-appearance: none;
     margin: 0;
 }
+.select-type{
+    flex: 1;
+    min-width: 100px; /* Đặt kích thước tối thiểu cho các input */
+    padding: 10px;
+    border: 1px solid #555;
+    border-radius: 5px;
+    background-color: #3b3e45;
+    color: gray;
+}
+
 .btn-delete {
     background-color: transparent;
     border: 1px solid red;

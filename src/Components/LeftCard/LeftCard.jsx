@@ -6,9 +6,11 @@ import { OrbitControls, PerspectiveCamera } from '@react-three/drei';
 import { PackageContext } from '../../contexts/PackageProvider/PackageProvider';
 import { useContext, useEffect, useState } from 'react';
 import CenteredGroup from './CenteredGroup';
+import { ItemContext } from '../../contexts/ItemProvider/ItemProvider';
 
 const LeftCard = () => {
   const { packages, setPackages } = useContext(PackageContext);
+  const { items } = useContext(ItemContext); // Fetch items from context
   const [gridSize, setGridSize] = useState(20);
   const [gridPosition, setGridPosition] = useState([0, 0, 0]);
 
@@ -57,12 +59,7 @@ const LeftCard = () => {
     marginBox(0, 'length', 5);
   }, [packages]);
 
-  const items = [
-    // { id: '1', color: 'green', position: [0, 0, 0], dimensions: [5, 4, 3] },
-    // { id: '2', color: 'pink', position: [5, 10, 11], dimensions: [5, 4, 3] },
 
-    // Thêm các item khác vào đây
-  ];
   return (
     <div className='container'>
       <Canvas>
@@ -75,7 +72,7 @@ const LeftCard = () => {
             <Package
               key={index}
               dimensions={[pkg.length, pkg.width, pkg.height]}
-              items={items}
+              // item={items.filter(item => item.packageId === pkg.id)}
               position={[pkg.position[0], pkg.position[1], pkg.position[2]]}
             />
           ))}
