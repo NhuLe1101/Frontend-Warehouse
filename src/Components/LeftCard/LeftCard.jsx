@@ -72,8 +72,8 @@ const LeftCard = () => {
             <Package
               key={index}
               dimensions={[pkg.length, pkg.width, pkg.height]}
-              // item={items.filter(item => item.packageId === pkg.id)}
               position={[pkg.position[0], pkg.position[1], pkg.position[2]]}
+
             />
           ))}
         </CenteredGroup>

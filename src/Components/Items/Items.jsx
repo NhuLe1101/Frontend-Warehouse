@@ -1,13 +1,24 @@
 import React from 'react';
 import * as THREE from 'three';
 
-const Items = ({ id, color, position, dimensions, quantity }) => {
+const limitPosition = (position, containerSize, objectSize, offset = 0) => {
+    const halfContainer = containerSize / 2;
+    const halfObject = objectSize / 2;
+
+    return Math.min(Math.max(position + offset, -halfContainer + halfObject), halfContainer - halfObject);
+};
+
+const Items = ({ id, color, position, dimensions, quantity, packageDimensions }) => {
     // Tạo một mảng chứa các bản sao của item dựa trên quantity
     const itemInstances = Array.from({ length: quantity }, (_, index) => {
-        // Tinh toán vị trí cho các bản sao nếu cần
-        const offset = index * 1.5; // Thay đổi giá trị này để thay đổi khoảng cách giữa các bản sao
+        // Tinh toán vị trí cho các bản sao
+        const offsetX = index * 1.5; // Khoảng cách giữa các item theo trục X (tùy chỉnh nếu cần)
+        const limitedX = limitPosition(position[0], packageDimensions[0], dimensions[0], offsetX);
+        const limitedY = limitPosition(position[1], packageDimensions[1], dimensions[1]);
+        const limitedZ = limitPosition(position[2], packageDimensions[2], dimensions[2]);
+
         return (
-            <group key={`${id}-${index}`} position={[position[0] + offset, position[1], position[2]]}>
+            <group key={`${id}-${index}`} position={[limitedX, limitedY, limitedZ]}>
                 <ambientLight intensity={0.5} />
                 <directionalLight position={[10, 10, 10]} />
                 <mesh>
