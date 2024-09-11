@@ -165,43 +165,47 @@
 }
 
 .popup-items .items_container .items_table .items_table_picture {
-    width: 15%;
+    width: 10%;
 }
 
 .popup-items .items_container .items_table .items_table_name {
-    width: 15%;
+    width: 12.5%;
 }
 
 .popup-items .items_container .items_table .items_table_type {
-    width: 10%;
+    width: 12.5%;
 }
 
 .popup-items .items_container .items_table .items_table_quantity {
-    width: 10%;
+    width: 5%;
 }
 
 .popup-items .items_container .items_table .items_table_checkin {
-    width: 10%;
+    width: 12.5%;
 }
 
 .popup-items .items_container .items_table .items_table_checkout {
-    width: 10%;
+    width: 12.5%;
 }
 
 .popup-items .items_container .items_table .items_table_STT {
     width: 5%;
 }
 
+.popup-items .items_container .items_table .products_table_bookingNo {
+    width: 5%;
+}
+
 .popup-items .items_container .items_table .items_table_location {
-    width: 12.5%;
+    width: 10%;
 }
 
 .popup-items .items_container .items_table .items_table_shelfName {
-    width: 12.5%;
+    width: 10%;
 }
 
 .popup-items .items_container .items_table .items_table_select {
-    width: 10%;
+    width: 5%;
 }
 
 .popup-items .items_container .items_table .items_table_header {
