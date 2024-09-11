@@ -24,18 +24,40 @@ const Booking = () => {
           <button id='close_form_create_new_booking' onClick={active_form_create_new_booking} >
             <p>x</p>
           </button>
+          <p className='title_form_create_new_booking'>THÔNG TIN BOOKING</p>
           <form action="">
-            <p className='title_form_create_new_booking'>THÔNG TIN BOOKING</p>
-            <p>Email</p>
-            <input type="text" required/>
-            <p>Số điện thoại</p>
-            <input type="number" required/>
-            <p>Họ và tên</p>
-            <input type="text" required/>
-            <p>File Excel</p>
-            <input type="file" name="" id="" required/>
-            <p>Delivery</p>
-            <input type="text" required/>
+            <div>
+              <p>Email</p>
+              <input type="text" required/>
+            </div>
+            <div>
+              <p>Số điện thoại</p>
+              <input type="number" required/>
+            </div>
+            <div>
+              <p>Họ và tên</p>
+              <input type="text" required/>
+            </div>
+            <div>
+              <p>File Excel</p>
+              <input type="file" name="" id="" required/>
+            </div>
+            <div>
+              <p>Delivery</p>
+              <input type="text" required/>
+            </div>
+            <div>
+              <p>Status</p>
+              <input type="text" required/>
+            </div>
+            <div>
+              <p>Ngày nhập</p>
+              <input type="date" required/>
+            </div>
+            <div>
+              <p>Ngày xuất</p>
+              <input type="date" required/>
+            </div>
             <button type="submit" id='btn_submit_form_create_new_booking'>Thêm mới</button>
           </form>
         </div>
@@ -64,6 +86,15 @@ const Booking = () => {
           <div className='booking_table_delivery'>
             <p>Delivery</p>
           </div>
+          <div className='booking_table_status'>
+            <p>Trạng thái</p>
+          </div>
+          <div className='booking_table_checkin'>
+            <p>Ngày nhập</p>
+          </div>
+          <div className='booking_table_checkout'>
+            <p>Ngày xuất</p>
+          </div>
           <div className='booking_table_sua'>
              <p></p>
           </div>
@@ -72,7 +103,7 @@ const Booking = () => {
           </div>
         </div>
         <div className='booking_table_items'>
-          <div className='booking_table_item'>
+        <div className='booking_table_item'>
             <div className='booking_table_stt'>
               <p>1</p>
             </div>
@@ -91,14 +122,23 @@ const Booking = () => {
             <div className='booking_table_delivery'>
               <p>Null</p>
             </div>
+            <div className='booking_table_status'>
+              <p>...</p>
+            </div>
+            <div className='booking_table_checkin'>
+             <p>12/09/2024</p>
+            </div>
+            <div className='booking_table_checkout'>
+              <p>12/09/2024</p>
+            </div>
             <div className='booking_table_sua'>
                <button type="button">
-                <img src="icons/icons8-edit-48.png" alt="" width={24}/>
+                <img src="icons/icons8-edit-48.png" alt="" width={18}/>
                </button>
             </div>
             <div className='booking_table_xoa'>
               <button type='button'>
-                <img src="icons/icons8-delete-60.png" alt="" width={24}/>
+                <img src="icons/icons8-delete-60.png" alt="" width={18}/>
               </button>
             </div>
           </div>
@@ -121,14 +161,23 @@ const Booking = () => {
             <div className='booking_table_delivery'>
               <p>Null</p>
             </div>
+            <div className='booking_table_status'>
+              <p>...</p>
+            </div>
+            <div className='booking_table_checkin'>
+             <p>12/09/2024</p>
+            </div>
+            <div className='booking_table_checkout'>
+              <p>12/09/2024</p>
+            </div>
             <div className='booking_table_sua'>
                <button type="button">
-                <img src="icons/icons8-edit-48.png" alt="" width={24}/>
+                <img src="icons/icons8-edit-48.png" alt="" width={18}/>
                </button>
             </div>
             <div className='booking_table_xoa'>
               <button type='button'>
-                <img src="icons/icons8-delete-60.png" alt="" width={24}/>
+                <img src="icons/icons8-delete-60.png" alt="" width={18}/>
               </button>
             </div>
           </div>

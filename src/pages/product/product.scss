@@ -83,7 +83,7 @@
                 .check_kien_hang_wrapper{
                     display: flex;
                     p{
-                        font-size: 14px;
+                        font-size: 16px;
                         font-weight: normal;
                         padding: 0 4px 0 0;
                     }
@@ -91,7 +91,7 @@
                 .check_ke_hang_wrapper{
                     display: flex;
                     p{
-                        font-size: 14px;
+                        font-size: 16px;
                         font-weight: normal;
                         padding: 0 4px 0 0;
                     }
@@ -113,10 +113,10 @@
             padding: 1.5rem;
 
             .products_table_picture{
-                width: 15%;
+                width: 12.5%;
             }
             .products_table_name{
-                width: 15%;
+                width: 12.5%;
             }
             .products_table_type{
                 width: 10%;
@@ -133,11 +133,14 @@
             .products_table_STT{
                 width: 5%;
             }
+            .products_table_bookingNo{
+                width: 10%;
+            }
             .products_table_location{
-                width: 12.5%;
+                width: 10%;
             }
             .products_table_shelfName{
-                width: 12.5%;
+                width: 10%;
             }
             .products_table_header{
                 display: flex;

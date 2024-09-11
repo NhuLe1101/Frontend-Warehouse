@@ -32,20 +32,16 @@ const Product = () => {
         <hr />
         <div className='search_and_filter_product_wrapper'>
           <div className='search_product_container'>
-            <input type="text" name="search_info" id="" placeholder='Tên kệ'/>
+            <input type="text" name="search_info" id="" placeholder='Tên sản phẩm'/>
             <button id='btn_search_product' onClick={searchProduct}>
               <img src="icons/icons8-search-24.png" alt="" width={'18px'}/>
             </button>
           </div>
           <div className='filter_product_container'>
-            <p>Sắp xếp theo:</p>
+            <p>Lọc theo:</p>
             <div className='check_kien_hang_wrapper'>
-              <p>Kiện hàng trống</p>
+              <p>Hàng chưa lên kệ</p>
               <input type="checkbox" name="checkbox_kienhangrong" id="" />
-            </div>
-            <div className='check_ke_hang_wrapper'>
-              <p>Kệ hàng trống</p>
-              <input type="checkbox" name="checkbox_kehangrong" id="" />
             </div>
             <button id='btn_ngaynhapDown' onClick={ngaynhapClicked} className={ngaynhapUp === true? 'hidden_btn_date' : 'active_btn_date'}>Ngày nhập <img src="icons/icons8-down-24.png" alt="" /></button>
             <button id='btn_ngaynhapUp' onClick={ngaynhapClicked}  className={ngaynhapUp === false ? 'hidden_btn_date' : 'active_btn_date'}>Ngày nhập <img src="icons/icons8-up-24.png" alt="" /></button>
@@ -63,6 +59,9 @@ const Product = () => {
           <div className='products_table_header'>
             <div className='products_table_STT'>
               <p>STT</p>
+            </div>
+            <div className='products_table_bookingNo'>
+              <p>BOOKING NO</p>
             </div>
             <div className='products_table_picture'>
               <p>HÌNH ẢNH</p>
@@ -92,6 +91,9 @@ const Product = () => {
           <div className='products_table_item'>
             <div className='products_table_STT'>
               <p>1</p>
+            </div>
+            <div className='products_table_bookingNo'>
+              <p>001</p>
             </div>
             <div className='products_table_picture'>
               <img src="logo192.png" alt="" width={'50px'} height={'50px'}/>

@@ -80,7 +80,7 @@
   display: flex;
 }
 .product .search_and_filter_product_container .search_and_filter_product_wrapper .filter_product_container .check_kien_hang_wrapper p {
-  font-size: 14px;
+  font-size: 16px;
   font-weight: normal;
   padding: 0 4px 0 0;
 }
@@ -88,7 +88,7 @@
   display: flex;
 }
 .product .search_and_filter_product_container .search_and_filter_product_wrapper .filter_product_container .check_ke_hang_wrapper p {
-  font-size: 14px;
+  font-size: 16px;
   font-weight: normal;
   padding: 0 4px 0 0;
 }
@@ -104,10 +104,10 @@
   padding: 1.5rem;
 }
 .product .products_container .products_table .products_table_picture {
-  width: 15%;
+  width: 12.5%;
 }
 .product .products_container .products_table .products_table_name {
-  width: 15%;
+  width: 12.5%;
 }
 .product .products_container .products_table .products_table_type {
   width: 10%;
@@ -124,11 +124,14 @@
 .product .products_container .products_table .products_table_STT {
   width: 5%;
 }
+.product .products_container .products_table .products_table_bookingNo {
+  width: 10%;
+}
 .product .products_container .products_table .products_table_location {
-  width: 12.5%;
+  width: 10%;
 }
 .product .products_container .products_table .products_table_shelfName {
-  width: 12.5%;
+  width: 10%;
 }
 .product .products_container .products_table .products_table_header {
   display: flex;
