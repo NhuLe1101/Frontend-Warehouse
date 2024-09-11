@@ -36,9 +36,11 @@ const RightCard = () => {
     }));
   };
   const addItem = (packageId) => {
+    const newColor = getRandomColor(); // Random màu mới
     const newItem = {
       id: items.length,
       packageId,
+      color: newColor, // Random màu khi thêm item
       quantity: 1, // Default quantity
       length: 10,  // Default length
       width: 5,    // Default width
@@ -86,6 +88,16 @@ const RightCard = () => {
   const handleClosePopup = () => {
     setShowPopup(false);
   };
+  const getRandomColor = () => {
+    // Tạo màu ngẫu nhiên dạng hex
+    const letters = '0123456789ABCDEF';
+    let color = '#';
+    for (let i = 0; i < 6; i++) {
+      color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+  };
+
   return (
     <div className='container'>
       <div className='card'>
@@ -170,7 +182,7 @@ const RightCard = () => {
             <div className='items-body' key={item.id}>
               <div className='row'>
                 <div className='col'>
-                  <div className='color'></div>
+                  <div className='color-item' style={{ backgroundColor: item.color }}></div>
                 </div>
                 <div className='col col-demension'>
                   <div className='label-item'>
