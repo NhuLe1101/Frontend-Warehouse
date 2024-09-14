@@ -1,8 +1,43 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import React from 'react'
 import './booking.css';
+import BookingService from '../../api/booking-upload';
 
 const Booking = () => {
+
+  const [bookings, setBookings] = useState([]);
+
+  useEffect(() => {
+    BookingService.getAllBookings()
+      .then((data) => {
+        setBookings(data); 
+      })
+      .catch((error) => {
+        console.error("Có lỗi xảy ra:", error);
+      });
+  }, []);
+
+
+  const [email, setEmail] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [fullName, setFullName] = useState('');
+  const [delivery, setDelivery] = useState('');
+  const [file, setFile] = useState(null);
+  const [status, setStatus] = useState('');
+  const [checkin, setCheckin] = useState('');
+  const [checkout, setCheckout] = useState('');
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const message = await BookingService.upload(email, phoneNumber, fullName, delivery, file, status, checkin, checkout);
+      alert(message); // Hiển thị thông báo từ backend
+      setActiveForm(!activeForm);
+      window.location.reload();
+    } catch (error) {
+      console.error("Có lỗi xảy ra khi upload dữ liệu:", error);
+    }
+  };
+
   const [activeForm, setActiveForm] = useState(false);
   const addNewBooking = () => {
     setActiveForm(!activeForm);
@@ -25,38 +60,38 @@ const Booking = () => {
             <p>x</p>
           </button>
           <p className='title_form_create_new_booking'>THÔNG TIN BOOKING</p>
-          <form action="">
+          <form action="" onSubmit={handleSubmit}>
             <div>
               <p>Email</p>
-              <input type="text" required/>
+              <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required/>
             </div>
             <div>
               <p>Số điện thoại</p>
-              <input type="number" required/>
+              <input type="number" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} required/>
             </div>
             <div>
               <p>Họ và tên</p>
-              <input type="text" required/>
+              <input type="text"  value={fullName} onChange={(e) => setFullName(e.target.value)} required/>
             </div>
             <div>
               <p>File Excel</p>
-              <input type="file" name="" id="" required/>
+              <input type="file"  accept=".csv" onChange={(e) => setFile(e.target.files[0])} required/>
             </div>
             <div>
               <p>Delivery</p>
-              <input type="text" required/>
+              <input type="text"  value={delivery} onChange={(e) => setDelivery(e.target.value)} required/>
             </div>
             <div>
               <p>Status</p>
-              <input type="text" required/>
+              <input type="text" value={status} onChange={(e) => setStatus(e.target.value)} required/>
             </div>
             <div>
               <p>Ngày nhập</p>
-              <input type="date" required/>
+              <input type="date" value={checkin} onChange={(e) => setCheckin(e.target.value)} required/>
             </div>
             <div>
               <p>Ngày xuất</p>
-              <input type="date" required/>
+              <input type="date" value={checkout} onChange={(e) => setCheckout(e.target.value)} required/>
             </div>
             <button type="submit" id='btn_submit_form_create_new_booking'>Thêm mới</button>
           </form>
@@ -103,84 +138,47 @@ const Booking = () => {
           </div>
         </div>
         <div className='booking_table_items'>
-        <div className='booking_table_item'>
-            <div className='booking_table_stt'>
-              <p>1</p>
+          {bookings.map((booking) => (
+            <div key={booking.bookingId} className='booking_table_item'>
+              <div className='booking_table_stt'>
+                <p>{booking.bookingId}</p>
+              </div>
+              <div className='booking_table_email'>
+                <p>{booking.customerEmail}</p>
+              </div>
+              <div className='booking_table_sodienthoai'>
+                <p>{booking.numberphone}</p>
+              </div>
+              <div className='booking_table_hovaten'>
+                <p>{booking.customerName}</p>
+              </div>
+              <div className='booking_table_fileexcel'>
+                <p>abcd.xlsx</p>
+              </div>
+              <div className='booking_table_delivery'>
+                <p>{booking.delivery}</p>
+              </div>
+              <div className='booking_table_status'>
+                <p>{booking.status}</p>
+              </div>
+              <div className='booking_table_checkin'>
+              <p>{booking.checkIn}</p>
+              </div>
+              <div className='booking_table_checkout'>
+                <p>{booking.checkOut}</p>
+              </div>
+              <div className='booking_table_sua'>
+                <button type="button">
+                  <img src="icons/icons8-edit-48.png" alt="" width={18}/>
+                </button>
+              </div>
+              <div className='booking_table_xoa'>
+                <button type='button'>
+                  <img src="icons/icons8-delete-60.png" alt="" width={18}/>
+                </button>
+              </div>
             </div>
-            <div className='booking_table_email'>
-              <p>nva111@gmail.com</p>
-            </div>
-            <div className='booking_table_sodienthoai'>
-              <p>0987766666</p>
-            </div>
-            <div className='booking_table_hovaten'>
-              <p>Nguyễn Văn A</p>
-            </div>
-            <div className='booking_table_fileexcel'>
-              <p>abcd.xlsx</p>
-            </div>
-            <div className='booking_table_delivery'>
-              <p>Null</p>
-            </div>
-            <div className='booking_table_status'>
-              <p>...</p>
-            </div>
-            <div className='booking_table_checkin'>
-             <p>12/09/2024</p>
-            </div>
-            <div className='booking_table_checkout'>
-              <p>12/09/2024</p>
-            </div>
-            <div className='booking_table_sua'>
-               <button type="button">
-                <img src="icons/icons8-edit-48.png" alt="" width={18}/>
-               </button>
-            </div>
-            <div className='booking_table_xoa'>
-              <button type='button'>
-                <img src="icons/icons8-delete-60.png" alt="" width={18}/>
-              </button>
-            </div>
-          </div>
-          <div className='booking_table_item'>
-            <div className='booking_table_stt'>
-              <p>2</p>
-            </div>
-            <div className='booking_table_email'>
-              <p>nva111@gmail.com</p>
-            </div>
-            <div className='booking_table_sodienthoai'>
-              <p>0987766666</p>
-            </div>
-            <div className='booking_table_hovaten'>
-              <p>Nguyễn Văn A</p>
-            </div>
-            <div className='booking_table_fileexcel'>
-              <p>abcd.xlsx</p>
-            </div>
-            <div className='booking_table_delivery'>
-              <p>Null</p>
-            </div>
-            <div className='booking_table_status'>
-              <p>...</p>
-            </div>
-            <div className='booking_table_checkin'>
-             <p>12/09/2024</p>
-            </div>
-            <div className='booking_table_checkout'>
-              <p>12/09/2024</p>
-            </div>
-            <div className='booking_table_sua'>
-               <button type="button">
-                <img src="icons/icons8-edit-48.png" alt="" width={18}/>
-               </button>
-            </div>
-            <div className='booking_table_xoa'>
-              <button type='button'>
-                <img src="icons/icons8-delete-60.png" alt="" width={18}/>
-              </button>
-            </div>
-          </div>
+          ))}
         </div>
       </div>
 
