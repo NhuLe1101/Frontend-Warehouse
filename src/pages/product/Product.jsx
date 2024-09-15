@@ -1,6 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import './product.css';
+import ProductService from '../../api/product';
+
 const Product = () => {
+
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    ProductService.getAllProducts()
+      .then((data) => {
+        setProducts(data); 
+      })
+      .catch((error) => {
+        console.error("Có lỗi xảy ra:", error);
+      });
+  }, []);
+
   const [ngaynhapUp, setNgayNhapUp] = useState(false);
   const [ngayxuatUp, setNgayXuatUp] = useState(false);
   const ngaynhapClicked = () => {
@@ -88,38 +103,40 @@ const Product = () => {
               <p>NGÀY XUẤT</p>
             </div>
           </div>
-          <div className='products_table_item'>
-            <div className='products_table_STT'>
-              <p>1</p>
-            </div>
-            <div className='products_table_bookingNo'>
-              <p>001</p>
-            </div>
-            <div className='products_table_picture'>
-              <img src="logo192.png" alt="" width={'50px'} height={'50px'}/>
-            </div>
-            <div className='products_table_name'>
-              <p>Lightstick J97</p>
-            </div>
-            <div className='products_table_type'>
-              <p>Hàng đặc biệt</p>
-            </div>
-            <div className='products_table_quantity'>
-              <p>1</p>
-            </div>
-            <div className='products_table_location'>
-              <p>null</p>
-            </div>
-            <div className='products_table_shelfName'>
-              <p>A5</p>
-            </div>
-            <div className='products_table_checkin'>
-              <p>23/08/2024</p>
-            </div>
-            <div className='products_table_checkout'>
-              <p>09/09/2024</p>
-            </div>
+          {products.map((product) => (
+            <div className='products_table_item'>
+              <div key={product.itemId} className='products_table_STT'>
+                <p>{product.itemId}</p>
+              </div>
+              <div className='products_table_bookingNo'>
+                <p>{product.booking.bookingId}</p>
+              </div>
+              <div className='products_table_picture'>
+                <img src={product.image} alt="" width={'50px'} height={'50px'}/>
+              </div>
+              <div className='products_table_name'>
+                <p>{product.name}</p>
+              </div>
+              <div className='products_table_type'>
+                <p>{product.type}</p>
+              </div>
+              <div className='products_table_quantity'>
+                <p>{product.quantity}</p>
+              </div>
+              <div className='products_table_location'>
+                <p>{product.position ? product.position : "null"}</p>
+              </div>
+              <div className='products_table_shelfName'>
+                <p>{product.shelf ? product.shelf : "null"}</p>
+              </div>
+              <div className='products_table_checkin'>
+                <p>{product.checkIn}</p>
+              </div>
+              <div className='products_table_checkout'>
+                <p>{product.checkOut}</p>
+              </div>
           </div>
+          ))}
         </div> 
       </div>  
     </div>
