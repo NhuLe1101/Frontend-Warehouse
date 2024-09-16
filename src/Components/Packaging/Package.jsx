@@ -23,7 +23,7 @@ const Package = ({ dimensions, position }) => {
                 <lineBasicMaterial color="white" />
             </lineSegments>
             {items
-                .filter(item => item.packageId) // Lọc items để chỉ lấy các item thuộc package này
+                .filter(item => item.packageId)
                 .map(item => {
                     // Giới hạn vị trí của item để không ra ngoài package
                     const limitedX = limitPosition(item.position[0], dimensions[0], item.length);
