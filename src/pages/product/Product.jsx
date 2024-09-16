@@ -1,6 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import './product.css';
+import ProductService from '../../api/product';
+
 const Product = () => {
+
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    ProductService.getAllProducts()
+      .then((data) => {
+        setProducts(data); 
+      })
+      .catch((error) => {
+        console.error("Có lỗi xảy ra:", error);
+      });
+  }, []);
+
   const [ngaynhapUp, setNgayNhapUp] = useState(false);
   const [ngayxuatUp, setNgayXuatUp] = useState(false);
   const ngaynhapClicked = () => {
@@ -32,20 +47,16 @@ const Product = () => {
         <hr />
         <div className='search_and_filter_product_wrapper'>
           <div className='search_product_container'>
-            <input type="text" name="search_info" id="" placeholder='Tên kệ'/>
+            <input type="text" name="search_info" id="" placeholder='Tên sản phẩm'/>
             <button id='btn_search_product' onClick={searchProduct}>
               <img src="icons/icons8-search-24.png" alt="" width={'18px'}/>
             </button>
           </div>
           <div className='filter_product_container'>
-            <p>Sắp xếp theo:</p>
+            <p>Lọc theo:</p>
             <div className='check_kien_hang_wrapper'>
-              <p>Kiện hàng trống</p>
+              <p>Hàng chưa lên kệ</p>
               <input type="checkbox" name="checkbox_kienhangrong" id="" />
-            </div>
-            <div className='check_ke_hang_wrapper'>
-              <p>Kệ hàng trống</p>
-              <input type="checkbox" name="checkbox_kehangrong" id="" />
             </div>
             <button id='btn_ngaynhapDown' onClick={ngaynhapClicked} className={ngaynhapUp === true? 'hidden_btn_date' : 'active_btn_date'}>Ngày nhập <img src="icons/icons8-down-24.png" alt="" /></button>
             <button id='btn_ngaynhapUp' onClick={ngaynhapClicked}  className={ngaynhapUp === false ? 'hidden_btn_date' : 'active_btn_date'}>Ngày nhập <img src="icons/icons8-up-24.png" alt="" /></button>
@@ -63,6 +74,9 @@ const Product = () => {
           <div className='products_table_header'>
             <div className='products_table_STT'>
               <p>STT</p>
+            </div>
+            <div className='products_table_bookingNo'>
+              <p>BOOKING NO</p>
             </div>
             <div className='products_table_picture'>
               <p>HÌNH ẢNH</p>
@@ -89,35 +103,40 @@ const Product = () => {
               <p>NGÀY XUẤT</p>
             </div>
           </div>
-          <div className='products_table_item'>
-            <div className='products_table_STT'>
-              <p>1</p>
-            </div>
-            <div className='products_table_picture'>
-              <img src="logo192.png" alt="" width={'50px'} height={'50px'}/>
-            </div>
-            <div className='products_table_name'>
-              <p>Lightstick J97</p>
-            </div>
-            <div className='products_table_type'>
-              <p>Hàng đặc biệt</p>
-            </div>
-            <div className='products_table_quantity'>
-              <p>1</p>
-            </div>
-            <div className='products_table_location'>
-              <p>null</p>
-            </div>
-            <div className='products_table_shelfName'>
-              <p>A5</p>
-            </div>
-            <div className='products_table_checkin'>
-              <p>23/08/2024</p>
-            </div>
-            <div className='products_table_checkout'>
-              <p>09/09/2024</p>
-            </div>
+          {products.map((product) => (
+            <div className='products_table_item'>
+              <div key={product.itemId} className='products_table_STT'>
+                <p>{product.itemId}</p>
+              </div>
+              <div className='products_table_bookingNo'>
+                <p>{product.booking.bookingId}</p>
+              </div>
+              <div className='products_table_picture'>
+                <img src={product.image} alt="" width={'50px'} height={'50px'}/>
+              </div>
+              <div className='products_table_name'>
+                <p>{product.name}</p>
+              </div>
+              <div className='products_table_type'>
+                <p>{product.type}</p>
+              </div>
+              <div className='products_table_quantity'>
+                <p>{product.quantity}</p>
+              </div>
+              <div className='products_table_location'>
+                <p>{product.position ? product.position : "null"}</p>
+              </div>
+              <div className='products_table_shelfName'>
+                <p>{product.shelf ? product.shelf : "null"}</p>
+              </div>
+              <div className='products_table_checkin'>
+                <p>{product.checkIn}</p>
+              </div>
+              <div className='products_table_checkout'>
+                <p>{product.checkOut}</p>
+              </div>
           </div>
+          ))}
         </div> 
       </div>  
     </div>
