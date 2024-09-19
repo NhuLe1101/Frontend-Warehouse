@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import React from 'react'
 import './booking.css';
+import TableTitle from '../../Components/Booking/BookingTableTitle/TableTitle';
+import BookingItems from '../../Components/Booking/BookingItems/BookingItems';
 import BookingService from '../../api/booking-upload';
 
 const Booking = () => {
@@ -102,84 +104,8 @@ const Booking = () => {
         </button>
       </div>
       <div className='booking_table'>
-        <div className='booking_table_title'>
-          <div className='booking_table_stt'>
-            <p>STT</p>
-          </div>
-          <div className='booking_table_email'>
-            <p>Email</p>
-          </div>
-          <div className='booking_table_sodienthoai'>
-            <p>Số điện thoại</p>
-          </div>
-          <div className='booking_table_hovaten'>
-            <p>Họ và tên</p>
-          </div>
-          <div className='booking_table_fileexcel'>
-            <p>File Excel</p>
-          </div>
-          <div className='booking_table_delivery'>
-            <p>Delivery</p>
-          </div>
-          <div className='booking_table_status'>
-            <p>Trạng thái</p>
-          </div>
-          <div className='booking_table_checkin'>
-            <p>Ngày nhập</p>
-          </div>
-          <div className='booking_table_checkout'>
-            <p>Ngày xuất</p>
-          </div>
-          <div className='booking_table_sua'>
-             <p></p>
-          </div>
-          <div className='booking_table_xoa'>
-            <p></p> 
-          </div>
-        </div>
-        <div className='booking_table_items'>
-          {bookings.map((booking) => (
-            <div key={booking.bookingId} className='booking_table_item'>
-              <div className='booking_table_stt'>
-                <p>{booking.bookingId}</p>
-              </div>
-              <div className='booking_table_email'>
-                <p>{booking.customerEmail}</p>
-              </div>
-              <div className='booking_table_sodienthoai'>
-                <p>{booking.numberphone}</p>
-              </div>
-              <div className='booking_table_hovaten'>
-                <p>{booking.customerName}</p>
-              </div>
-              <div className='booking_table_fileexcel'>
-                <p>abcd.xlsx</p>
-              </div>
-              <div className='booking_table_delivery'>
-                <p>{booking.delivery}</p>
-              </div>
-              <div className='booking_table_status'>
-                <p>{booking.status}</p>
-              </div>
-              <div className='booking_table_checkin'>
-              <p>{booking.checkIn}</p>
-              </div>
-              <div className='booking_table_checkout'>
-                <p>{booking.checkOut}</p>
-              </div>
-              <div className='booking_table_sua'>
-                <button type="button">
-                  <img src="icons/icons8-edit-48.png" alt="" width={18}/>
-                </button>
-              </div>
-              <div className='booking_table_xoa'>
-                <button type='button'>
-                  <img src="icons/icons8-delete-60.png" alt="" width={18}/>
-                </button>
-              </div>
-            </div>
-          ))}
-        </div>
+        <TableTitle></TableTitle>
+        <BookingItems></BookingItems>
       </div>
 
     </div>
