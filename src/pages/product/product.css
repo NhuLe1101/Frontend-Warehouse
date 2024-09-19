@@ -1,8 +1,8 @@
 .product {
   width: 100%;
-  height: 100vh;
+  height: fit-content;
   background-color: #262838;
-  padding: 0 5rem;
+  padding: 0 5rem 1rem 5rem;
 }
 .product .product_page_title {
   color: #fff;

@@ -26,7 +26,7 @@ const PopupAddBooking = () => {
     const addNewBooking = () => {
       setActiveForm(!activeForm);
     }
-    const active_form_create_new_booking = () =>{
+    const active_form_of_booking_page = () =>{
       setActiveForm(!activeForm);
     }
   return (
@@ -35,11 +35,11 @@ const PopupAddBooking = () => {
       <p>Thêm mới</p>
       <img src="icons/icons8-add-24.png" alt="" width={'18px'}/>
     </button>
-    <div className={`form_create_new_booking ${activeForm === true ? 'active_form_create_new_booking' : 'hide_form_create_new_booking'}`} >
-      <button id='close_form_create_new_booking' onClick={active_form_create_new_booking} >
+    <div className={`form_of_booking_page ${activeForm === true ? 'active_form_of_booking_page' : 'hide_form_of_booking_page'}`} >
+      <button id='close_form_of_booking_page' onClick={active_form_of_booking_page} >
         <p>x</p>
       </button>
-      <p className='title_form_create_new_booking'>THÔNG TIN BOOKING</p>
+      <p className='title_form_of_booking_page'>THÔNG TIN BOOKING</p>
       <form action="" onSubmit={handleSubmit}>
         <div>
           <p>Email</p>
@@ -62,8 +62,13 @@ const PopupAddBooking = () => {
           <input type="text"  value={delivery} onChange={(e) => setDelivery(e.target.value)} required/>
         </div>
         <div>
-          <p>Status</p>
-          <input type="text" value={status} onChange={(e) => setStatus(e.target.value)} required/>
+            <p>Status</p>
+            <select value={status} onChange={(e) => setStatus(e.target.value)} required>
+                <option value="Đã huỷ">Đã huỷ</option>
+                <option value="Đang lưu kho">Đang lưu kho</option>
+                <option value="Đã xuất kho">Đã xuất kho</option>
+                <option value="Quá hạn">Quá hạn</option>
+            </select>
         </div>
         <div>
           <p>Ngày nhập</p>
@@ -73,12 +78,16 @@ const PopupAddBooking = () => {
           <p>Ngày xuất</p>
           <input type="date" value={checkout} onChange={(e) => setCheckout(e.target.value)} required/>
         </div>
-        <button type="submit" id='btn_submit_form_create_new_booking'>Thêm mới</button>
+        <button type="submit" id='btn_submit_form_of_booking_page'>Thêm mới</button>
       </form>
     </div>
     <button type="button" className='btn_create_file add_button_container'>
       <a href="https://www.appsheet.com/newshortcut/1aa24261-b440-4ca3-b224-75c16a5b2800" target="_blank" rel="noopener noreferrer">Công cụ tạo file Excel</a>
       <img src="icons/icons8-excel-24.png" alt="" width={'18px'}/>
+    </button>
+    <button type="button" className='btn_view_file_deleted add_button_container' style={{marginLeft: "1rem"}}>
+      <p>Thùng rác</p>
+      <img src="icons/icons8-delete-60.png" alt="" width={'18px'} />
     </button>
   </div>
   ) 

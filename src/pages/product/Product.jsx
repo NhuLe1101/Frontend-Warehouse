@@ -103,10 +103,10 @@ const Product = () => {
               <p>NGÀY XUẤT</p>
             </div>
           </div>
-          {products.map((product) => (
+          {products.map((product, index) => (
             <div className='products_table_item'>
               <div key={product.itemId} className='products_table_STT'>
-                <p>{product.itemId}</p>
+                <p>{index + 1}</p>
               </div>
               <div className='products_table_bookingNo'>
                 <p>{product.booking.bookingId}</p>
