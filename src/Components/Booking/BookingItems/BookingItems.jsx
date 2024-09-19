@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import React from 'react'
 import '../../../pages/booking/booking.css'; 
-import BookingService from '../../../api/booking-upload';
+import BookingService from '../../../api/booking';
 
 const BookingItems = () => {
     const [bookings, setBookings] = useState([]);
