@@ -101,7 +101,6 @@ const BookingItems = () => {
             <div>
                 <p>Status</p>
                 <select value={status} onChange={(e) => setStatus(e.target.value)} required>
-                    <option value="Đã huỷ">Đã huỷ</option>
                     <option value="Đang lưu kho">Đang lưu kho</option>
                     <option value="Đã xuất kho">Đã xuất kho</option>
                     <option value="Quá hạn">Quá hạn</option>
@@ -114,6 +113,12 @@ const BookingItems = () => {
             <div>
               <p>Ngày xuất</p>
               <input type="date" value={checkout} disabled/>
+            </div>
+            <div>
+              <p>File Excel</p>
+              <a href={`http://localhost:8080/api/booking/download/${selectedBooking.excelFile.split('\\').pop()}`} download>
+                Tải xuống file CSV
+              </a>
             </div>
             <button type="submit" id="btn_submit_form_of_booking_page">Lưu thay đổi</button>
           </form>

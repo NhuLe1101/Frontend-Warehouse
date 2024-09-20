@@ -64,7 +64,6 @@ const PopupAddBooking = () => {
         <div>
             <p>Status</p>
             <select value={status} onChange={(e) => setStatus(e.target.value)} required>
-                <option value="Đã huỷ">Đã huỷ</option>
                 <option value="Đang lưu kho">Đang lưu kho</option>
                 <option value="Đã xuất kho">Đã xuất kho</option>
                 <option value="Quá hạn">Quá hạn</option>
