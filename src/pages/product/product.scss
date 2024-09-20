@@ -186,5 +186,16 @@
                 }
             }
         }
+        .product_pagination{
+            display: flex;
+            justify-content: center;
+            button{
+                padding: 4px 12px;
+                margin: 0 .5rem;
+                border-radius: 8px;
+                border-width: 0;
+                font-weight: 500;
+            }
+        }
     }
 }

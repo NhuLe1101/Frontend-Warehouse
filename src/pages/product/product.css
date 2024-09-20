@@ -172,5 +172,16 @@
 .product .products_container .products_table .products_table_item .products_table_type p {
   text-align: left;
 }
+.product .products_container .product_pagination {
+  display: flex;
+  justify-content: center;
+}
+.product .products_container .product_pagination button {
+  padding: 4px 12px;
+  margin: 0 0.5rem;
+  border-radius: 8px;
+  border-width: 0;
+  font-weight: 500;
+}
 
 /*# sourceMappingURL=product.css.map */
