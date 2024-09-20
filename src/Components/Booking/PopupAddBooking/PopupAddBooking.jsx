@@ -8,7 +8,7 @@ const PopupAddBooking = () => {
     const [fullName, setFullName] = useState('');
     const [delivery, setDelivery] = useState('');
     const [file, setFile] = useState(null);
-    const [status, setStatus] = useState('');
+    const [status, setStatus] = useState("Đang lưu kho");
     const [checkin, setCheckin] = useState('');
     const [checkout, setCheckout] = useState('');
     const handleSubmit = async (e) => {

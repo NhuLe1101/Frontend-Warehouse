@@ -75,8 +75,12 @@ const deleteBooking = (bookingId) => {
 
 
 // Update booking
-const updateBooking = (bookingId, status) => {
+const updateBooking = (bookingId, email, phoneNumber, fullName, delivery, status) => {
   const formData = new FormData();
+  formData.append("email", email);
+  formData.append("phoneNumber", phoneNumber);
+  formData.append("fullName", fullName);
+  formData.append("delivery", delivery);
   formData.append("status", status);
 
   return axios

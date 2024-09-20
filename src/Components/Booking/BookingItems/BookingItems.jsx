@@ -46,7 +46,7 @@ const BookingItems = () => {
   const handleSubmitFormEdit = async (e) => {
     e.preventDefault();
     try {
-      const message = await BookingService.updateBooking(selectedBooking.bookingId, status);
+      const message = await BookingService.updateBooking(selectedBooking.bookingId, email, phoneNumber, fullName, delivery, status);
       alert(message); 
       setActiveFormEdit(false);
       window.location.reload();
@@ -58,19 +58,18 @@ const BookingItems = () => {
 
   // Hàm xử lý khi người dùng muốn xoá booking
   const deleteBooking = async (bookingId) => {
-    window.alert("Chức năng này đang xây dựng!");
-    //Đoạn code ở dưới chạy được nhưng lỗi khoá ngoại, cần xoá product trước mới xoá được booking
+    //window.alert("Chức năng này đang xây dựng!");
 
-    // const isConfirmed = window.confirm("Bạn có chắc chắn muốn xoá booking này không?");
-    // if (isConfirmed) {
-    //   try {
-    //     const message = await BookingService.deleteBooking(bookingId); // Gọi API xoá booking
-    //     alert(message); // Hiển thị thông báo từ backend
-    //     window.location.reload(); // Tải lại danh sách booking sau khi xoá
-    //   } catch (error) {
-    //     console.error("Có lỗi xảy ra khi xoá dữ liệu:", error);
-    //   }
-    // }
+    const isConfirmed = window.confirm("Bạn có chắc chắn muốn xoá booking này không?");
+    if (isConfirmed) {
+      try {
+        const message = await BookingService.deleteBooking(bookingId); // Gọi API xoá booking
+        alert(message); // Hiển thị thông báo từ backend
+        window.location.reload(); // Tải lại danh sách booking sau khi xoá
+      } catch (error) {
+        console.error("Có lỗi xảy ra khi xoá dữ liệu:", error);
+      }
+    }
   };
 
   return (
@@ -84,19 +83,19 @@ const BookingItems = () => {
           <form onSubmit={handleSubmitFormEdit}>
             <div>
               <p>Email</p>
-              <input type="email" value={email} disabled/>
+              <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required/>
             </div>
             <div>
               <p>Số điện thoại</p>
-              <input type="number" value={phoneNumber}  disabled/>
+              <input type="number" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)}  required/>
             </div>
             <div>
               <p>Họ và tên</p>
-              <input type="text" value={fullName}  disabled/>
+              <input type="text" value={fullName} onChange={(e) => setFullName(e.target.value)}  required/>
             </div>
             <div>
               <p>Delivery</p>
-              <input type="text" value={delivery} disabled />
+              <input type="text" value={delivery} onChange={(e) => setDelivery(e.target.value)} required />
             </div>
             <div>
                 <p>Status</p>
