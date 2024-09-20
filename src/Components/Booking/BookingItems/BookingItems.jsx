@@ -58,7 +58,9 @@ const BookingItems = () => {
 
   // Hàm xử lý khi người dùng muốn xoá booking
   const deleteBooking = async (bookingId) => {
-    window.alert("Chức năng 'Chuyển vào thùng rác' đang xây dựng!");
+    window.alert("Chức năng này đang xây dựng!");
+    //Đoạn code ở dưới chạy được nhưng lỗi khoá ngoại, cần xoá product trước mới xoá được booking
+
     // const isConfirmed = window.confirm("Bạn có chắc chắn muốn xoá booking này không?");
     // if (isConfirmed) {
     //   try {

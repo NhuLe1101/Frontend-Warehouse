@@ -85,10 +85,6 @@ const PopupAddBooking = () => {
       <a href="https://www.appsheet.com/newshortcut/1aa24261-b440-4ca3-b224-75c16a5b2800" target="_blank" rel="noopener noreferrer">Công cụ tạo file Excel</a>
       <img src="icons/icons8-excel-24.png" alt="" width={'18px'}/>
     </button>
-    <button type="button" className='btn_view_file_deleted add_button_container' style={{marginLeft: "1rem"}}>
-      <p>Thùng rác</p>
-      <img src="icons/icons8-delete-60.png" alt="" width={'18px'} />
-    </button>
   </div>
   ) 
 }
