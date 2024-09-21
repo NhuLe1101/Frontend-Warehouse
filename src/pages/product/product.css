@@ -1,8 +1,8 @@
 .product {
   width: 100%;
-  height: 100vh;
+  height: fit-content;
   background-color: #262838;
-  padding: 0 5rem;
+  padding: 0 5rem 1rem 5rem;
 }
 .product .product_page_title {
   color: #fff;
@@ -171,6 +171,17 @@
 .product .products_container .products_table .products_table_item .products_table_name p,
 .product .products_container .products_table .products_table_item .products_table_type p {
   text-align: left;
+}
+.product .products_container .product_pagination {
+  display: flex;
+  justify-content: center;
+}
+.product .products_container .product_pagination button {
+  padding: 4px 12px;
+  margin: 0 0.5rem;
+  border-radius: 8px;
+  border-width: 0;
+  font-weight: 500;
 }
 
 /*# sourceMappingURL=product.css.map */

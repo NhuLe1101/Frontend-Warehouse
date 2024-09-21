@@ -10,6 +10,59 @@
   text-align: center;
   padding: 1rem;
 }
+.booking .form_of_booking_page {
+  padding: 1rem;
+  width: 600px;
+  background-color: #ccc;
+  border-radius: 12px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+.booking .form_of_booking_page #close_form_of_booking_page,
+.booking .form_of_booking_page #close_form_edit_of_booking_page {
+  width: 24px;
+  height: 24px;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  border-width: 0;
+  margin-left: calc(100% - 24px);
+  cursor: pointer;
+}
+.booking .form_of_booking_page #close_form_of_booking_page p,
+.booking .form_of_booking_page #close_form_edit_of_booking_page p {
+  font-size: 14px;
+}
+.booking .form_of_booking_page .title_form_of_booking_page {
+  font-weight: bold;
+  text-align: center;
+}
+.booking .form_of_booking_page form {
+  padding: 1rem;
+  height: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}
+.booking .form_of_booking_page form p {
+  margin-bottom: 0.3rem;
+}
+.booking .form_of_booking_page form input {
+  margin-bottom: 1rem;
+}
+.booking .form_of_booking_page form select {
+  margin-bottom: 1rem;
+}
+.booking .form_of_booking_page form #btn_submit_form_of_booking_page {
+  width: fit-content;
+  padding: 4px;
+  margin-top: 1rem;
+}
 .booking .booking_add_button {
   padding: 1rem 0;
   display: flex;
@@ -31,66 +84,30 @@
 .booking .booking_add_button .btn_create_file {
   margin-left: 1rem;
 }
-.booking .booking_add_button .active_form_create_new_booking {
+.booking .booking_add_button .active_form_of_booking_page,
+.booking .booking_add_button .active_form_edit_of_booking_page {
   display: block;
 }
-.booking .booking_add_button .hide_form_create_new_booking {
+.booking .booking_add_button .hide_form_of_booking_page,
+.booking .booking_add_button .hide_form_edit_of_booking_page {
   display: none;
-}
-.booking .booking_add_button .form_create_new_booking {
-  padding: 1rem;
-  width: 600px;
-  background-color: #ccc;
-  border-radius: 12px;
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-}
-.booking .booking_add_button .form_create_new_booking #close_form_create_new_booking {
-  width: 24px;
-  height: 24px;
-  padding: 4px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 4px;
-  border-width: 0;
-  margin-left: calc(100% - 24px);
-  cursor: pointer;
-}
-.booking .booking_add_button .form_create_new_booking #close_form_create_new_booking p {
-  font-size: 14px;
-}
-.booking .booking_add_button .form_create_new_booking .title_form_create_new_booking {
-  font-weight: bold;
-  text-align: center;
-}
-.booking .booking_add_button .form_create_new_booking form {
-  padding: 1rem;
-  height: 400px;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  flex-wrap: wrap;
-}
-.booking .booking_add_button .form_create_new_booking form p {
-  margin-bottom: 0.3rem;
-}
-.booking .booking_add_button .form_create_new_booking form input {
-  margin-bottom: 1rem;
-}
-.booking .booking_add_button .form_create_new_booking form #btn_submit_form_create_new_booking {
-  width: fit-content;
-  padding: 4px;
-  margin-top: 1rem;
 }
 .booking .booking_add_button a {
   text-decoration: none;
   font-size: 14px;
   color: #000;
 }
+.booking .booking_table .hide_form_edit_of_booking_page {
+  display: none;
+}
+.booking .booking_table .active_form_edit_of_booking_page {
+  display: block;
+}
 .booking .booking_table .booking_table_stt {
+  width: 5%;
+  text-align: center;
+}
+.booking .booking_table .booking_table_id {
   width: 5%;
   text-align: center;
 }
@@ -98,31 +115,25 @@
   width: 17%;
 }
 .booking .booking_table .booking_table_sodienthoai {
-  width: 10%;
-}
-.booking .booking_table .booking_table_hovaten {
-  width: 10%;
-}
-.booking .booking_table .booking_table_fileexcel {
-  width: 10%;
+  width: 13%;
 }
 .booking .booking_table .booking_table_delivery {
   width: 10%;
 }
 .booking .booking_table .booking_table_status {
-  width: 9%;
+  width: 12%;
 }
 .booking .booking_table .booking_table_checkin {
-  width: 9%;
+  width: 10%;
 }
 .booking .booking_table .booking_table_checkout {
   width: 10%;
 }
 .booking .booking_table .booking_table_sua {
-  width: 5%;
+  width: 9%;
 }
 .booking .booking_table .booking_table_xoa {
-  width: 5%;
+  width: 9%;
 }
 .booking .booking_table .booking_table_title {
   border-radius: 12px 12px 0px 0px;

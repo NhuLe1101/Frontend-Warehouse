@@ -1,8 +1,8 @@
 .product{
     width: 100%;
-    height: 100vh;
+    height: fit-content;
     background-color: #262838;
-    padding: 0 5rem;
+    padding: 0 5rem 1rem 5rem;
 
     .product_page_title{
         color: #fff;
@@ -184,6 +184,17 @@
                         text-align: left;
                     }
                 }
+            }
+        }
+        .product_pagination{
+            display: flex;
+            justify-content: center;
+            button{
+                padding: 4px 12px;
+                margin: 0 .5rem;
+                border-radius: 8px;
+                border-width: 0;
+                font-weight: 500;
             }
         }
     }
