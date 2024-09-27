@@ -1,6 +1,6 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import { useTheme } from '@mui/material/styles';
+import { useTheme, createTheme, ThemeProvider, styled} from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Collapse from '@mui/material/Collapse';
 import IconButton from '@mui/material/IconButton';
@@ -20,6 +20,34 @@ import FirstPageIcon from '@mui/icons-material/FirstPage';
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import LastPageIcon from '@mui/icons-material/LastPage';
+import { lime, purple } from '@mui/material/colors';
+import Button from '@mui/material/Button';
+import CssBaseline from '@mui/material/CssBaseline';
+import SaveIcon from '@mui/icons-material/Save';
+
+const ColorButton = styled(Button)(({ theme }) => ({
+  color: theme.palette.getContrastText(purple[500]),
+  backgroundColor: purple[500],
+  '&:hover': {
+    backgroundColor: purple[700],
+  },
+  fontWeight: 700,
+}));
+
+const darkTheme = createTheme({
+  palette: {
+    mode: 'dark',
+    background:{
+      default:'#1E1E2C',
+      paper:'#1E1E2C',
+    },
+  },
+  typography: {
+    indam: {
+      fontWeight:600,
+    },
+  },
+});
 
 function TablePaginationActions(props) {
     const theme = useTheme();
@@ -112,6 +140,12 @@ function Row(props) {
   const { row } = props;
   const [open, setOpen] = React.useState(false);
 
+  const [active, setActive] = React.useState(false);
+  function handleClick() {
+    setActive(true);
+    window.alert(active);
+  }
+
   return (
     <React.Fragment>
       <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
@@ -133,6 +167,9 @@ function Row(props) {
         <TableCell align="right">{row.checkin}</TableCell>
         <TableCell align="right">{row.checkout}</TableCell>
         <TableCell align="right">{row.quantity}</TableCell>
+        <TableCell align="center">
+          <ColorButton variant="contained" onClick={handleClick}>Sửa</ColorButton>
+        </TableCell>
       </TableRow>
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
@@ -216,18 +253,37 @@ export default function CollapsibleTable() {
     };
 
   return (
+    <ThemeProvider theme={darkTheme}>
+      <CssBaseline />
     <TableContainer component={Paper}>
       <Table aria-label="collapsible table">
-        <TableHead>
+        <TableHead >
           <TableRow>
             <TableCell />
-            <TableCell>STT</TableCell>
-            <TableCell align="right">BK.NO</TableCell>
-            <TableCell align="right">TÊN</TableCell>
-            <TableCell align="right">LOẠI</TableCell>
-            <TableCell align="right">NGÀY NHẬP</TableCell>
-            <TableCell align="right">NGÀY XUẤT</TableCell>
-            <TableCell align="right">SỐ LƯỢNG</TableCell>
+            <TableCell>
+              <Typography variant="indam">STT</Typography>
+            </TableCell>
+            <TableCell align="right">
+              <Typography variant="indam">BK.ID</Typography>
+            </TableCell>
+            <TableCell align="right">
+              <Typography variant="indam">TÊN</Typography>
+            </TableCell>
+            <TableCell align="right">
+            <Typography variant="indam">LOẠI</Typography>
+            </TableCell>
+            <TableCell align="right">
+              <Typography variant="indam">NGÀY NHẬP</Typography>
+            </TableCell>
+            <TableCell align="right">
+              <Typography variant="indam">NGÀY XUẤT</Typography>
+            </TableCell>
+            <TableCell align="right">
+              <Typography variant="indam">SỐ LƯỢNG</Typography>
+            </TableCell>
+            <TableCell align="right">
+              <Typography variant="indam">THAO TÁC</Typography>
+            </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -270,5 +326,6 @@ export default function CollapsibleTable() {
         </TableFooter>
       </Table>
     </TableContainer>
+    </ThemeProvider>
   );
 }
