@@ -1,4 +1,5 @@
 import * as React from 'react';
+import dayjs from 'dayjs';
 import PropTypes from 'prop-types';
 import { useTheme, createTheme, ThemeProvider, styled} from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -20,10 +21,27 @@ import FirstPageIcon from '@mui/icons-material/FirstPage';
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import LastPageIcon from '@mui/icons-material/LastPage';
-import { lime, purple } from '@mui/material/colors';
+import { purple } from '@mui/material/colors';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
-import SaveIcon from '@mui/icons-material/Save';
+import Modal from '@mui/material/Modal';
+import Grid from '@mui/material/Grid';
+import TextField from '@mui/material/TextField';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+
+const styleModal = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 400,
+  bgcolor: 'background.paper',
+  border: '2px solid #000',
+  boxShadow: 24,
+  p: 4,
+};
 
 const ColorButton = styled(Button)(({ theme }) => ({
   color: theme.palette.getContrastText(purple[500]),
@@ -139,12 +157,41 @@ function createData(stt, bookingid, name, type, checkin, checkout, quantity) {
 function Row(props) {
   const { row } = props;
   const [open, setOpen] = React.useState(false);
-
+  const [selectedProduct, setSelectedProduct] = React.useState(null);
   const [active, setActive] = React.useState(false);
-  function handleClick() {
-    setActive(true);
-    window.alert(active);
-  }
+
+  const [bookingId, setbookingId] = React.useState('');
+  const [productId, setproductId] = React.useState('');
+  const [productName, setproductName] = React.useState('');
+  const [productType, setproductType] = React.useState('');
+  const [productCheckin, setproductCheckin] = React.useState('');
+  const [productCheckout, setproductCheckout] = React.useState('');
+  const [productQuantity, setproductQuantity] = React.useState('');
+
+
+  const [openModal, setOpenModal] = React.useState(false);
+
+  const handleOpenModal = (row) => {
+    setSelectedProduct(row);
+    setbookingId(row.bookingid);
+    setproductId(row.stt);
+    setproductName(row.name);
+    setproductType(row.type);
+    setproductCheckin(dayjs(row.checkin));
+    setproductCheckout(dayjs(row.checkout));
+    setproductQuantity(row.quantity);
+    setOpenModal(true);
+  };
+
+
+  React.useEffect(() => {
+    if (selectedProduct !== null) {
+      console.log('Selected Product:', selectedProduct);  
+    }
+  }, [selectedProduct]);
+
+  const handleCloseModal = () => setOpenModal(false);
+
 
   return (
     <React.Fragment>
@@ -158,7 +205,7 @@ function Row(props) {
             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>
         </TableCell>
-        <TableCell component="th" scope="row">
+        <TableCell component="th" scope="row" >
           {row.stt}
         </TableCell>
         <TableCell align="right">{row.bookingid}</TableCell>
@@ -168,7 +215,98 @@ function Row(props) {
         <TableCell align="right">{row.checkout}</TableCell>
         <TableCell align="right">{row.quantity}</TableCell>
         <TableCell align="center">
-          <ColorButton variant="contained" onClick={handleClick}>Sửa</ColorButton>
+          <ColorButton variant="contained" onClick={() => handleOpenModal(row)}>Sửa</ColorButton>
+          <Modal
+          open={openModal}
+          onClose={handleCloseModal}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+          
+        >
+          <Box sx={styleModal}>
+              <Box sx={{ width: '100%' }}>
+              <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+                <Grid item xs={6}>
+                <TextField
+                  id="bookingid"
+                  label="Mã booking"
+                  variant="standard"
+                  defaultValue={bookingId}
+                  onChange={(e) => setbookingId(e.target.value )}
+                  margin="normal"
+                />
+                </Grid>
+                <Grid item xs={6}>
+                  <TextField
+                    id="productid"
+                    label="Mã sản phẩm"
+                    variant="standard"
+                    defaultValue={productId}
+                    onChange={(e) => setproductId(e.target.value )}
+                    margin="normal"
+                  />
+                </Grid>
+                <Grid item xs={6}>
+                  <TextField
+                    id="name"
+                    label="Tên sản phẩm"
+                    variant="standard"
+                    defaultValue={productName}
+                    onChange={(e) => setproductName(e.target.value )}
+                    margin="normal"
+                  />
+                </Grid>
+                <Grid item xs={6}>
+                  <TextField
+                    id="type"
+                    label="Loại sản phẩm"
+                    variant="standard"
+                    defaultValue={productType}
+                    onChange={(e) => setproductType(e.target.value )}
+                    margin="normal"
+                  />
+                </Grid>
+                <Grid item xs={6}>
+                  <LocalizationProvider dateAdapter={AdapterDayjs}>
+                      <div style={{margin: '1rem 0'}}>
+                        <DatePicker
+                          label="Ngày nhập"
+                          value={productCheckin}
+                          onChange={(newvalue) => setproductCheckin(newvalue)}
+                        />
+                      </div>
+                    </LocalizationProvider>
+                </Grid>
+                <Grid item xs={6}>
+                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                      <div style={{margin: '1rem 0'}}>
+                        <DatePicker
+                          label="Ngày xuất"
+                          value={productCheckout}
+                          onChange={(newvalue) => setproductCheckout(newvalue)}
+                        />
+                      </div>
+                    </LocalizationProvider>
+                </Grid>
+                <Grid item xs={6}>
+                  <TextField
+                    id="type"
+                    label="Số lượng"
+                    variant="standard"
+                    defaultValue={productQuantity}
+                    onChange={(e) => setproductQuantity(e.target.value )}
+                    margin="normal"
+                  />
+                </Grid>
+                <Grid item xs={6}>
+                  <Button variant="contained" size="medium" type='submit'>
+                    Lưu
+                  </Button>
+                </Grid>
+              </Grid>
+            </Box>
+          </Box>
+        </Modal>
         </TableCell>
       </TableRow>
       <TableRow>
@@ -229,12 +367,12 @@ Row.propTypes = {
 };
 
 const rows = [
-  createData(1, 'BK001', 'Áo long bào', 'Quần áo', '24-12-2024', '24-12-2024', 100),
-  createData(2, 'BK002', 'Áo long bào ngư', 'Quần áo', '24-12-2024', '24-12-2024', 200),
-  createData(3, 'BK003', 'Máy tính', 'Điện tử', '24-12-2024', '24-12-2024', 300),
+  createData(1, 'BK001', 'Áo long bào', 'Quần áo', '2024-08-24', '2024-08-24', 100),
+  createData(2, 'BK002', 'Áo long bào ngư', 'Quần áo', '2024-08-24', '2024-08-24', 200),
+  createData(3, 'BK003', 'Máy tính', 'Điện tử', '2024-08-24', '2024-08-24', 300),
 ];
 
-export default function CollapsibleTable() {
+export default function ProductTable() {
 
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
