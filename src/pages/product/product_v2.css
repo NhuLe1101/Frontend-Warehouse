@@ -1,0 +1,79 @@
+.search_and_filter_product_container {
+  background-color: #1E1E2C;
+  padding: 1rem;
+  border-radius: 12px;
+  margin-bottom: 1rem;
+}
+.search_and_filter_product_container .search_and_filter_product_wrapper {
+  display: flex;
+  padding: 1rem;
+  justify-content: space-between;
+}
+.search_and_filter_product_container .search_and_filter_product_wrapper .search_product_container {
+  width: 40%;
+  display: flex;
+}
+.search_and_filter_product_container .search_and_filter_product_wrapper .search_product_container input {
+  width: 70%;
+  padding: 4px;
+  border-radius: 12px;
+  border-width: 0;
+}
+.search_and_filter_product_container .search_and_filter_product_wrapper .search_product_container button {
+  width: 15%;
+  padding: 4px;
+  border-radius: 12px;
+  border-width: 0;
+  margin-left: 1%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.search_and_filter_product_container .search_and_filter_product_wrapper .filter_product_container {
+  position: relative;
+  width: 60%;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+.search_and_filter_product_container .search_and_filter_product_wrapper .filter_product_container p {
+  color: #fff;
+  font-size: 14px;
+  font-weight: bold;
+}
+.search_and_filter_product_container .search_and_filter_product_wrapper .filter_product_container button {
+  width: 20%;
+  padding: 4px;
+  border-radius: 12px;
+  border-width: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+.search_and_filter_product_container .search_and_filter_product_wrapper .filter_product_container button img {
+  width: 16px;
+}
+.search_and_filter_product_container .search_and_filter_product_wrapper .filter_product_container .active_btn_date {
+  display: flex;
+}
+.search_and_filter_product_container .search_and_filter_product_wrapper .filter_product_container .hidden_btn_date {
+  display: none;
+}
+.search_and_filter_product_container .search_and_filter_product_wrapper .filter_product_container .check_kien_hang_wrapper {
+  display: flex;
+}
+.search_and_filter_product_container .search_and_filter_product_wrapper .filter_product_container .check_kien_hang_wrapper p {
+  font-size: 16px;
+  font-weight: normal;
+  padding: 0 4px 0 0;
+}
+.search_and_filter_product_container .search_and_filter_product_wrapper .filter_product_container .check_ke_hang_wrapper {
+  display: flex;
+}
+.search_and_filter_product_container .search_and_filter_product_wrapper .filter_product_container .check_ke_hang_wrapper p {
+  font-size: 16px;
+  font-weight: normal;
+  padding: 0 4px 0 0;
+}

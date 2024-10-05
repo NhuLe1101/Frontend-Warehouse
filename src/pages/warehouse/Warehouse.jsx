@@ -122,7 +122,7 @@ const Warehouse = () => {
     saveDataToServer(compartmentData);
 
     setPopupVisible(true);
-  };
+  };  
 
   const handlePopupClose = () => {
     setPopupVisible(false);
@@ -166,17 +166,17 @@ const Warehouse = () => {
                 <Compartment
                   position={[-compartmentWidth, 0, 0]}
                   hasItem={false}
-                  onClick={() => handleCompartmentClick(shelf, shelfIndex, layerIndex)}  // Không truyền side
+                  onClick={() => handleCompartmentClick(shelf, shelfIndex, layerIndex)}  
                 />
                 <Compartment
                   position={[0, 0, 0]}
                   hasItem={false}
-                  onClick={() => handleCompartmentClick(shelf, shelfIndex, layerIndex)}  // Không truyền side
+                  onClick={() => handleCompartmentClick(shelf, shelfIndex, layerIndex)} 
                 />
                 <Compartment
                   position={[compartmentWidth, 0, 0]}
                   hasItem={false}
-                  onClick={() => handleCompartmentClick(shelf, shelfIndex, layerIndex)}  // Không truyền side
+                  onClick={() => handleCompartmentClick(shelf, shelfIndex, layerIndex)}  
                 />
               </group>
             ))}

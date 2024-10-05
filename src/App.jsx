@@ -12,6 +12,7 @@ import Warehouse from './pages/warehouse/Warehouse';
 import Login from './pages/login/Login';
 import Booking from './pages/booking/Booking';
 import Product from './pages/product/Product';
+import Product_v2 from './pages/product/Product_v2';
 import Navbar from './Components/Navbar/Navbar';
 import Footer from './Components/Footer/Footer';
 import PrivateRoute from './Components/PrivateRoute/PrivateRoute';
@@ -47,7 +48,7 @@ const App = () => {
             path: "/booking",
             element: (
               // <PrivateRoute>
-              <Booking />
+                <Booking />
               // </PrivateRoute>
             ),
           },
@@ -55,11 +56,19 @@ const App = () => {
             path: "/product",
             element: (
               // <PrivateRoute>
-              <Product />
+              //  <Product />
+                  <Product_v2/>
               // </PrivateRoute>
             ),
           },
-        
+          {
+            path: "/warehouse",
+            element: (
+              // <PrivateRoute>
+                <Warehouse />
+              // </PrivateRoute>
+            ),
+          },
           {
             path: "/login",
             element: <Login />,
@@ -74,15 +83,7 @@ const App = () => {
             path: "/binpacking",
             element: (
               // <PrivateRoute>
-              <BinPacking />
-              // </PrivateRoute>
-            ),
-          },
-          {
-            path: "/warehouse",
-            element: (
-              // <PrivateRoute>
-              <Warehouse />
+                <BinPacking />
               // </PrivateRoute>
             ),
           },

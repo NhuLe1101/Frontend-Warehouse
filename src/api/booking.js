@@ -3,16 +3,9 @@ import axios from "axios";
 const API_URL = "http://localhost:8080/api/booking/";
 
 // Upload booking
-const upload = (email, phoneNumber, fullName, delivery, file, status, checkin, checkout) => {
+const upload = (file) => {
   const formData = new FormData();
-  formData.append("email", email);
-  formData.append("phoneNumber", phoneNumber);
-  formData.append("fullName", fullName);
-  formData.append("delivery", delivery);
   formData.append("file", file);
-  formData.append("status", status);
-  formData.append("checkin", checkin);
-  formData.append("checkout", checkout);
 
   return axios
     .post(API_URL + "upload", formData, {

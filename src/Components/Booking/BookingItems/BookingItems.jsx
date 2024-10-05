@@ -19,7 +19,9 @@ const BookingItems = () => {
   useEffect(() => {
     BookingService.getAllBookings()
       .then((data) => {
-        setBookings(data); 
+        if(data){
+          setBookings(data); 
+        }
       })
       .catch((error) => {
         console.error("Có lỗi xảy ra:", error);
