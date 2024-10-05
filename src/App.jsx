@@ -47,7 +47,7 @@ const App = () => {
             path: "/booking",
             element: (
               // <PrivateRoute>
-                <Booking />
+              <Booking />
               // </PrivateRoute>
             ),
           },
@@ -55,18 +55,11 @@ const App = () => {
             path: "/product",
             element: (
               // <PrivateRoute>
-                <Product />
+              <Product />
               // </PrivateRoute>
             ),
           },
-          {
-            path: "/warehouse",
-            element: (
-              // <PrivateRoute>
-                <Warehouse />
-              // </PrivateRoute>
-            ),
-          },
+        
           {
             path: "/login",
             element: <Login />,
@@ -81,7 +74,15 @@ const App = () => {
             path: "/binpacking",
             element: (
               // <PrivateRoute>
-                <BinPacking />
+              <BinPacking />
+              // </PrivateRoute>
+            ),
+          },
+          {
+            path: "/warehouse",
+            element: (
+              // <PrivateRoute>
+              <Warehouse />
               // </PrivateRoute>
             ),
           },

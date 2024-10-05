@@ -121,7 +121,7 @@ const RightCard = () => {
                 </div>
                 <div className='col col-demension'>
                   <div className='label-package'>
-                    <div className='label'>Kích thước(IN)</div>
+                    <div className='label'>Kích thước(mm)</div>
                     <div className='label'>Trọng lượng: {pkg.percentWeight} kg</div>
                   </div>
                   <div className='input-group'>
@@ -186,7 +186,7 @@ const RightCard = () => {
                 </div>
                 <div className='col col-demension'>
                   <div className='label-item'>
-                    <div className='label'>Kích thước(IN)</div>
+                    <div className='label'>Kích thước(mm)</div>
                   </div>
                   <div className='input-group'>
                     <input
