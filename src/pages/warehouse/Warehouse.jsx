@@ -109,20 +109,19 @@ const Warehouse = () => {
         console.error('Error creating compartment:', error);
       });
   };
-  const handleCompartmentClick = (shelf, shelfIndex, layerIndex) => {
+  const handleCompartmentClick = (shelf, shelfIndex, layerIndex, side) => {
     const compartmentData = {
-      nameComp: `Compartment-${shelfIndex}-${layerIndex}`,
+      nameComp: `N${layerIndex}0${side}`, // Tên ngăn kết hợp tầng và vị trí (Ngăn + tầng + vị trí)
       layerIndex: layerIndex,
-      hasItem: false,  // Giá trị tùy chỉnh
-      shelfId: shelf.shelfId,  // Id của kệ
+      side: side,  // Lưu vị trí (1: left, 2: mid, 3: right)
+      hasItem: false,
+      shelfId: shelf.shelfId,
     };
 
-    // console.log(shelf.shelfId);
-
     saveDataToServer(compartmentData);
-
     setPopupVisible(true);
-  };  
+  };
+
 
   const handlePopupClose = () => {
     setPopupVisible(false);
@@ -166,21 +165,20 @@ const Warehouse = () => {
                 <Compartment
                   position={[-compartmentWidth, 0, 0]}
                   hasItem={false}
-                  onClick={() => handleCompartmentClick(shelf, shelfIndex, layerIndex)}  
+                  onClick={() => handleCompartmentClick(shelf, shelfIndex, layerIndex, 1)}  // 1: left
                 />
                 <Compartment
                   position={[0, 0, 0]}
                   hasItem={false}
-                  onClick={() => handleCompartmentClick(shelf, shelfIndex, layerIndex)} 
+                  onClick={() => handleCompartmentClick(shelf, shelfIndex, layerIndex, 2)}  // 2: mid
                 />
                 <Compartment
                   position={[compartmentWidth, 0, 0]}
                   hasItem={false}
-                  onClick={() => handleCompartmentClick(shelf, shelfIndex, layerIndex)}  
+                  onClick={() => handleCompartmentClick(shelf, shelfIndex, layerIndex, 3)}  // 3: right
                 />
               </group>
             ))}
-
           </group>
         ))}
 
