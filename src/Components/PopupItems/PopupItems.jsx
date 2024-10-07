@@ -64,9 +64,6 @@ const PopupItems = ({onClose}) => {
                         <div className='products_table_bookingNo'>
                             <p>BK NO</p>
                         </div>
-                        <div className='items_table_picture'>
-                            <p>HÌNH ẢNH</p>
-                        </div>
                         <div className='items_table_name'>
                             <p>TÊN</p>
                         </div>
@@ -99,8 +96,6 @@ const PopupItems = ({onClose}) => {
                         <div className='products_table_bookingNo'>
                             <p>001</p>
                         </div>
-                        <div className='items_table_picture'>
-                            <img src="logo192.png" alt="" width={'50px'} height={'50px'} />                            </div>
                         <div className='items_table_name'>
                             <p>Lightstick J97</p>
                         </div>

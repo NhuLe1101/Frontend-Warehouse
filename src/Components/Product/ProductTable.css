@@ -1,0 +1,7 @@
+.imgPrdContainer{
+    object-fit: cover;
+}
+.imgPrd{
+    width: 100px;
+    height: 100px;
+}

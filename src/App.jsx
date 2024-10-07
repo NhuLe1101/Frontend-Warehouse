@@ -12,7 +12,6 @@ import Warehouse from './pages/warehouse/Warehouse';
 import Login from './pages/login/Login';
 import Booking from './pages/booking/Booking';
 import Product from './pages/product/Product';
-import Product_v2 from './pages/product/Product_v2';
 import Navbar from './Components/Navbar/Navbar';
 import Footer from './Components/Footer/Footer';
 import PrivateRoute from './Components/PrivateRoute/PrivateRoute';
@@ -57,7 +56,7 @@ const App = () => {
             element: (
               // <PrivateRoute>
               //  <Product />
-                  <Product_v2/>
+                  <Product/>
               // </PrivateRoute>
             ),
           },

@@ -32,13 +32,13 @@ const BtnAddNewBooking = () => {
                         <div {...getRootProps({ className: 'dropzone' })}>
                             <input {...getInputProps()} />
                             <FaUpload size={40} color="#4a90e2" />
-                            <p>Drag 'n' drop some files here, or click to select files</p>
+                            <p>Kéo file vào đây hoặc Click để chọn files</p>
                         </div>
                     </section>
                 )}
             </Dropzone>
-            {fileName && <p className="file-name">File uploaded: {fileName}</p>}
-            <button onClick={handleSubmit} className="submit-button">Submit</button>
+            {fileName && <p className="file-name">File: {fileName}</p>}
+            <button onClick={handleSubmit} className="submit-button">Lưu</button>
         </div>
     );
 }
