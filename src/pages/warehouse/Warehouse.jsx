@@ -4,6 +4,7 @@ import { OrbitControls, useGLTF } from '@react-three/drei';
 import { memo } from 'react';
 import PopupItems from '../../Components/PopupItems/PopupItems';
 import ShelfService from '../../api/shelf';
+import { Text } from '@react-three/drei';
 function Scene() {
   return (
     <>
@@ -39,6 +40,23 @@ const TruckModel = memo(({ position, scale }) => {
     </Suspense>
   );
 });
+const AssetsModel = memo(({ position, scale }) => {
+  const { scene } = useGLTF('/models/assets.glb', true);
+  const modelRef = useRef();
+
+  useEffect(() => {
+    if (modelRef.current) {
+      modelRef.current.position.set(...position); // Set model position after loading
+      modelRef.current.scale.set(...scale); // Set model scale
+    }
+  }, [position, scale]);
+
+  return (
+    <Suspense fallback={<div>Đang tải mô hình...</div>}>
+      <primitive ref={modelRef} object={scene.clone()} />
+    </Suspense>
+  );
+});
 const ShelfModel = memo(({ position }) => {
   const { scene } = useGLTF('/models/metal_shelf_-_5mb.glb', true);
   const modelRef = useRef();
@@ -55,7 +73,7 @@ const ShelfModel = memo(({ position }) => {
     </Suspense>
   );
 });
-function Compartment({ position, hasItem, onClick }) {
+function Compartment({ position, hasItem, onClick, nameComp }) {
   return (
     <mesh position={position} onClick={onClick}>
       <boxGeometry args={[0.4, 0.35, 0.4]} />
@@ -65,6 +83,15 @@ function Compartment({ position, hasItem, onClick }) {
         roughness={0.6} // Adds a bit of roughness for realism
         metalness={0.1} // Slight metallic effect
       />
+      <Text
+        position={[0, 0.1, 0.25]} // Adjust position above the box
+        fontSize={0.07} // Adjust text size
+        color="black" // Text color
+        anchorX="center" // Anchor text to center
+        anchorY="middle"
+      >
+        {nameComp} {/* This displays the compartment's name */}
+      </Text>
     </mesh>
   );
 }
@@ -74,25 +101,6 @@ const Warehouse = () => {
   const [popupVisible, setPopupVisible] = useState(false);
   const [selectedCompartment, setSelectedCompartment] = useState(null);
 
-  // const addItemToCompartment = (shelfIndex, layerIndex, side) => {
-  //   setCompartments(prev => ({
-  //     ...prev,
-  //     [`${shelfIndex}-${layerIndex}-${side}`]: true
-  //   }));
-  //   setPopupVisible(false); // Đóng popup nếu có item được thêm
-  // };
-
-  // const handleCompartmentClick = (shelfIndex, layerIndex, side) => {
-  //   if (!compartments[`${shelfIndex}-${layerIndex}-${side}`]) {
-  //     setSelectedCompartment({ shelfIndex, layerIndex, side });
-  //     setPopupVisible(true);
-  //   }
-  // };
-
-  // const saveDataToServer = (shelfIndex, layerIndex, shelfName) => {
-  //   // service.callSaveDataToServer
-  //   console.log(`Clicked shelf ${shelfIndex}, layer ${layerIndex} (middle)`, `shelf ${shelfName}`);
-  // }
   const saveDataToServer = (compartmentData) => {
     fetch(`http://localhost:8080/api/compartments/${compartmentData.shelfId}`, {
       method: 'POST',
@@ -184,7 +192,7 @@ const Warehouse = () => {
 
         <TruckModel position={[5, 1, 11]} scale={[0.5, 0.5, 0.5]} /> {/* Thêm mô hình xe tải ở vị trí nào đó */}
         <TruckModel position={[8, 1, 11]} scale={[0.5, 0.5, 0.5]} /> {/* Thêm mô hình xe tải ở vị trí nào đó */}
-
+        <AssetsModel position={[-6, 0.1, 8]} scale={[0.5, 0.5, 0.5]} />
       </Canvas>
       {popupVisible && (
         <PopupItems
