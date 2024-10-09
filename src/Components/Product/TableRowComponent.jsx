@@ -4,10 +4,18 @@ import { TableRow, TableCell, IconButton, Collapse, Box, Typography, TableHead, 
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 
-export default function TableRowComponent({ product, index }) {
+export default function TableRowComponent({ product, index, isPopup, onSelectProduct }) {
   const [open, setOpen] = React.useState(false);
   let count = 1; 
-
+  const handleButtonClick = () => {
+    if (product.quantity === 1) {
+      // Nếu quantity là 1, tự động thêm vào compartment
+      onSelectProduct(product, 1);  // Gửi số lượng mặc định là 1
+    } else {
+      // Nếu quantity > 1, mở popup để nhập số lượng
+      onSelectProduct(product);
+    }
+  };
   return (
     <>
       <TableRow>
@@ -28,6 +36,13 @@ export default function TableRowComponent({ product, index }) {
             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>
         </TableCell>
+        {isPopup && (
+          <TableCell>
+            <button variant="contained" color="primary" onClick={handleButtonClick}>
+              Select
+            </button>
+          </TableCell>
+        )}
       </TableRow>
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>

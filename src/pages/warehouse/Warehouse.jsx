@@ -173,17 +173,20 @@ const Warehouse = () => {
                 <Compartment
                   position={[-compartmentWidth, 0, 0]}
                   hasItem={false}
-                  onClick={() => handleCompartmentClick(shelf, shelfIndex, layerIndex, 1)}  // 1: left
+                  onClick={() => handleCompartmentClick(shelf, shelfIndex, layerIndex, 1)}
+                  nameComp={`N${layerIndex}01`}  // Left side compartment name
                 />
                 <Compartment
                   position={[0, 0, 0]}
                   hasItem={false}
-                  onClick={() => handleCompartmentClick(shelf, shelfIndex, layerIndex, 2)}  // 2: mid
+                  onClick={() => handleCompartmentClick(shelf, shelfIndex, layerIndex, 2)}
+                  nameComp={`N${layerIndex}02`}  // Middle side compartment name
                 />
                 <Compartment
                   position={[compartmentWidth, 0, 0]}
                   hasItem={false}
-                  onClick={() => handleCompartmentClick(shelf, shelfIndex, layerIndex, 3)}  // 3: right
+                  onClick={() => handleCompartmentClick(shelf, shelfIndex, layerIndex, 3)}
+                  nameComp={`N${layerIndex}03`}  // Right side compartment name
                 />
               </group>
             ))}
@@ -201,11 +204,7 @@ const Warehouse = () => {
           onClose={() => setPopupVisible(false)}
         />
       )}
-      {/* <button onClick={() => addItemToCompartment(0, 0, 'left')}>Thêm item vào ngăn trái tầng 0</button>
-      <button onClick={() => addItemToCompartment(0, 0, 'middle')}>Thêm item vào ngăn giữa tầng 0</button>
-      <button onClick={() => addItemToCompartment(0, 0, 'right')}>Thêm item vào ngăn phải tầng 0</button> */}
 
-      {/* Thêm các nút khác cho các ngăn khác nếu cần */}
     </div>
   );
 };

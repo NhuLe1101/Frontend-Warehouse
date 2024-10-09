@@ -5,18 +5,17 @@ import TablePaginationActions from './TablePaginationActions';
 import ProductService from '../../api/product';  // Import your API service
 import './ProductTable.css';
 
-export default function ProductTable() {
-  const [products, setProducts] = React.useState([]);  // State for product data
-  const [loading, setLoading] = React.useState(true);  // State for loading
+export default function ProductTable({ isPopup, onSelectProduct }) {
+  const [products, setProducts] = React.useState([]);  // State cho danh sách sản phẩm
+  const [loading, setLoading] = React.useState(true);  // State cho trạng thái loading
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
-  // Fetch product data when component mounts
   React.useEffect(() => {
     ProductService.getAllProducts()
       .then((data) => {
-        setProducts(data);  // Set the fetched products
-        setLoading(false);  // Set loading to false after data is fetched
+        setProducts(data);
+        setLoading(false);
       })
       .catch((error) => {
         console.error("Error fetching products:", error);
@@ -24,16 +23,6 @@ export default function ProductTable() {
       });
   }, []);
 
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-  };
-
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
-  };
-
-  // Show a loading message while data is being fetched
   if (loading) {
     return <p>Loading...</p>;
   }
@@ -56,7 +45,13 @@ export default function ProductTable() {
         </TableHead>
         <TableBody>
           {products.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((product, index) => (
-            <TableRowComponent key={product.id} product={product} index={index} />
+            <TableRowComponent
+              key={product.itemId}
+              product={product}
+              index={index}
+              isPopup={isPopup}
+              onSelectProduct={onSelectProduct}
+            />
           ))}
         </TableBody>
       </Table>
@@ -66,9 +61,11 @@ export default function ProductTable() {
         count={products.length}
         rowsPerPage={rowsPerPage}
         page={page}
-        onPageChange={handleChangePage}
-        onRowsPerPageChange={handleChangeRowsPerPage}
-        ActionsComponent={TablePaginationActions}
+        onPageChange={(event, newPage) => setPage(newPage)}
+        onRowsPerPageChange={(event) => {
+          setRowsPerPage(parseInt(event.target.value, 10));
+          setPage(0);
+        }}
       />
     </TableContainer>
   );
