@@ -38,7 +38,7 @@ const BtnAddNewBooking = () => {
                 )}
             </Dropzone>
             {fileName && <p className="file-name">File: {fileName}</p>}
-            <button onClick={handleSubmit} className="submit-button">Lưu</button>
+            <button onClick={handleSubmit} className="submit-button-add-bk">Lưu</button>
         </div>
     );
 }

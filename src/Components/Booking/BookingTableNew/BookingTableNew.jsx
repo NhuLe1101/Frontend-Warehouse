@@ -3,6 +3,7 @@ import React, { Fragment } from 'react';
 import MUIDataTable from 'mui-datatables';
 import BookingService from '../../../api/booking';
 import {createTheme, ThemeProvider} from '@mui/material/styles'
+import { FaDownload, FaEdit } from 'react-icons/fa'; // Import the download icon from FontAwesome
 
 const columns = [
     {
@@ -20,19 +21,50 @@ const columns = [
     {
         name: "Excel File",
         options: {
-            customBodyRender: (value) => <a href={value} target='_blank' style={{color: "#fff", textDecoration: "none", backgroundColor: "darkslateblue", padding: "6px", borderRadius:"8px"}}>Link File</a>
+            customBodyRender: (value) => <button className="download-btn" style={{color: "#fff", textDecoration: "none", backgroundColor: "#0c3c73", padding: "6px", borderRadius:"8px"}}>
+        <FaDownload style={{marginRight: "6px"}} /> Booking File
+      </button>
+        }
+    },
+    {
+        name: "Thao tác",
+        options: {
+            customBodyRender: (value) => <button className="download-btn" style={{color: "#fff", textDecoration: "none", backgroundColor: "#0c3c73", padding: "6px", borderRadius:"8px"}}>
+        <FaEdit style={{marginRight: "6px"}} /> Sửa </button>
         }
     }
 ];
 
 const options = {
   selectableRows: false,
+    textLabels: {
+      body: {
+        noMatch: "Không tìm thấy dữ liệu",
+      },
+      pagination: {
+        next: "Trang sau",
+        previous: "Trang trước",
+        rowsPerPage: "Số hàng mỗi trang",
+        displayRows: "trên",
+      },
+      toolbar: {
+        search: "Tìm kiếm",
+        viewColumns: "Xem cột",
+      },
+      filter: {
+        title: "Bộ lọc",
+        reset: "Đặt lại",
+      },
+      viewColumns: {
+        title: "Hiển thị cột",
+      },
+    },
   elevation: 0,
 };
 
 const getMuiTheme = () => createTheme({
     typography:{
-        fontFamily:"Poppins",
+        fontFamily:"sans-serif",
         
     },
     palette:{
@@ -49,7 +81,7 @@ const getMuiTheme = () => createTheme({
                     padding: "7px 15px",
                 },
                 body:{
-                    padding: "7px 32px",
+                    padding: "16px",
                     color:"#e2e8f0",
                 },
             }

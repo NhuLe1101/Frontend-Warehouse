@@ -43,13 +43,14 @@
   line-height: 56px;
   padding: 0 8px;
   position: relative;
+  display: contents;
 }
 
 .navbar .nav-links li a:hover::after,
 .navbar .nav-links li a.active::after {
   content: "";
   position: absolute;
-  bottom: -8px;
+  bottom: 8px;
   left: 50%;
   transform: translateX(-50%);
   width: 80%;
@@ -60,7 +61,7 @@
 .navbar .nav-links li.active a::after {
   content: "";
   position: absolute;
-  bottom: -8px;
+  bottom: 8px;
   left: 50%;
   transform: translateX(-50%);
   border-radius: 8px;
@@ -118,7 +119,7 @@
   cursor: pointer;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1023px) {
   .navbar .menu-icon {
     display: block;
     right: 0;
@@ -146,6 +147,7 @@
 
   .navbar .nav-links.active {
     display: flex;
+    width: inherit;
   }
 
   .navbar .nav-links li {
