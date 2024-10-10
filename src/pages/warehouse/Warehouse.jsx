@@ -101,39 +101,79 @@ const Warehouse = () => {
   const [popupVisible, setPopupVisible] = useState(false);
   const [selectedCompartment, setSelectedCompartment] = useState(null);
 
-  const saveDataToServer = (compartmentData) => {
-    fetch(`http://localhost:8080/api/compartments/${compartmentData.shelfId}`, {
+  const fetchCompartmentFromServer = (compartmentIdentifier) => {
+    return fetch(`http://localhost:8080/api/compartments/${compartmentIdentifier.shelfId}/${compartmentIdentifier.nameComp}`)
+      .then(response => {
+        if (!response.ok) {
+          // Nếu không tồn tại, trả về null hoặc false
+          return null;
+        }
+        return response.json(); // Trả về dữ liệu compartment nếu đã tồn tại
+      })
+      .catch((error) => {
+        console.error('Error fetching compartment from server:', error);
+        throw error;
+      });
+  };
+
+  const createCompartment = (compartmentData) => {
+    return fetch(`http://localhost:8080/api/compartments/${compartmentData.shelfId}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(compartmentData),
     })
-      .then(response => response.json())
-      .then(data => {
-        console.log('Compartment created:', data);
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Failed to create compartment');
+        }
+        return response.json(); // Trả về dữ liệu của compartment mới được tạo
       })
       .catch((error) => {
         console.error('Error creating compartment:', error);
+        throw error;
       });
   };
+
+
   const handleCompartmentClick = (shelf, shelfIndex, layerIndex, side) => {
-    const compartmentData = {
-      nameComp: `N${layerIndex}0${side}`, // Tên ngăn kết hợp tầng và vị trí (Ngăn + tầng + vị trí)
+    const compartmentIdentifier = {
+      nameComp: `N${layerIndex}0${side}`,
       layerIndex: layerIndex,
-      side: side,  // Lưu vị trí (1: left, 2: mid, 3: right)
-      hasItem: false,
+      side: side,
       shelfId: shelf.shelfId,
     };
 
-    saveDataToServer(compartmentData);
-    setPopupVisible(true);
+    // Gọi API để kiểm tra compartment có tồn tại không
+    fetchCompartmentFromServer(compartmentIdentifier)
+      .then((compartmentFromServer) => {
+        if (compartmentFromServer) {
+          // Compartment đã tồn tại, lấy dữ liệu từ server và hiển thị popup
+          setSelectedCompartment(compartmentFromServer);
+          setPopupVisible(true);
+        } else {
+          // Nếu compartment chưa tồn tại, tạo mới
+          createCompartment(compartmentIdentifier)
+            .then((newCompartment) => {
+              setSelectedCompartment(newCompartment);
+              setPopupVisible(true);
+            })
+            .catch((error) => {
+              console.error('Error creating compartment:', error);
+            });
+        }
+      })
+      .catch((error) => {
+        console.error('Error fetching compartment:', error);
+      });
   };
 
 
-  const handlePopupClose = () => {
-    setPopupVisible(false);
-  };
+
+
+
+
   const [shelves, setShelves] = useState([]);
 
   // Fetch shelves data when the component is mounted
@@ -197,13 +237,13 @@ const Warehouse = () => {
         <TruckModel position={[8, 1, 11]} scale={[0.5, 0.5, 0.5]} /> {/* Thêm mô hình xe tải ở vị trí nào đó */}
         <AssetsModel position={[-6, 0.1, 8]} scale={[0.5, 0.5, 0.5]} />
       </Canvas>
-      {popupVisible && (
+      {popupVisible && selectedCompartment && (
         <PopupItems
           compartmentData={selectedCompartment}
-          // onAddItem={addItemToCompartment}
           onClose={() => setPopupVisible(false)}
         />
       )}
+
 
     </div>
   );
