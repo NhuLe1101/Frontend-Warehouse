@@ -1,29 +1,34 @@
 import React, { useState, useEffect } from 'react';
-import './editbooking.css'; // Assuming you have a CSS file for styling
+import './editbooking.css'; 
+import BookingService from '../../../api/booking';
 
 const EditBooking = ({ booking, onClose, onSave }) => {
     const [formData, setFormData] = useState(booking);
-    const [saveStatus, setSaveStatus] = useState(null); // To track save status (null, success, or error)
+    const [saveStatus, setSaveStatus] = useState(null); 
 
 
     useEffect(() => {
         setFormData(booking);
     }, [booking]);
 
-    const handleInputChange = (e) => {
+    const handleInputChange = async (e) => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
     };
 
     const handleSaveClick = async () => {
         try {
-            await onSave(formData); // Save function passed from the parent component
-            setSaveStatus('success'); // If save is successful
+            //console.log(formData);
+            const message = await BookingService.updateBooking(formData); 
+            alert(message);
+            setSaveStatus('success');
+            window.location.reload(); 
         } catch (error) {
-            setSaveStatus('error'); // If there's an error
+            setSaveStatus('error'); 
+            console.error("Có lỗi xảy ra khi upload dữ liệu:", error);
         }
     };
-    if (!booking) return null; // In case no booking data is provided
+    if (!booking) return null; 
 
     return (
         <div className="popup">
@@ -44,7 +49,7 @@ const EditBooking = ({ booking, onClose, onSave }) => {
                         Name:
                         <input
                             type="text"
-                            name="name"
+                            name="customerName"
                             value={formData.name}
                             onChange={handleInputChange}
                         />
@@ -62,12 +67,12 @@ const EditBooking = ({ booking, onClose, onSave }) => {
                         Phone:
                         <input
                             type="text"
-                            name="phone"
+                            name="numberphone"
                             value={formData.phone}
                             onChange={handleInputChange}
                         />
                     </label>
-                    {/* Add more fields here as needed */}
+                    
                 </form>
                 <div className="popup-actions">
                     <button className='btn-save-edit-bk' onClick={handleSaveClick}>Save</button>

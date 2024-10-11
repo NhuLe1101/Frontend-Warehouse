@@ -131,7 +131,7 @@ const BookingTableNew = () => {
         handleClosePopup();
     };
 
-    const newBookingData = bookings.map((obj) => [String(obj.id), "ABC", obj.customerEmail, "0123", obj.excelFile]);
+    const newBookingData = bookings.map((obj) => [String(obj.id), obj.customerName, obj.customerEmail, obj.numberphone, obj.excelFile]);
     const data = newBookingData;
 
     return (

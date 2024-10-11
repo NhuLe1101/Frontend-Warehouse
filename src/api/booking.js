@@ -47,37 +47,17 @@ const getAllBookings = () => {
     });
 };
 
-// Delete booking
-const deleteBooking = (bookingId) => {
-  return axios
-    .delete(API_URL + `delete/${bookingId}`)
-    .then((response) => {
-      console.log(response.data.message);
-      return response.data.message;
-    })
-    .catch((error) => {
-      console.error("Có lỗi xảy ra khi xóa:", error);
-      if (error.response) {
-        console.log(error.response.data.message);
-        return error.response.data.message;
-      } else {
-        return "Có lỗi không xác định xảy ra.";
-      }
-    });
-};
-
 
 // Update booking
-const updateBooking = (bookingId, email, phoneNumber, fullName, delivery, status) => {
+const updateBooking = ( booking) => {
   const formData = new FormData();
-  formData.append("email", email);
-  formData.append("phoneNumber", phoneNumber);
-  formData.append("fullName", fullName);
-  formData.append("delivery", delivery);
-  formData.append("status", status);
+  formData.append("email", booking.customerEmail);
+  formData.append("phoneNumber", booking.numberphone);
+  formData.append("fullName", booking.customerName);
+  formData.append("filePath", booking.excelFile);
 
   return axios
-    .put(API_URL + `update/${bookingId}`, formData, {
+    .put(API_URL + `update/${booking.id}`, formData, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
@@ -101,7 +81,6 @@ const updateBooking = (bookingId, email, phoneNumber, fullName, delivery, status
 const BookingService = {
   upload,
   getAllBookings,
-  deleteBooking,
   updateBooking,
 };
 
