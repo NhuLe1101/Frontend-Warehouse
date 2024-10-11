@@ -1,7 +1,7 @@
 import React, { Fragment, useState } from 'react'
 import Dropzone from 'react-dropzone'
 import { FaUpload } from 'react-icons/fa';
-import './BtnAddNewBooking.css'
+import './btnaddnewbooking.css'
 import BookingService from '../../../api/booking';
 
 const BtnAddNewBooking = () => {

@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import './booking.css';
 import { Button, Dialog, DialogContent } from '@mui/material';
 import FileUploadIcon from '@mui/icons-material/FileUpload';
-import BookingTableNew from '../../Components/Booking/BookingTableNew/BookingTableNew';
+import BookingTableNew from '../../Components/Booking/BookingTable/BookingTableNew';
 import BtnAddNewBooking from '../../Components/Booking/BtnAddNewBooking/BtnAddNewBooking';
 
 const Booking = () => {
@@ -18,7 +18,7 @@ const Booking = () => {
   };
 
   return (
-    <div className='booking' style={{ marginTop: '56px' }}>
+    <div className='booking' style={{ marginTop: '56px'}}>
       <div className='booking_title'>
         <p style={{ fontSize: '32px' }}>QUẢN LÝ BOOKING</p>
       </div>

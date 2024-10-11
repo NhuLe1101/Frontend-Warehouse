@@ -34,6 +34,7 @@ export default function TablePaginationActions({ count, page, rowsPerPage, onPag
       <IconButton onClick={handleLastPageButtonClick} disabled={page >= Math.ceil(count / rowsPerPage) - 1}>
         <LastPage />
       </IconButton>
+      
     </div>
   );
 }
