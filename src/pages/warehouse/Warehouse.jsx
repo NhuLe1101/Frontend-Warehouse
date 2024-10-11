@@ -79,18 +79,18 @@ function Compartment({ position, hasItem, onClick, nameComp }) {
       <boxGeometry args={[0.4, 0.35, 0.4]} />
 
       <meshStandardMaterial
-        color={hasItem ? '#4CAF50' : '#e6b07a'} // Green if it has an item, gray otherwise
-        roughness={0.6} // Adds a bit of roughness for realism
-        metalness={0.1} // Slight metallic effect
+        color={hasItem ? '#4CAF50' : '#e6b07a'} // Green if it has an item
+        roughness={0.6}
+        metalness={0.1}
       />
       <Text
-        position={[0, 0.1, 0.25]} // Adjust position above the box
-        fontSize={0.07} // Adjust text size
-        color="black" // Text color
-        anchorX="center" // Anchor text to center
+        position={[0, 0.1, 0.25]}
+        fontSize={0.07}
+        color="black"
+        anchorX="center"
         anchorY="middle"
       >
-        {nameComp} {/* This displays the compartment's name */}
+        {nameComp}
       </Text>
     </mesh>
   );
@@ -105,10 +105,9 @@ const Warehouse = () => {
     return fetch(`http://localhost:8080/api/compartments/${compartmentIdentifier.shelfId}/${compartmentIdentifier.nameComp}`)
       .then(response => {
         if (!response.ok) {
-          // Nếu không tồn tại, trả về null hoặc false
           return null;
         }
-        return response.json(); // Trả về dữ liệu compartment nếu đã tồn tại
+        return response.json();
       })
       .catch((error) => {
         console.error('Error fetching compartment from server:', error);
@@ -128,7 +127,7 @@ const Warehouse = () => {
         if (!response.ok) {
           throw new Error('Failed to create compartment');
         }
-        return response.json(); // Trả về dữ liệu của compartment mới được tạo
+        return response.json();
       })
       .catch((error) => {
         console.error('Error creating compartment:', error);
@@ -149,11 +148,17 @@ const Warehouse = () => {
     fetchCompartmentFromServer(compartmentIdentifier)
       .then((compartmentFromServer) => {
         if (compartmentFromServer) {
-          // Compartment đã tồn tại, lấy dữ liệu từ server và hiển thị popup
-          setSelectedCompartment(compartmentFromServer);
-          setPopupVisible(true);
+          // Nếu compartment đã có item, hiển thị thông tin item
+          if (compartmentFromServer.hasItem) {
+            setSelectedCompartment(compartmentFromServer);
+            setPopupVisible(true);
+          } else {
+            // Nếu compartment chưa có item, hiển thị popup thêm item
+            setSelectedCompartment(compartmentFromServer);
+            setPopupVisible(true);
+          }
         } else {
-          // Nếu compartment chưa tồn tại, tạo mới
+          // Nếu compartment chưa tồn tại, tạo mới và hiển thị popup thêm item
           createCompartment(compartmentIdentifier)
             .then((newCompartment) => {
               setSelectedCompartment(newCompartment);
@@ -170,13 +175,8 @@ const Warehouse = () => {
   };
 
 
-
-
-
-
   const [shelves, setShelves] = useState([]);
 
-  // Fetch shelves data when the component is mounted
   useEffect(() => {
     ShelfService.getAllShelves()
       .then(data => {
@@ -241,8 +241,10 @@ const Warehouse = () => {
         <PopupItems
           compartmentData={selectedCompartment}
           onClose={() => setPopupVisible(false)}
+          isItemPresent={selectedCompartment.hasItem}  // Truyền trạng thái item có trong compartment hay không
         />
       )}
+
 
 
     </div>

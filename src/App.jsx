@@ -61,14 +61,6 @@ const App = () => {
             ),
           },
           {
-            path: "/warehouse",
-            element: (
-              // <PrivateRoute>
-                <Warehouse />
-              // </PrivateRoute>
-            ),
-          },
-          {
             path: "/login",
             element: <Login />,
           },
@@ -83,6 +75,14 @@ const App = () => {
             element: (
               // <PrivateRoute>
                 <BinPacking />
+              // </PrivateRoute>
+            ),
+          },
+          {
+            path: "/warehouse",
+            element: (
+              // <PrivateRoute>
+                <Warehouse />
               // </PrivateRoute>
             ),
           },
