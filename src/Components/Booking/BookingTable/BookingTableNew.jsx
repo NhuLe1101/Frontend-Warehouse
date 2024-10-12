@@ -126,8 +126,6 @@ const BookingTableNew = () => {
             b.id === updatedBooking.id ? updatedBooking : b
         );
         setBookings(updatedBookings);
-        // Assuming there's a function to save the updated data to the database
-        // saveBookingToDatabase(updatedBooking);
         handleClosePopup();
     };
 

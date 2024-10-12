@@ -1,7 +1,7 @@
 .booking {
   width: 100%;
   height: fit-content;
-  min-width: 100vh;
+  min-height: 100vh;
   background-color: #262838;
   padding: 0 5rem 2rem 5rem;
   position: relative;
@@ -169,6 +169,10 @@
 }
 .booking .booking_table .booking_table_items .booking_table_item:last-child {
   border-radius: 0px 0px 12px 12px;
+}
+
+.tss-1qtl85h-MUIDataTableBodyCell-root.tss-1ej321f-MUIDataTableBodyCell-cellHide.tss-1t2q2nr-MUIDataTableBodyCell-stackedHeader.tss-1vd39vz-MUIDataTableBodyCell-stackedCommon {
+  visibility: hidden !important;
 }
 
 /*# sourceMappingURL=booking.css.map */

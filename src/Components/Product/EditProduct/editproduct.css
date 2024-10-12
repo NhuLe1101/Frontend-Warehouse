@@ -1,9 +1,9 @@
-.popup {
+.popup-pd {
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 400px;
+    width: 750px;
     background: rgba(255, 255, 255, 1);
     padding: 20px;
     border-radius: 10px;
@@ -11,20 +11,30 @@
     z-index: 1000;
 }
 
-.formEditBk{
-    display: flex;
-    flex-direction: column;
-}
-
-.formEditBk label{
-    display: flex;
-    justify-content: space-between;
+.popup-pd h2{
+    color: #000;
     margin-bottom: 1rem;
 }
 
-.formEditBk label input{
+.formEditPd {
+    display: grid;
+    grid-template-columns: 45% 45%;
+    justify-content: space-around;
+}
+
+.formEditPd label{
     display: flex;
-    width: 80%;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    color: #000;
+    align-items: center;
+}
+
+.formEditPd label input,
+.formEditPd label select{
+    display: flex;
+    width: 60%;
+    padding: 8px;
 }
 
 

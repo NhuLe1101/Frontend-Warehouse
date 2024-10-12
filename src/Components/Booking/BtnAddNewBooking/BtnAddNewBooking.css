@@ -48,13 +48,3 @@
     margin-top: 8px;
 }
 
-@media (max-width: 899.95px) {
-    .tss-1vd39vz-MUIDataTableBodyCell-stackedCommon {
-        /* display: inline-block; */
-        font-size: 16px;
-        height: auto;
-        width: calc(50%);
-        box-sizing: border-box;
-        padding: inherit;
-    }
-}

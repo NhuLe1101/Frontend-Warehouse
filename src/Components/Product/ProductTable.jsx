@@ -57,6 +57,7 @@ export default function ProductTable({ isPopup, onSelectProduct }) {
               <TableCell variant="indam">NGÀY XUẤT</TableCell>
               <TableCell variant="indam">TRẠNG THÁI</TableCell>
               <TableCell variant="indam">BOOKING</TableCell>
+              <TableCell variant="indam">THAO TÁC</TableCell>
               <TableCell />
             </TableRow>
           </TableHead>
