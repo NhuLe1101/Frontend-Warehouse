@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import './popupitems.css';
 import ProductTable from '../Product/ProductTable';
-import PopupQuantity from '../PopupQuantity/PopupQuantity';
+import PopupQuantity from './PopupQuantity';
 import { Snackbar } from '@mui/material';
 import { Alert } from '@mui/material';
+import ItemInfo from '../ItemInfo/ItemInfo';
+
 const PopupItems = ({ compartmentData, onClose, isItemPresent }) => {
     const [ngaynhapUp, setNgayNhapUp] = useState(false);
     const [ngayxuatUp, setNgayXuatUp] = useState(false);
@@ -45,15 +47,6 @@ const PopupItems = ({ compartmentData, onClose, isItemPresent }) => {
         const compartmentId = compartmentData ? compartmentData.compId : null; // Lấy compId từ compartmentData đã cập nhật
         const productId = selectedProduct ? selectedProduct.itemId : null;
 
-
-        // console.log('compId :', compartmentData.compId);
-        // console.log('ProductId:', selectedProduct.itemId);
-        // if (!compartmentId || !productId) {
-        //     console.error('compartmentId hoặc productId bị thiếu.');
-        //     return;  // Ngăn không gửi request nếu dữ liệu bị thiếu
-        // }
-        // console.log("Sending quantity:", quantity);
-
         // Gọi API để thêm item vào ngăn
         fetch(`http://localhost:8080/api/compartments/${compartmentId}/addItem`, {
             method: 'POST',
@@ -85,21 +78,29 @@ const PopupItems = ({ compartmentData, onClose, isItemPresent }) => {
                 setOpenSnackbar(true);
             });
     };
+    const handleEdit = () => {
+        console.log('Chỉnh sửa sản phẩm');
+    };
+
+    const handleDelete = () => {
+        console.log('Xóa sản phẩm');
+    };
+
+    const handleCheckout = () => {
+        console.log('Checkout sản phẩm');
+    };
 
 
     return (
         <div className="popup-items">
             <button className='close-btn' onClick={onClose}></button>
             {isItemPresent ? (
-                <>
-                    {/* Nếu ngăn đã có item, hiển thị thông tin chi tiết về item */}
-                    <h2>Thông tin Item trong ngăn</h2>
-                    <div className='item_info'>
-                        <p><strong>Tên sản phẩm:</strong> {compartmentData.item.name}</p>
-                        <p><strong>Số lượng:</strong> {compartmentData.quantity}</p>
-                        <p><strong>Loại:</strong> {compartmentData.item.type}</p>
-                    </div>
-                </>
+                <ItemInfo
+                    compartmentData={compartmentData}
+                    onEdit={handleEdit}
+                    onDelete={handleDelete}
+                    onCheckout={handleCheckout}
+                />
             ) : (
                 <>
                     {/* Nếu ngăn chưa có item, hiển thị giao diện thêm item */}

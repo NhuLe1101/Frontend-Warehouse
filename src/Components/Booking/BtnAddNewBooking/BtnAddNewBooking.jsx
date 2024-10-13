@@ -1,8 +1,8 @@
 import React, { Fragment, useState } from 'react'
 import Dropzone from 'react-dropzone'
 import { FaUpload } from 'react-icons/fa';
-import './btnaddnewbooking.css'
 import BookingService from '../../../api/booking';
+import './BtnAddNewBooking.css'
 
 const BtnAddNewBooking = () => {
     const [fileName, setFileName] = useState('');

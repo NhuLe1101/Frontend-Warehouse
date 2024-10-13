@@ -7,7 +7,6 @@ import {
   Outlet,
 } from "react-router-dom";
 import Home from './pages/home/Home';
-import BinPacking from './pages/binpacking/BinPacking';
 import Warehouse from './pages/warehouse/Warehouse';
 import Login from './pages/login/Login';
 import Booking from './pages/booking/Booking';
@@ -70,14 +69,6 @@ const App = () => {
         path: "/",
         element: <Layout2 />,
         children: [
-          {
-            path: "/binpacking",
-            element: (
-              // <PrivateRoute>
-                <BinPacking />
-              // </PrivateRoute>
-            ),
-          },
           {
             path: "/warehouse",
             element: (
