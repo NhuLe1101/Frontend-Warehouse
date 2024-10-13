@@ -7,10 +7,32 @@
     padding: 20px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
     z-index: 1000;
-    width: 75%;
+    width: 75%; /* Chiều rộng cố định */
+    max-height: 80vh; /* Đặt chiều cao tối đa cho popup */
+    overflow-y: auto; /* Bật thanh cuộn dọc nếu nội dung quá lớn */
     border-radius: 10px;
+    scrollbar-width: thin;
+    scrollbar-color: #888 #262838;
+}
+/* Tùy chỉnh scrollbar cho toàn bộ trang hoặc chỉ cho popup-items */
+.popup-items::-webkit-scrollbar {
+    width: 10px; /* Độ rộng của thanh cuộn */
 }
 
+.popup-items::-webkit-scrollbar-thumb {
+    background-color: #888; /* Màu của thanh cuộn */
+    border-radius: 10px;
+    border: 2px solid #262838; /* Màu nền phía sau thanh cuộn */
+}
+
+.popup-items::-webkit-scrollbar-thumb:hover {
+    background-color: #555; /* Màu khi hover trên thanh cuộn */
+}
+
+.popup-items::-webkit-scrollbar-track {
+    background-color: #262838; /* Màu nền của track scrollbar */
+    border-radius: 10px;
+}
 .close-btn {
     position: absolute;
     right: 32px;

@@ -5,6 +5,8 @@ import PopupQuantity from './PopupQuantity';
 import { Snackbar } from '@mui/material';
 import { Alert } from '@mui/material';
 import ItemInfo from '../ItemInfo/ItemInfo';
+import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
+import CompartmentService from './../../api/compartment';
 
 const PopupItems = ({ compartmentData, onClose, isItemPresent }) => {
     const [ngaynhapUp, setNgayNhapUp] = useState(false);
@@ -28,68 +30,102 @@ const PopupItems = ({ compartmentData, onClose, isItemPresent }) => {
     const [openSnackbar, setOpenSnackbar] = useState(false);
     const [snackbarMessage, setSnackbarMessage] = useState('');
     const [snackbarSeverity, setSnackbarSeverity] = useState('info');
+    const [isEditMode, setIsEditMode] = useState(false);
+    const [openDeleteDialog, setOpenDeleteDialog] = useState(false); 
 
     const handleSelectProduct = (product) => {
-        if (product.quantity > 1) {
-            setSelectedProduct(product);
-            console.log('Product đã chọn:', product); // Kiểm tra giá trị của selectedProduct
-            setPopupQuantityVisible(true);  // Hiển thị popup khi số lượng > 1
+        setIsEditMode(false); 
+        setSelectedProduct(product);
+        setPopupQuantityVisible(true);
+    };
+
+    const handleQuantityConfirm = (quantity) => {
+        const compartmentId = compartmentData.compId;
+        const itemId = selectedProduct?.itemId;
+
+        if (isEditMode) {
+            CompartmentService.updateItemQuantity(compartmentId, itemId, quantity)
+                .then((response) => {
+                    setSnackbarMessage('Số lượng đã được cập nhật thành công.');
+                    setSnackbarSeverity('success');
+                    setOpenSnackbar(true);
+                    setPopupQuantityVisible(false);
+                })
+                .catch((error) => {
+                    setSnackbarMessage(error.response.data.message || 'Có lỗi xảy ra');
+                    setSnackbarSeverity('error');
+                    setOpenSnackbar(true);
+                });
         } else {
-            // Xử lý tự động thêm nếu số lượng = 1
-            console.log('tu dong them');
+            CompartmentService.addItemToCompartment(compartmentId, itemId, quantity)
+                .then((response) => {
+                    setSnackbarMessage('Item đã được thêm thành công.');
+                    setSnackbarSeverity('success');
+                    setOpenSnackbar(true);
+                    setPopupQuantityVisible(false);
+                })
+                .catch((error) => {
+                    setSnackbarMessage(error.response.data.message || 'Có lỗi xảy ra');
+                    setSnackbarSeverity('error');
+                    setOpenSnackbar(true);
+                });
         }
     };
 
-    console.log("compartmentData received:", compartmentData); // Kiểm tra dữ liệu nhận được
-    console.log("compartmentData item:", compartmentData.item); // Kiểm tra dữ liệu nhận được
+    const handleEdit = () => {
+        setIsEditMode(true); // Chế độ "edit"
 
-    const handleQuantityConfirm = (quantity) => {
-        const compartmentId = compartmentData ? compartmentData.compId : null; // Lấy compId từ compartmentData đã cập nhật
-        const productId = selectedProduct ? selectedProduct.itemId : null;
+        const product = compartmentData.item ? {
+            itemId: compartmentData.item.itemId,
+            name: compartmentData.item.name,
+            quantity: compartmentData.item.quantity 
+        } : null;
 
-        // Gọi API để thêm item vào ngăn
-        fetch(`http://localhost:8080/api/compartments/${compartmentId}/addItem`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                itemId: productId,
-                quantity: quantity
-            }),
-        })
+        setSelectedProduct(product);
+        setPopupQuantityVisible(true); 
+    };
+
+
+    const handleDelete = () => {
+        setOpenDeleteDialog(true);
+    };
+
+    const confirmDelete = () => {
+        const compartmentId = compartmentData.compId;
+        const itemId = compartmentData.item.itemId;
+
+        CompartmentService.deleteItemFromCompartment(compartmentId, itemId)
             .then((response) => {
-                if (!response.ok) {
-                    return response.json().then((data) => {
-                        throw new Error(data.message || 'Có lỗi xảy ra');
-                    });
-                }
-                return response.json();
-            })
-            .then((data) => {
-                console.log('Item đã được thêm thành công:', data);
-                setSnackbarMessage('Item đã được thêm thành công.');
-                setSnackbarSeverity('success'); // Thông báo thành công
+                setSnackbarMessage('Item đã được xóa thành công.');
+                setSnackbarSeverity('success');
                 setOpenSnackbar(true);
+                setTimeout(() => {
+                    onClose();
+                }, 3000);
             })
             .catch((error) => {
-                setSnackbarMessage(error.message); // Hiển thị thông báo từ MessageResponse
-                setSnackbarSeverity('error'); // Thông báo lỗi
+                setSnackbarMessage(error.response.data.message || 'Có lỗi xảy ra');
+                setSnackbarSeverity('error');
                 setOpenSnackbar(true);
             });
     };
-    const handleEdit = () => {
-        console.log('Chỉnh sửa sản phẩm');
-    };
 
-    const handleDelete = () => {
-        console.log('Xóa sản phẩm');
+    const cancelDelete = () => {
+        setOpenDeleteDialog(false); 
     };
 
     const handleCheckout = () => {
         console.log('Checkout sản phẩm');
     };
+    const handleSnackbarClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return; // Không đóng snackbar nếu lý do là clickaway
+        }
 
+        setOpenSnackbar(false);
+
+        onClose();
+    };
 
     return (
         <div className="popup-items">
@@ -140,29 +176,50 @@ const PopupItems = ({ compartmentData, onClose, isItemPresent }) => {
                             </div>
                         </div>
                         <ProductTable isPopup={true} onSelectProduct={handleSelectProduct} />
-                        {selectedProduct && (
-                            <PopupQuantity
-                                open={popupQuantityVisible}
-                                onClose={() => setPopupQuantityVisible(false)}
-                                maxQuantity={selectedProduct.quantity}
-                                onConfirm={handleQuantityConfirm}
-                            />
-                        )}
                     </div>
                 </>
-            )}
 
+            )}
+            {selectedProduct && (
+                <PopupQuantity
+                    open={popupQuantityVisible}
+                    onClose={() => setPopupQuantityVisible(false)}
+                    maxQuantity={isEditMode ? compartmentData.item.quantity : selectedProduct.quantity}  // Sử dụng quantity từ compartment khi ở chế độ edit
+                    onConfirm={handleQuantityConfirm}  // Gọi hàm xác nhận dựa trên chế độ "add" hoặc "edit"
+                />
+            )}
+            <Dialog
+                open={openDeleteDialog}
+                onClose={cancelDelete}
+            >
+                <DialogTitle>Xác nhận xóa</DialogTitle>
+                <DialogContent>
+                    <DialogContentText>
+                        Bạn có chắc chắn muốn xóa sản phẩm này khỏi ngăn chứa không? Hành động này không thể hoàn tác.
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={cancelDelete} color="primary">
+                        Hủy
+                    </Button>
+                    <Button onClick={confirmDelete} sx={{ color: 'white', backgroundColor: 'red', '&:hover': { backgroundColor: 'darkred' } }}
+                    >
+                        Xóa
+                    </Button>
+                </DialogActions>
+            </Dialog>
             {/* Snackbar cho thông báo */}
             <Snackbar
                 open={openSnackbar}
                 autoHideDuration={6000}
-                onClose={() => setOpenSnackbar(false)}
+                onClose={handleSnackbarClose}  // Gọi hàm handleSnackbarClose khi snackbar đóng
                 anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
             >
-                <Alert onClose={() => setOpenSnackbar(false)} severity={snackbarSeverity}>
+                <Alert onClose={handleSnackbarClose} severity={snackbarSeverity}>
                     {snackbarMessage}
                 </Alert>
             </Snackbar>
+
         </div>
     );
 };
