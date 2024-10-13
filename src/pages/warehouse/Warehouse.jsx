@@ -1,100 +1,15 @@
-import React, { useRef, useEffect, Suspense, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { OrbitControls, useGLTF } from '@react-three/drei';
-import { memo } from 'react';
 import PopupItems from '../../Components/PopupItems/PopupItems';
 import ShelfService from '../../api/shelf';
-import { Text } from '@react-three/drei';
-function Scene() {
-  return (
-    <>
-      <directionalLight intensity={1} position={[5, 10, 5]} castShadow />
-      <ambientLight intensity={0.5} />
-    </>
-  );
-}
-
-function Ground() {
-  return (
-    <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0, 0]} receiveShadow>
-      <planeGeometry args={[20, 20]} />
-      <meshStandardMaterial color="lightgray" side={2} />
-    </mesh>
-  );
-}
-
-const TruckModel = memo(({ position, scale }) => {
-  const { scene } = useGLTF('/models/truck.glb', true);
-  const modelRef = useRef();
-
-  useEffect(() => {
-    if (modelRef.current) {
-      modelRef.current.position.set(...position); // Set model position after loading
-      modelRef.current.scale.set(...scale); // Set model scale
-    }
-  }, [position, scale]);
-
-  return (
-    <Suspense fallback={<div>Đang tải mô hình...</div>}>
-      <primitive ref={modelRef} object={scene.clone()} />
-    </Suspense>
-  );
-});
-const AssetsModel = memo(({ position, scale }) => {
-  const { scene } = useGLTF('/models/assets.glb', true);
-  const modelRef = useRef();
-
-  useEffect(() => {
-    if (modelRef.current) {
-      modelRef.current.position.set(...position); // Set model position after loading
-      modelRef.current.scale.set(...scale); // Set model scale
-    }
-  }, [position, scale]);
-
-  return (
-    <Suspense fallback={<div>Đang tải mô hình...</div>}>
-      <primitive ref={modelRef} object={scene.clone()} />
-    </Suspense>
-  );
-});
-const ShelfModel = memo(({ position }) => {
-  const { scene } = useGLTF('/models/metal_shelf_-_5mb.glb', true);
-  const modelRef = useRef();
-
-  useEffect(() => {
-    if (modelRef.current) {
-      modelRef.current.position.set(...position);
-    }
-  }, [position]);
-
-  return (
-    <Suspense fallback={<div>Đang tải mô hình...</div>}>
-      <primitive ref={modelRef} object={scene.clone()} />
-    </Suspense>
-  );
-});
-function Compartment({ position, hasItem, onClick, nameComp }) {
-  return (
-    <mesh position={position} onClick={onClick}>
-      <boxGeometry args={[0.4, 0.35, 0.4]} />
-
-      <meshStandardMaterial
-        color={hasItem ? '#4CAF50' : '#e6b07a'} // Green if it has an item
-        roughness={0.6}
-        metalness={0.1}
-      />
-      <Text
-        position={[0, 0.1, 0.25]}
-        fontSize={0.07}
-        color="black"
-        anchorX="center"
-        anchorY="middle"
-      >
-        {nameComp}
-      </Text>
-    </mesh>
-  );
-}
+import Scene from '../../Components/Model3D/Scene';
+import Ground from '../../Components/Model3D/Ground';
+import AssetsModel from '../../Components/Model3D/AssetsModel';
+import ShelfModel from '../../Components/Model3D/ShelfModel';
+import TruckModel from '../../Components/Model3D/TruckModel';
+import Compartment from '../../Components/Model3D/Compartment';
+import WarehouseView from '../../Components/WarehouseView/WarehouseView';
 
 const Warehouse = () => {
   const [compartments, setCompartments] = useState({});
@@ -192,6 +107,8 @@ const Warehouse = () => {
   const baseHeightOffset = 0.35; // Điều chỉnh chiều cao của box cho khỏi nằm giữa mặt đất
   return (
     <div className='warehouse' style={{ marginTop: '0px' }}>
+      <WarehouseView />
+
       <Canvas style={{ width: '100%', height: '100vh', background: 'black' }} shadows camera={{ position: [5, 8, 18], fov: 60 }}>
         <Scene />
         <OrbitControls />

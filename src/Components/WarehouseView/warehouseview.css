@@ -1,0 +1,44 @@
+.warehouse-view {
+    background-color: rgba(30, 30, 30, 0.9);
+    padding: 20px;
+    border-radius: 10px;
+    width: 250px;
+    color: white;
+
+    position: fixed;
+    top: 450px;
+    left: 40px;
+    z-index: 1000;
+}
+
+.warehouse-view h3 {
+    margin-top: 0;
+    font-size: 1.4em;
+}
+
+.warehouse-view p {
+    font-size: 0.9em;
+    margin-bottom: 20px;
+}
+
+.warehouse-view h4 {
+    margin-bottom: 10px;
+    font-size: 1.2em;
+}
+
+.view-options {
+    display: flex;
+    flex-direction: column;
+}
+
+.view-options div {
+    margin-bottom: 10px;
+}
+
+input[type="radio"] {
+    margin-right: 10px;
+}
+
+label {
+    font-size: 0.9em;
+}
