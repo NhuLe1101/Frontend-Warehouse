@@ -2,42 +2,50 @@ import * as React from 'react';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, TablePagination } from '@mui/material';
 import TableRowComponent from './TableRowComponent';
 import TablePaginationActions from './TablePaginationActions';
-import {ThemeProvider, createTheme} from '@mui/material/styles';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
 import ProductService from '../../api/product';  // Import your API service
 import './ProductTable.css';
 
 const darkTheme = createTheme({
   palette: {
     mode: 'dark',
-    background:{
-      default:'#0b0b16',
-      paper:'#0b0b16',
+    background: {
+      default: '#0b0b16',
+      paper: '#0b0b16',
     },
   },
   typography: {
     indam: {
-      fontWeight:1000,
+      fontWeight: 1000,
     },
   },
 });
 
-export default function ProductTable({ isPopup, onSelectProduct }) {
+export default function ProductTable({ isPopup, onSelectProduct, productsByName }) {
   const [products, setProducts] = React.useState([]);  // State cho danh sách sản phẩm
   const [loading, setLoading] = React.useState(true);  // State cho trạng thái loading
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
   React.useEffect(() => {
-    ProductService.getAllProducts()
-      .then((data) => {
-        setProducts(data);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.error("Error fetching products:", error);
-        setLoading(false);
-      });
-  }, []);
+    if (productsByName) {
+      setProducts(productsByName);
+      setLoading(false);
+    } else {
+      ProductService.getAllProducts()
+        .then((data) => {
+          if (data) {
+            setProducts(data);
+          }
+        })
+        .catch((error) => {
+          console.error("Error fetching products:", error);
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+    }
+  }, [productsByName]); 
 
   if (loading) {
     return <p>Loading...</p>;
