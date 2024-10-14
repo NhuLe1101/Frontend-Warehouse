@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Canvas } from '@react-three/fiber';
-import { OrbitControls, useGLTF } from '@react-three/drei';
+import { OrbitControls } from '@react-three/drei';
 import PopupItems from '../../Components/PopupItems/PopupItems';
 import ShelfService from '../../api/shelf';
 import Scene from '../../Components/Model3D/Scene';
@@ -15,6 +15,7 @@ const Warehouse = () => {
   const [compartments, setCompartments] = useState({});
   const [popupVisible, setPopupVisible] = useState(false);
   const [selectedCompartment, setSelectedCompartment] = useState(null);
+  const [selectedView, setSelectedView] = useState('default'); // View lựa chọn: default, available, checkout
 
   const fetchCompartmentFromServer = (compartmentIdentifier) => {
     return fetch(`http://localhost:8080/api/compartments/${compartmentIdentifier.shelfId}/${compartmentIdentifier.nameComp}`)
@@ -50,7 +51,6 @@ const Warehouse = () => {
       });
   };
 
-
   const handleCompartmentClick = (shelf, shelfIndex, layerIndex, side) => {
     const compartmentIdentifier = {
       nameComp: `N${layerIndex}0${side}`,
@@ -59,21 +59,12 @@ const Warehouse = () => {
       shelfId: shelf.shelfId,
     };
 
-    // Gọi API để kiểm tra compartment có tồn tại không
     fetchCompartmentFromServer(compartmentIdentifier)
       .then((compartmentFromServer) => {
         if (compartmentFromServer) {
-          // Nếu compartment đã có item, hiển thị thông tin item
-          if (compartmentFromServer.hasItem) {
-            setSelectedCompartment(compartmentFromServer);
-            setPopupVisible(true);
-          } else {
-            // Nếu compartment chưa có item, hiển thị popup thêm item
-            setSelectedCompartment(compartmentFromServer);
-            setPopupVisible(true);
-          }
+          setSelectedCompartment(compartmentFromServer);
+          setPopupVisible(true);
         } else {
-          // Nếu compartment chưa tồn tại, tạo mới và hiển thị popup thêm item
           createCompartment(compartmentIdentifier)
             .then((newCompartment) => {
               setSelectedCompartment(newCompartment);
@@ -89,25 +80,64 @@ const Warehouse = () => {
       });
   };
 
-
   const [shelves, setShelves] = useState([]);
 
   useEffect(() => {
     ShelfService.getAllShelves()
       .then(data => {
-        console.log("Shelves data:", data); // Kiểm tra dữ liệu
         setShelves(data);
       })
       .catch(error => {
         console.error("Error fetching shelves: ", error);
       });
   }, []);
+
+  useEffect(() => {
+    fetch('http://localhost:8080/api/compartments')
+      .then(response => response.json())
+      .then(data => {
+        if (Array.isArray(data)) {
+          setCompartments(data); 
+        } else {
+          console.error("Invalid data format:", data);
+        }
+      })
+      .catch(error => {
+        console.error('Error fetching compartments:', error);
+      });
+  }, []);
+
+
+  const getCompartmentColor = (compartments, shelfId, nameComp) => {
+    if (!Array.isArray(compartments)) {
+      console.error("Compartments is not an array:", compartments);
+      return '#e6b07a';  // Màu mặc định nếu không có dữ liệu hoặc dữ liệu không đúng
+    }
+  
+    // Tìm compartment dựa trên shelfId và nameComp
+    const compartment = compartments.find(c => c.shelf.shelfId === shelfId && c.nameComp === nameComp);
+  
+    if (!compartment) {
+      return '#e6b07a';  // Màu mặc định nếu không tìm thấy compartment
+    }
+  
+    if (selectedView === 'available' && compartment.item) {
+      return '#4CAF50';  // Màu xanh nếu có item trong chế độ "available"
+    }
+  
+    if (selectedView === 'checkout' && compartment.item && new Date(compartment.item.checkout) < new Date()) {
+      return '#FF0000';  // Màu đỏ nếu item bị quá hạn checkout trong chế độ "checkout"
+    }
+  
+    return '#e6b07a';  // Màu mặc định nếu không có điều kiện nào phù hợp
+  };
+  
   const compartmentWidth = 0.5;  // Khoảng cách giữa các ngăn
   const layerHeights = [0.4, 0.4, 0.4, 0.4, 0.4];
   const baseHeightOffset = 0.35; // Điều chỉnh chiều cao của box cho khỏi nằm giữa mặt đất
   return (
     <div className='warehouse' style={{ marginTop: '0px' }}>
-      <WarehouseView />
+      <WarehouseView selectedView={selectedView} setSelectedView={setSelectedView} />
 
       <Canvas style={{ width: '100%', height: '100vh', background: 'black' }} shadows camera={{ position: [5, 8, 18], fov: 60 }}>
         <Scene />
@@ -115,8 +145,7 @@ const Warehouse = () => {
         <Ground />
         {shelves.length > 0 && shelves.map((shelf, shelfIndex) => (
           <group key={shelf.shelfId}>
-            {/* console.log(shelf); */}
-            <ShelfModel position={[shelf.position.xCoord, shelf.position.yCoord, shelf.position.zCoord]} /> {/* Kiểm tra vị trí */}
+            <ShelfModel position={[shelf.position.xCoord, shelf.position.yCoord, shelf.position.zCoord]} /> {/* Vị trí kệ */}
 
             {layerHeights.map((height, layerIndex) => (
               <group
@@ -129,19 +158,19 @@ const Warehouse = () => {
               >
                 <Compartment
                   position={[-compartmentWidth, 0, 0]}
-                  hasItem={false}
+                  color={getCompartmentColor(compartments, shelf.shelfId, `N${layerIndex}01`)}  // Truyền shelfId và nameComp
                   onClick={() => handleCompartmentClick(shelf, shelfIndex, layerIndex, 1)}
                   nameComp={`N${layerIndex}01`}  // Left side compartment name
                 />
                 <Compartment
                   position={[0, 0, 0]}
-                  hasItem={false}
+                  color={getCompartmentColor(compartments, shelf.shelfId, `N${layerIndex}02`)}  // Truyền shelfId và nameComp
                   onClick={() => handleCompartmentClick(shelf, shelfIndex, layerIndex, 2)}
                   nameComp={`N${layerIndex}02`}  // Middle side compartment name
                 />
                 <Compartment
                   position={[compartmentWidth, 0, 0]}
-                  hasItem={false}
+                  color={getCompartmentColor(compartments, shelf.shelfId, `N${layerIndex}03`)}  // Truyền shelfId và nameComp
                   onClick={() => handleCompartmentClick(shelf, shelfIndex, layerIndex, 3)}
                   nameComp={`N${layerIndex}03`}  // Right side compartment name
                 />
@@ -150,15 +179,15 @@ const Warehouse = () => {
           </group>
         ))}
 
-        <TruckModel position={[5, 1, 11]} scale={[0.5, 0.5, 0.5]} /> {/* Thêm mô hình xe tải ở vị trí nào đó */}
-        <TruckModel position={[8, 1, 11]} scale={[0.5, 0.5, 0.5]} /> {/* Thêm mô hình xe tải ở vị trí nào đó */}
+        <TruckModel position={[5, 1, 11]} scale={[0.5, 0.5, 0.5]} /> 
+        <TruckModel position={[8, 1, 11]} scale={[0.5, 0.5, 0.5]} /> 
         <AssetsModel position={[-6, 0.1, 8]} scale={[0.5, 0.5, 0.5]} />
       </Canvas>
       {popupVisible && selectedCompartment && (
         <PopupItems
           compartmentData={selectedCompartment}
           onClose={() => setPopupVisible(false)}
-          isItemPresent={selectedCompartment.hasItem}  // Truyền trạng thái item có trong compartment hay không
+          isItemPresent={selectedCompartment.hasItem} 
         />
       )}
 

@@ -4,9 +4,7 @@ import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 
-const WarehouseView = () => {
-    const [selectedView, setSelectedView] = useState('available');
-
+const WarehouseView = ({ selectedView, setSelectedView }) => {
     const handleViewChange = (event) => {
         setSelectedView(event.target.value);
     };
@@ -22,6 +20,12 @@ const WarehouseView = () => {
                     value={selectedView}
                     onChange={handleViewChange}
                 >
+                    <FormControlLabel
+                        value="default"
+                        control={<Radio sx={{ color: 'white', '&.Mui-checked': { color: '#ffffff' } }} />}
+                        label="Default"
+                        sx={{ color: 'white' }}
+                    />
                     <FormControlLabel
                         value="available"
                         control={<Radio sx={{ color: 'white', '&.Mui-checked': { color: '#ffffff' } }} />}

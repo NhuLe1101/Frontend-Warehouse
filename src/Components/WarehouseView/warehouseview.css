@@ -6,10 +6,12 @@
     color: white;
 
     position: fixed;
-    top: 450px;
-    left: 40px;
+    top: 75vh;
+    left: 3vw;
     z-index: 1000;
+    transform: translateY(-50%);
 }
+
 
 .warehouse-view h3 {
     margin-top: 0;
