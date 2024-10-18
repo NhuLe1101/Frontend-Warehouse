@@ -40,8 +40,8 @@ const Navbar = () => {
         <li className={location.pathname === '/product' ? 'active' : ''}>
           <Link to="/product">Sản phẩm</Link>
         </li>
-        <li className={location.pathname === '/binpacking' ? 'active' : ''}>
-          <Link to="/binpacking">Sắp xếp</Link>
+        <li className={location.pathname === '/statistic' ? 'active' : ''}>
+          <Link to="/statistic">Thống kê</Link>
         </li>
         <li className={location.pathname === '/warehouse' ? 'active' : ''}>
           <Link to="/warehouse">Kho hàng</Link>

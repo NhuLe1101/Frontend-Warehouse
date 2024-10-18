@@ -1,11 +1,40 @@
 import React, { useState, useEffect } from 'react';
-import './editbooking.css'; 
+import Button from '@mui/material/Button';
+import { styled } from '@mui/material/styles';
+import Dialog from '@mui/material/Dialog';
+import DialogTitle from '@mui/material/DialogTitle';
+import DialogContent from '@mui/material/DialogContent';
+import DialogActions from '@mui/material/DialogActions';
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
+import Typography from '@mui/material/Typography'
+import './editbooking.css';
 import BookingService from '../../../api/booking';
+import Swal from 'sweetalert2';
+import zIndex from '@mui/material/styles/zIndex';
 
-const EditBooking = ({ booking, onClose, onSave }) => {
+const BootstrapDialog = styled(Dialog)(({ theme }) => ({
+    '& .MuiDialogContent-root': {
+        padding: theme.spacing(2),
+    },
+    '& .MuiDialogActions-root': {
+        padding: theme.spacing(1),
+    },
+}));
+
+
+const EditBooking = ({ booking, onClose, onSave, onOpen }) => {
     const [formData, setFormData] = useState(booking);
-    const [saveStatus, setSaveStatus] = useState(null); 
+    const [saveStatus, setSaveStatus] = useState(null);
 
+    const AlertSuccess = () => {
+        Swal.fire({
+            icon: "success",
+            text: "Cập nhật thành công!"
+        }).then((result) => {
+            window.location.reload();
+        });
+    };
 
     useEffect(() => {
         setFormData(booking);
@@ -19,21 +48,39 @@ const EditBooking = ({ booking, onClose, onSave }) => {
     const handleSaveClick = async () => {
         try {
             //console.log(formData);
-            const message = await BookingService.updateBooking(formData); 
-            alert(message);
+            const message = await BookingService.updateBooking(formData);
             setSaveStatus('success');
-            window.location.reload(); 
+            AlertSuccess();
         } catch (error) {
-            setSaveStatus('error'); 
+            setSaveStatus('error');
             console.error("Có lỗi xảy ra khi upload dữ liệu:", error);
         }
     };
-    if (!booking) return null; 
+    if (!booking) return null;
 
     return (
-        <div className="popup">
-            <div className="popup-content">
-                <h2>Edit Booking</h2>
+        <BootstrapDialog
+            onClose={onClose}
+            aria-labelledby="customized-dialog-title"
+            open={onOpen}
+            style={{zIndex: '0'}}
+        >
+            <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
+                Chi tiết Booking
+            </DialogTitle>
+            <IconButton
+                aria-label="close"
+                onClick={onClose}
+                sx={(theme) => ({
+                    position: 'absolute',
+                    right: 8,
+                    top: 8,
+                    color: theme.palette.grey[500],
+                })}
+            >
+                <CloseIcon />
+            </IconButton>
+            <DialogContent dividers style={{width:'360px'}}>
                 <form className='formEditBk'>
                     <label>
                         ID:
@@ -43,14 +90,15 @@ const EditBooking = ({ booking, onClose, onSave }) => {
                             value={formData.id}
                             onChange={handleInputChange}
                             readOnly
+                            disabled
                         />
                     </label>
                     <label>
-                        Name:
+                        Tên:
                         <input
                             type="text"
                             name="customerName"
-                            value={formData.name}
+                            value={formData.customerName}
                             onChange={handleInputChange}
                         />
                     </label>
@@ -64,22 +112,23 @@ const EditBooking = ({ booking, onClose, onSave }) => {
                         />
                     </label>
                     <label>
-                        Phone:
+                        Điện thoại:
                         <input
                             type="text"
                             name="numberphone"
-                            value={formData.phone}
+                            value={formData.numberphone}
                             onChange={handleInputChange}
                         />
                     </label>
-                    
+
                 </form>
-                <div className="popup-actions">
-                    <button className='btn-save-edit-bk' onClick={handleSaveClick}>Save</button>
-                    <button className='btn-cancel-edit-bk' onClick={onClose}>Cancel</button>
-                </div>
-            </div>
-        </div>
+            </DialogContent>
+            <DialogActions>
+                <Button variant="contained" onClick={handleSaveClick}>
+                    LƯU
+                </Button>
+            </DialogActions>
+        </BootstrapDialog>
     );
 };
 

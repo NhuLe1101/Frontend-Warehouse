@@ -5,8 +5,9 @@ import BookingService from '../../../api/booking';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { FaDownload, FaEdit } from 'react-icons/fa'; // Import the download icon from FontAwesome
 import EditBooking from '../EditBooking/EditBooking'; // Import the EditBooking component
+import Swal from 'sweetalert2';
 
-const columns = (handleEditClick) => [
+const columns = (handleEditClick, downloadClicked) => [
     {
         name: "STT",
     },
@@ -22,9 +23,10 @@ const columns = (handleEditClick) => [
     {
         name: "Excel File",
         options: {
-            customBodyRender: (value) => <button className="download-btn" style={{ color: "#fff", textDecoration: "none", backgroundColor: "#0c3c73", padding: "6px", borderRadius: "8px", borderWidth: '0', paddingLeft: '8px', paddingRight: '8px', cursor: 'pointer' }}>
+            customBodyRender: (value, tableMeta) => (<button className="download-btn" style={{ color: "#fff", textDecoration: "none", backgroundColor: "#0c3c73", padding: "6px", borderRadius: "8px", borderWidth: '0', paddingLeft: '8px', paddingRight: '8px', cursor: 'pointer' }}
+                onClick={() => downloadClicked(tableMeta.rowIndex)} >
                 <FaDownload style={{ marginRight: "6px" }} /> Booking File
-            </button>
+            </button>)
         }
     },
     {
@@ -101,6 +103,33 @@ const BookingTableNew = () => {
     const [selectedBooking, setSelectedBooking] = useState(null);
     const [isEditing, setIsEditing] = useState(false);
 
+    const downloadClicked = (rowIndex) => {
+        let timerInterval;
+        Swal.fire({
+            title: "Tải xuống",
+            html: "Tập tin sẽ được tải xuống sau <b></b> giây!",
+            timer: 2000,
+            timerProgressBar: true,
+            didOpen: () => {
+                Swal.showLoading();
+                const timer = Swal.getPopup().querySelector("b");
+                timerInterval = setInterval(() => {
+                    timer.textContent = `${Swal.getTimerLeft()}`;
+                }, 100);
+            },
+            willClose: () => {
+                clearInterval(timerInterval);
+            }
+        }).then((result) => {
+            let excelFile = bookings[rowIndex].excelFile.split('\\').pop();
+            //alert(excelFile);
+            window.open(`http://localhost:8080/api/booking/download/${excelFile}`);
+            if (result.dismiss === Swal.DismissReason.timer) {
+                console.log("Lỗi tải xuống!");
+            }
+        });
+    };
+
     useEffect(() => {
         BookingService.getAllBookings()
             .then((data) => {
@@ -139,7 +168,7 @@ const BookingTableNew = () => {
                     <MUIDataTable
                         title={"Danh sách Booking"}
                         data={data}
-                        columns={columns(handleEditClick)}
+                        columns={columns(handleEditClick, downloadClicked)}
                         options={options}
                     />
                 </ThemeProvider>
@@ -150,6 +179,7 @@ const BookingTableNew = () => {
                     booking={selectedBooking}
                     onClose={handleClosePopup}
                     onSave={handleSave}
+                    onOpen={isEditing}
                 />
             )}
         </Fragment>

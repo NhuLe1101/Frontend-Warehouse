@@ -54,19 +54,27 @@ export default function TableRowComponent({ product, index, isPopup, onSelectPro
     setIsEditing(false);
   };
 
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // Tháng bắt đầu từ 0
+    const year = date.getFullYear();
+    return `${day}/${month}/${year}`;
+  };
+
   return (
     <>
       <TableRow>
         <TableCell>{product.itemId}</TableCell>
         <TableCell>
           <div className='imgPrdContainer'>
-            <img className='imgPrd' src={product.image} alt="" />
+            <img className='imgPrd' src={product.image || '/favicon.ico'} alt="" />
           </div>
         </TableCell>
         <TableCell>{product.name}</TableCell>
         <TableCell>{product.quantity}</TableCell>
-        <TableCell>{product.checkin}</TableCell>
-        <TableCell>{product.checkout}</TableCell>
+        <TableCell>{formatDate(product.checkin)}</TableCell>
+        <TableCell>{formatDate(product.checkout)}</TableCell>
         <TableCell>{product.status}</TableCell>
         <TableCell>{product.booking.id}</TableCell>
         <TableCell>
@@ -88,22 +96,21 @@ export default function TableRowComponent({ product, index, isPopup, onSelectPro
         )}
       </TableRow>
       <TableRow>
-        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={13}>
           <Collapse in={open} timeout="auto" unmountOnExit>
             <Box margin={1}>
               <Typography variant="h6" gutterBottom>
-                <TableHead>
-                  <TableRow>
-                    <TableCell>STT</TableCell>
-                    <TableCell>Kệ</TableCell>
-                    <TableCell>Ngăn chứa</TableCell>
-                    <TableCell>Số lượng</TableCell>
-                    <TableCell />
+                <TableHead style={{ display: 'block', width: '100%' }}>
+                  <TableRow style={{ display: 'flex', width: '100%' }}>
+                    <TableCell width={'25%'}>STT</TableCell>
+                    <TableCell width={'25%'}>Kệ</TableCell>
+                    <TableCell width={'25%'}>Ngăn chứa</TableCell>
+                    <TableCell width={'25%'}>Số lượng</TableCell>
                   </TableRow>
                 </TableHead>
               </Typography>
               <Typography variant="body2">
-                <TableBody>
+                <TableBody style={{ display: 'block', width: '100%' }}>
                   {loading ? (
                     <TableRow>
                       <TableCell colSpan={4}>Đang tải...</TableCell>
@@ -114,11 +121,11 @@ export default function TableRowComponent({ product, index, isPopup, onSelectPro
                     </TableRow>
                   ) : compartments.length > 0 ? (
                     compartments.map((compartment, idx) => (
-                      <TableRow key={compartment.compId}>
-                        <TableCell>{count++}</TableCell>
-                        <TableCell>{compartment.shelf?.nameShelf || 'Không xác định'}</TableCell>
-                        <TableCell>{compartment.nameComp}</TableCell>
-                        <TableCell>{compartment.quantity}</TableCell>
+                      <TableRow key={compartment.compId} style={{ display: 'flex', width: '100%' }}>
+                        <TableCell width={'25%'}>{count++}</TableCell>
+                        <TableCell width={'25%'}>{compartment.shelf?.nameShelf || 'Không xác định'}</TableCell>
+                        <TableCell width={'25%'}>{compartment.nameComp}</TableCell>
+                        <TableCell width={'25%'}>{compartment.quantity}</TableCell>
                       </TableRow>
                     ))
                   ) : (

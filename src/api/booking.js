@@ -28,7 +28,6 @@ const upload = (file) => {
     });
 };
 
-// Get all bookings
 const getAllBookings = () => {
   return axios
     .get(API_URL + "all")

@@ -20,9 +20,81 @@ const getAllProducts = () => {
     });
 };
 
-const getProductsByCompartment = () => {
+const getProductsIsNullCompartment = () => {
   return axios
-    .get(API_URL + "compartment-is-null")
+    .get(API_URL + "items-not-in-compartments")
+    .then((response) => {
+      console.log(response.data);
+      return response.data;
+    })
+    .catch((error) => {
+      console.error("Có lỗi xảy ra khi lấy dữ liệu:", error);
+      if (error.response) {
+        console.log(error.response.data.message);
+        return error.response.data.message;
+      } else {
+        return "Có lỗi không xác định xảy ra.";
+      }
+    });
+};
+
+const getProductsByCheckinDecrease = () => {
+  return axios
+    .get(API_URL + "items-check-in-decrease")
+    .then((response) => {
+      console.log(response.data);
+      return response.data;
+    })
+    .catch((error) => {
+      console.error("Có lỗi xảy ra khi lấy dữ liệu:", error);
+      if (error.response) {
+        console.log(error.response.data.message);
+        return error.response.data.message;
+      } else {
+        return "Có lỗi không xác định xảy ra.";
+      }
+    });
+};
+
+const getProductsByCheckinIncrease = () => {
+  return axios
+    .get(API_URL + "items-check-in-increase")
+    .then((response) => {
+      console.log(response.data);
+      return response.data;
+    })
+    .catch((error) => {
+      console.error("Có lỗi xảy ra khi lấy dữ liệu:", error);
+      if (error.response) {
+        console.log(error.response.data.message);
+        return error.response.data.message;
+      } else {
+        return "Có lỗi không xác định xảy ra.";
+      }
+    });
+};
+
+const getProductsByCheckoutIncrease = () => {
+  return axios
+    .get(API_URL + "items-check-out-increase")
+    .then((response) => {
+      console.log(response.data);
+      return response.data;
+    })
+    .catch((error) => {
+      console.error("Có lỗi xảy ra khi lấy dữ liệu:", error);
+      if (error.response) {
+        console.log(error.response.data.message);
+        return error.response.data.message;
+      } else {
+        return "Có lỗi không xác định xảy ra.";
+      }
+    });
+};
+
+const getProductsByCheckoutDecrease = () => {
+  return axios
+    .get(API_URL + "items-check-out-decrease")
     .then((response) => {
       console.log(response.data);
       return response.data;
@@ -94,7 +166,11 @@ const ProductService = {
   getAllProducts,
   updateProduct,
   getProductsByName,
-  getProductsByCompartment
+  getProductsIsNullCompartment,
+  getProductsByCheckinDecrease,
+  getProductsByCheckinIncrease,
+  getProductsByCheckoutDecrease,
+  getProductsByCheckoutIncrease,
 };
 
 

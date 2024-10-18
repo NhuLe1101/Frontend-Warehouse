@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import './editproduct.css'; 
+import './editproduct.css';
 import ProductService from '../../../api/product';
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
+import Swal from 'sweetalert2';
 
 const EditProduct = ({ product, onClose }) => {
     const [formData, setFormData] = useState(product);
-    const [saveStatus, setSaveStatus] = useState(null); 
+    const [saveStatus, setSaveStatus] = useState(null);
 
 
     useEffect(() => {
@@ -16,19 +19,29 @@ const EditProduct = ({ product, onClose }) => {
         setFormData({ ...formData, [name]: value });
     };
 
+    const AlertSuccess = () => {
+        Swal.fire({
+            icon: "success",
+            text: "Cập nhật thành công!"
+        }).then((result) => {
+            window.location.reload();
+        });
+    };
+
     const handleSaveClick = async () => {
         try {
             console.log(formData);
-            const message = await ProductService.updateProduct(formData); 
-            alert(message);
+            const message = await ProductService.updateProduct(formData);
+            //alert(message);
             setSaveStatus('success');
-            window.location.reload(); 
+            //window.location.reload();
+            AlertSuccess();
         } catch (error) {
-            setSaveStatus('error'); 
+            setSaveStatus('error');
             console.error("Có lỗi xảy ra khi upload dữ liệu:", error);
         }
     };
-    if (!product) return null; 
+    if (!product) return null;
 
     return (
         <div className="popup-pd">
@@ -42,6 +55,8 @@ const EditProduct = ({ product, onClose }) => {
                             name="stt"
                             value={formData.itemId}
                             readOnly
+                            disabled
+                            style={{ border: 'none' }}
                         />
                     </label>
                     <label>
@@ -51,11 +66,13 @@ const EditProduct = ({ product, onClose }) => {
                             name="booking"
                             value={formData.booking.id}
                             readOnly
+                            disabled
+                            style={{ border: 'none' }}
                         />
                     </label>
                     <label>
                         Hình ảnh:
-                        <img src={formData.image} alt="" width={50}/>
+                        <img src={formData.image} alt="" width={50} />
                     </label>
                     <label>
                         Tên:
@@ -109,7 +126,7 @@ const EditProduct = ({ product, onClose }) => {
                             value={formData.weight}
                             onChange={handleInputChange}
                         />
-                        
+
                     </label>
                     <label>
                         Vận chuyển:
@@ -120,12 +137,13 @@ const EditProduct = ({ product, onClose }) => {
                             onChange={handleInputChange}
                         />
                     </label>
-                    
-                    
+
+
                 </form>
                 <div className="popup-actions">
-                    <button className='btn-save-edit-bk' onClick={handleSaveClick}>Save</button>
-                    <button className='btn-cancel-edit-bk' onClick={onClose}>Cancel</button>
+                    <button className='btn-save-edit-bk' onClick={handleSaveClick}>Lưu</button>
+                    <button className='btn-cancel-edit-bk' onClick={onClose}><CloseIcon /></button>
+
                 </div>
             </div>
         </div>

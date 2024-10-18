@@ -7,7 +7,7 @@
 
 .search_and_filter_product_container .search_and_filter_product_wrapper {
   display: flex;
-  padding: 1rem;
+  padding: .2rem;
   justify-content: space-between;
   flex-wrap: wrap; /* Allows wrapping on smaller screens */
 }
@@ -15,19 +15,22 @@
 .search_and_filter_product_container .search_and_filter_product_wrapper .search_product_container {
   width: 100%;
   display: flex;
-  justify-content: inherit;
+  justify-content: center;
   margin-bottom: 1rem; /* Space between search and filter sections */
+  flex-wrap: wrap;
 }
 
 .search_and_filter_product_container .search_and_filter_product_wrapper .search_product_container input {
-  width: 70%;
+  width: 56%;
   padding: 4px;
   border-radius: 12px;
   border-width: 0;
+  margin: 8px;
+  min-width: 100px;
 }
 
 .search_and_filter_product_container .search_and_filter_product_wrapper .search_product_container button {
-  width: 20%;
+  width: 10%;
   padding: 4px;
   border-radius: 12px;
   border-width: 0;
@@ -35,6 +38,8 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  margin: 8px;
+  min-width: 20px;
 }
 
 .search_and_filter_product_container .search_and_filter_product_wrapper .filter_product_container {

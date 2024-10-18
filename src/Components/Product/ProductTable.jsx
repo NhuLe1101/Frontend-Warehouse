@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, TablePagination } from '@mui/material';
 import TableRowComponent from './TableRowComponent';
 import TablePaginationActions from './TablePaginationActions';
@@ -22,21 +22,34 @@ const darkTheme = createTheme({
 });
 
 export default function ProductTable({ isPopup, onSelectProduct, productsByName }) {
-  const [products, setProducts] = React.useState([]);  // State cho danh sách sản phẩm
+  const [products, setProducts] = React.useState([]);
   const [loading, setLoading] = React.useState(true);  // State cho trạng thái loading
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [allProduct, setAllProduct] = useState([]);
+
+  const allProducts = async () => {
+    try {
+      const a = await ProductService.getAllProducts();
+      setAllProduct(a);
+    } catch (error) {
+      console.error('Failed to fetch products:', error);
+    }
+  };
+
+  useEffect(() => {
+    allProducts();
+  }, []);
 
   React.useEffect(() => {
     if (productsByName) {
-      setProducts(productsByName);
+      setProducts(Array.isArray(productsByName) ? productsByName : allProduct);
       setLoading(false);
-    } else {
+    }
+    else {
       ProductService.getAllProducts()
         .then((data) => {
-          if (data) {
-            setProducts(data);
-          }
+          setProducts(Array.isArray(data) ? data : []);
         })
         .catch((error) => {
           console.error("Error fetching products:", error);
@@ -45,7 +58,7 @@ export default function ProductTable({ isPopup, onSelectProduct, productsByName 
           setLoading(false);
         });
     }
-  }, [productsByName]); 
+  }, [productsByName]);
 
   if (loading) {
     return <p>Loading...</p>;
@@ -65,8 +78,7 @@ export default function ProductTable({ isPopup, onSelectProduct, productsByName 
               <TableCell variant="indam">NGÀY XUẤT</TableCell>
               <TableCell variant="indam">TRẠNG THÁI</TableCell>
               <TableCell variant="indam">BOOKING</TableCell>
-              <TableCell variant="indam">THAO TÁC</TableCell>
-              <TableCell />
+              <TableCell variant="indam" colSpan={3}>THAO TÁC</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>

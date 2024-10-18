@@ -14,6 +14,8 @@ import Product from './pages/product/Product';
 import Navbar from './Components/Navbar/Navbar';
 import Footer from './Components/Footer/Footer';
 import PrivateRoute from './Components/PrivateRoute/PrivateRoute';
+import Statistic from './pages/statistic/Statistic';
+
 const App = () => {
   {
     const Layout = () => {
@@ -56,6 +58,15 @@ const App = () => {
               // <PrivateRoute>
               //  <Product />
                   <Product/>
+              // </PrivateRoute>
+            ),
+          },
+          {
+            path: "/statistic",
+            element: (
+              // <PrivateRoute>
+              //  <Product />
+                  <Statistic/>
               // </PrivateRoute>
             ),
           },

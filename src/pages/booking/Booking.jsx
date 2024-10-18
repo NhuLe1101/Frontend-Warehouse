@@ -30,9 +30,9 @@ const Booking = () => {
       >
         Nhập file
       </Button>
-      <Dialog open={open} onClose={handleClose}>
+      <Dialog open={open} onClose={handleClose} style={{zIndex:'0'}}>
         <DialogContent>
-          <BtnAddNewBooking />
+          <BtnAddNewBooking onClose={handleClose}/>
         </DialogContent>
       </Dialog>
 

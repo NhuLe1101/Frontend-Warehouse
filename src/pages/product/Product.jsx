@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import ProductTable from '../../Components/Product/ProductTable'
 import './product.css';
 import ProductService from '../../api/product';
+import SelectSmall from '../../Components/Product/Select/SelectComponent';
 
 const Product = () => {
   const [ngaynhapUp, setNgayNhapUp] = useState(false);
@@ -9,36 +10,44 @@ const Product = () => {
   const [productsByName, setProductsByName] = useState(null);
   const [allCbIsChecked, setAllCbIsChecked] = useState(false);
   const [itemNullCpmCbIsChecked, setItemNullCpmCbIsChecked] = useState(false);
-
-  const handleCheckboxChange = async (event) => {
-    setAllCbIsChecked(event.target.checked);
-      if (event.target.checked) {
-          // alert("Ô này đang check");
-          const products = await ProductService.getProductsByName('');
-          setProductsByName(products);
-      }
-  };
-  
-  const handleNullCpmCheckboxChange = async (event) => {
-    setItemNullCpmCbIsChecked(event.target.checked);
-      if (event.target.checked) {
-          //alert("Ô này đang check");
-          const products = await ProductService.getProductsByCompartment();
-          setProductsByName(products);
-      }
-  };
-
-  const ngaynhapClicked = () => {
-    setNgayNhapUp(!ngaynhapUp);
-    window.alert(ngaynhapUp ? 'Giảm dần nè!' : 'Tăng dần nè!');
-  };
-
-  const ngayxuatClicked = () => {
-    setNgayXuatUp(!ngayxuatUp);
-    window.alert(ngayxuatUp ? 'Giảm dần nè!' : 'Tăng dần nè!');
-  };
-
   const [searchData, setSearchData] = useState(null);
+
+  const handleReset = () => {
+    setSearchData('');
+};
+
+  /**test select*/
+  const all = async () => {
+    const products = await ProductService.getAllProducts();
+    setProductsByName(products);
+    handleReset();
+  }
+
+  const itemByNullComp = async () => {
+    const products = await ProductService.getProductsIsNullCompartment();
+    setProductsByName(products);
+  }
+
+  const checkinDec = async () => {
+    const products = await ProductService.getProductsByCheckinDecrease();
+    setProductsByName(products);
+  }
+
+  const checkinInc = async () => {
+    const products = await ProductService.getProductsByCheckinIncrease();
+    setProductsByName(products);
+  }
+
+  const checkoutDec = async () => {
+    const products = await ProductService.getProductsByCheckoutDecrease();
+    setProductsByName(products);
+  }
+
+  const checkoutInc = async () => {
+    const products = await ProductService.getProductsByCheckoutIncrease();
+    setProductsByName(products);
+  }
+  /**test select*/
 
   const handleInputChange = (event) => {
     setSearchData(event.target.value);
@@ -74,29 +83,9 @@ const Product = () => {
             <button id='btn_search_product' onClick={() => searchProduct(searchData)}>
               <img src="icons/icons8-search-24.png" alt="" width={'18px'} />
             </button>
-          </div>
-          <div className='filter_product_container'>
-            <p>Lọc theo:</p>
-            <div className='check_kien_hang_wrapper'>
-              <p>Tất cả</p>
-              <input type="checkbox" name="all_cb" value="all_cb" checked={allCbIsChecked} onChange={handleCheckboxChange}/>
-            </div>
-            <div className='check_kien_hang_wrapper'>
-              <p>Hàng chưa lên kệ</p>
-              <input type="checkbox" name="checkbox_kienhangrong" checked={itemNullCpmCbIsChecked} onChange={handleNullCpmCheckboxChange}/>
-            </div>
-            <button id='btn_ngaynhapDown' onClick={ngaynhapClicked} className={ngaynhapUp ? 'hidden_btn_date' : 'active_btn_date'}>
-              Ngày nhập <img src="icons/icons8-down-24.png" alt="" />
-            </button>
-            <button id='btn_ngaynhapUp' onClick={ngaynhapClicked} className={!ngaynhapUp ? 'hidden_btn_date' : 'active_btn_date'}>
-              Ngày nhập <img src="icons/icons8-up-24.png" alt="" />
-            </button>
-            <button id='btn_ngayxuatDown' onClick={ngayxuatClicked} className={ngayxuatUp ? 'hidden_btn_date' : 'active_btn_date'}>
-              Ngày xuất <img src="icons/icons8-down-24.png" alt="" />
-            </button>
-            <button id='btn_ngayxuatUp' onClick={ngayxuatClicked} className={!ngayxuatUp ? 'hidden_btn_date' : 'active_btn_date'}>
-              Ngày xuất <img src="icons/icons8-up-24.png" alt="" />
-            </button>
+            <SelectSmall all={all} itemByNullComp={itemByNullComp} checkinDec={checkinDec} checkinInc={checkinInc}
+              checkoutDec={checkoutDec} checkoutInc={checkoutInc}
+            ></SelectSmall>
           </div>
         </div>
       </div>

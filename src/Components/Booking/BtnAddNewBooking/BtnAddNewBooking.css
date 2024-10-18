@@ -5,6 +5,10 @@
     margin: 20px;
 }
 
+.btn_add_new_booking button{
+cursor: pointer;
+}
+
 .dropzone {
     border: 2px dashed #4a90e2; /* Màu viền */
     border-radius: 8px; /* Bo tròn góc */
@@ -45,6 +49,13 @@
     padding: .2rem 1rem;
     border-radius: 8px;
     border-width: 0;
-    margin-top: 8px;
+    margin-top: 16px;
 }
 
+.close-button-add-bk{
+    border: none;
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background-color: transparent !important;
+}

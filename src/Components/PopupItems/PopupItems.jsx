@@ -7,34 +7,78 @@ import { Alert } from '@mui/material';
 import ItemInfo from '../ItemInfo/ItemInfo';
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
 import CompartmentService from './../../api/compartment';
+import ProductService from '../../api/product';
+import SelectSmall from '../Product/Select/SelectComponent';
 
 const PopupItems = ({ compartmentData, onClose, isItemPresent }) => {
-    const [ngaynhapUp, setNgayNhapUp] = useState(false);
-    const [ngayxuatUp, setNgayXuatUp] = useState(false);
+    const [productsByName, setProductsByName] = useState(null);
+    const [searchData, setSearchData] = useState(null);
 
-    const ngaynhapClicked = () => {
-        setNgayNhapUp(!ngaynhapUp);
-        window.alert(ngaynhapUp ? 'Giảm dần nè!' : 'Tăng dần nè!');
+    const handleReset = () => {
+        setSearchData('');
     };
 
-    const ngayxuatClicked = () => {
-        setNgayXuatUp(!ngayxuatUp);
-        window.alert(ngayxuatUp ? 'Giảm dần nè!' : 'Tăng dần nè!');
+    /**test select*/
+    const all = async () => {
+        const products = await ProductService.getAllProducts();
+        setProductsByName(products);
+        handleReset();
+    }
+
+    const itemByNullComp = async () => {
+        const products = await ProductService.getProductsIsNullCompartment();
+        setProductsByName(products);
+    }
+
+    const checkinDec = async () => {
+        const products = await ProductService.getProductsByCheckinDecrease();
+        setProductsByName(products);
+    }
+
+    const checkinInc = async () => {
+        const products = await ProductService.getProductsByCheckinIncrease();
+        setProductsByName(products);
+    }
+
+    const checkoutDec = async () => {
+        const products = await ProductService.getProductsByCheckoutDecrease();
+        setProductsByName(products);
+    }
+
+    const checkoutInc = async () => {
+        const products = await ProductService.getProductsByCheckoutIncrease();
+        setProductsByName(products);
+    }
+    /**test select*/
+
+    const handleInputChange = (event) => {
+        setSearchData(event.target.value);
     };
 
-    const searchProduct = () => {
-        window.alert('Oh no! Nút này chưa chạy được đâu!');
+    const searchProduct = async (data) => {
+        setSearchData(data);
+        const products = await ProductService.getProductsByName(data);
+        setProductsByName(products);
     };
+
+    useEffect(() => {
+        if (productsByName) {
+            console.log(productsByName);
+        }
+    }, [productsByName]);
+
+    /**Như bên dưới */
+
     const [selectedProduct, setSelectedProduct] = useState(null);
     const [popupQuantityVisible, setPopupQuantityVisible] = useState(false);
     const [openSnackbar, setOpenSnackbar] = useState(false);
     const [snackbarMessage, setSnackbarMessage] = useState('');
     const [snackbarSeverity, setSnackbarSeverity] = useState('info');
     const [isEditMode, setIsEditMode] = useState(false);
-    const [openDeleteDialog, setOpenDeleteDialog] = useState(false); 
+    const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
 
     const handleSelectProduct = (product) => {
-        setIsEditMode(false); 
+        setIsEditMode(false);
         setSelectedProduct(product);
         setPopupQuantityVisible(true);
     };
@@ -78,11 +122,11 @@ const PopupItems = ({ compartmentData, onClose, isItemPresent }) => {
         const product = compartmentData.item ? {
             itemId: compartmentData.item.itemId,
             name: compartmentData.item.name,
-            quantity: compartmentData.item.quantity 
+            quantity: compartmentData.item.quantity
         } : null;
 
         setSelectedProduct(product);
-        setPopupQuantityVisible(true); 
+        setPopupQuantityVisible(true);
     };
 
 
@@ -111,7 +155,7 @@ const PopupItems = ({ compartmentData, onClose, isItemPresent }) => {
     };
 
     const cancelDelete = () => {
-        setOpenDeleteDialog(false); 
+        setOpenDeleteDialog(false);
     };
 
     const handleCheckout = () => {
@@ -149,33 +193,17 @@ const PopupItems = ({ compartmentData, onClose, isItemPresent }) => {
                             <hr style={{ marginBottom: '.5rem' }} />
                             <div className='search_and_filter_product_wrapper'>
                                 <div className='search_product_container'>
-                                    <input type="text" name="search_info" placeholder='Tên sản phẩm' />
-                                    <button id='btn_search_product' onClick={searchProduct}>
+                                    <input type="text" name="search_info" placeholder='Tên sản phẩm' value={searchData} onChange={handleInputChange} />
+                                    <button id='btn_search_product' onClick={() => searchProduct(searchData)}>
                                         <img src="icons/icons8-search-24.png" alt="" width={'18px'} />
                                     </button>
-                                </div>
-                                <div className='filter_product_container'>
-                                    <p>Lọc theo:</p>
-                                    <div className='check_kien_hang_wrapper'>
-                                        <p>Hàng chưa lên kệ</p>
-                                        <input type="checkbox" name="checkbox_kienhangrong" />
-                                    </div>
-                                    <button id='btn_ngaynhapDown' onClick={ngaynhapClicked} className={ngaynhapUp ? 'hidden_btn_date' : 'active_btn_date'}>
-                                        Ngày nhập <img src="icons/icons8-down-24.png" alt="" />
-                                    </button>
-                                    <button id='btn_ngaynhapUp' onClick={ngaynhapClicked} className={!ngaynhapUp ? 'hidden_btn_date' : 'active_btn_date'}>
-                                        Ngày nhập <img src="icons/icons8-up-24.png" alt="" />
-                                    </button>
-                                    <button id='btn_ngayxuatDown' onClick={ngayxuatClicked} className={ngayxuatUp ? 'hidden_btn_date' : 'active_btn_date'}>
-                                        Ngày xuất <img src="icons/icons8-down-24.png" alt="" />
-                                    </button>
-                                    <button id='btn_ngayxuatUp' onClick={ngayxuatClicked} className={!ngayxuatUp ? 'hidden_btn_date' : 'active_btn_date'}>
-                                        Ngày xuất <img src="icons/icons8-up-24.png" alt="" />
-                                    </button>
+                                    <SelectSmall all={all} itemByNullComp={itemByNullComp} checkinDec={checkinDec} checkinInc={checkinInc}
+                                        checkoutDec={checkoutDec} checkoutInc={checkoutInc}
+                                    ></SelectSmall>
                                 </div>
                             </div>
                         </div>
-                        <ProductTable isPopup={true} onSelectProduct={handleSelectProduct} />
+                        <ProductTable productsByName={productsByName} isPopup={true} onSelectProduct={handleSelectProduct} />
                     </div>
                 </>
 
