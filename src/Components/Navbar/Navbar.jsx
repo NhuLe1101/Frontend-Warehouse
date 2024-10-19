@@ -41,7 +41,7 @@ const Navbar = () => {
           <Link to="/product">Sản phẩm</Link>
         </li>
         <li className={location.pathname === '/statistic' ? 'active' : ''}>
-          <Link to="/statistic">Thống kê</Link>
+          <Link to="/statistic">Báo cáo</Link>
         </li>
         <li className={location.pathname === '/warehouse' ? 'active' : ''}>
           <Link to="/warehouse">Kho hàng</Link>
