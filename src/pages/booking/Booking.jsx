@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import './booking.css';
 import { Button, Dialog, DialogContent } from '@mui/material';
 import FileUploadIcon from '@mui/icons-material/FileUpload';
-import BookingTableNew from '../../Components/Booking/BookingTable/BookingTableNew';
+import BookingTableNew from '../../Components/Booking/BookingTable/BookingTableNew_DarkTheme';
 import BtnAddNewBooking from '../../Components/Booking/BtnAddNewBooking/BtnAddNewBooking';
 
 const Booking = () => {

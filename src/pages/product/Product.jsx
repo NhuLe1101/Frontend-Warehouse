@@ -5,11 +5,7 @@ import ProductService from '../../api/product';
 import SelectSmall from '../../Components/Product/Select/SelectComponent';
 
 const Product = () => {
-  const [ngaynhapUp, setNgayNhapUp] = useState(false);
-  const [ngayxuatUp, setNgayXuatUp] = useState(false);
   const [productsByName, setProductsByName] = useState(null);
-  const [allCbIsChecked, setAllCbIsChecked] = useState(false);
-  const [itemNullCpmCbIsChecked, setItemNullCpmCbIsChecked] = useState(false);
   const [searchData, setSearchData] = useState(null);
 
   const handleReset = () => {
@@ -90,7 +86,7 @@ const Product = () => {
         </div>
       </div>
       {/* seacrh: end */}
-      <ProductTable productsByName={productsByName} allProductChecked={allCbIsChecked}></ProductTable>
+      <ProductTable productsByName={productsByName} ></ProductTable>
     </div>
   )
 }

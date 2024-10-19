@@ -7,11 +7,9 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
-import Typography from '@mui/material/Typography'
 import './editbooking.css';
 import BookingService from '../../../api/booking';
 import Swal from 'sweetalert2';
-import zIndex from '@mui/material/styles/zIndex';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
     '& .MuiDialogContent-root': {
@@ -23,9 +21,8 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
 }));
 
 
-const EditBooking = ({ booking, onClose, onSave, onOpen }) => {
+const EditBooking = ({ booking, onClose, onOpen }) => {
     const [formData, setFormData] = useState(booking);
-    const [saveStatus, setSaveStatus] = useState(null);
 
     const AlertSuccess = () => {
         Swal.fire({
@@ -48,11 +45,11 @@ const EditBooking = ({ booking, onClose, onSave, onOpen }) => {
     const handleSaveClick = async () => {
         try {
             //console.log(formData);
-            const message = await BookingService.updateBooking(formData);
-            setSaveStatus('success');
+            await BookingService.updateBooking(formData);
+            //setSaveStatus('success');
             AlertSuccess();
         } catch (error) {
-            setSaveStatus('error');
+            //setSaveStatus('error');
             console.error("Có lỗi xảy ra khi upload dữ liệu:", error);
         }
     };

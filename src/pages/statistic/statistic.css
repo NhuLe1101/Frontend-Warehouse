@@ -1,5 +1,5 @@
 .statistic {
-    height: 800px;
+    height: 100vh;
     background-color: #262838;
     position: relative;
   }
@@ -14,4 +14,7 @@
     transform: translateX(-50%);
 }
 
+.css-t3xolk {
+  z-index: 0 !important;
+}
   
