@@ -11,6 +11,7 @@ import LayersIcon from '@mui/icons-material/Layers';
 import { AppProvider } from '@toolpad/core/AppProvider';
 import { DashboardLayout } from '@toolpad/core/DashboardLayout';
 import { useDemoRouter } from '@toolpad/core/internal';
+import zIndex from '@mui/material/styles/zIndex';
 
 const NAVIGATION = [
   {
@@ -104,16 +105,17 @@ function Statistic(props) {
 
   return (
     <div className='statistic' style={{ marginTop: '56px' }}>
-      <AppProvider
-        navigation={NAVIGATION}
-        router={router}
-        theme={demoTheme}
-        window={demoWindow}
-      >
-        <DashboardLayout>
-          <DemoPageContent pathname={router.pathname} />
-        </DashboardLayout>
-      </AppProvider>
+      <div style={{ position: 'relative', zIndex: '0' }}>
+        <AppProvider
+          navigation={NAVIGATION}
+          router={router}
+          theme={demoTheme}
+        >
+          <DashboardLayout>
+            <DemoPageContent pathname={router.pathname} />
+          </DashboardLayout>
+        </AppProvider>
+      </div>
     </div>
   );
 }
