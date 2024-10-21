@@ -12,7 +12,7 @@ import Compartment from '../../Components/Model3D/Compartment';
 import WarehouseView from '../../Components/WarehouseView/WarehouseView';
 
 const Warehouse = () => {
-  const [compartments, setCompartments] = useState({});
+  const [compartments, setCompartments] = useState([]);
   const [popupVisible, setPopupVisible] = useState(false);
   const [selectedCompartment, setSelectedCompartment] = useState(null);
   const [selectedView, setSelectedView] = useState('default'); // View lựa chọn: default, available, checkout
@@ -109,9 +109,10 @@ const Warehouse = () => {
 
 
   const getCompartmentColor = (compartments, shelfId, nameComp) => {
+    // Kiểm tra compartments có phải là mảng hay không, nếu không thì gán là mảng rỗng
     if (!Array.isArray(compartments)) {
       console.error("Compartments is not an array:", compartments);
-      return '#e6b07a';  // Màu mặc định nếu không có dữ liệu hoặc dữ liệu không đúng
+      compartments = [];
     }
   
     // Tìm compartment dựa trên shelfId và nameComp

@@ -15,6 +15,7 @@ import zIndex from '@mui/material/styles/zIndex';
 // Cấu hình các mục navigation với đường dẫn tương ứng
 const NAVIGATION = [
   {
+    segment: 'statistic/dashboard',
     title: 'Dashboard',
     icon: <DashboardIcon />,
   },
@@ -56,20 +57,22 @@ function Statistic(props) {
 
   return (
     <div className='statistic' style={{ marginTop: '56px', overflow: 'hidden' }}>
-      <AppProvider
-        navigation={NAVIGATION}
-        branding={{
-          title: 'My Dashboard',  // Tiêu đề của Dashboard
-        }}
-        // router={router}
-        theme={demoTheme}
-        // window={demoWindow}
-      >
-        <DashboardLayout>
-          <Outlet /> {/* Outlet sẽ render các route con như dashboard, report, static */}
-        </DashboardLayout>
-      </AppProvider>
+      <div style={{ position: 'relative', zIndex: '0' }}>
 
+        <AppProvider
+          navigation={NAVIGATION}
+          branding={{
+            title: 'My Dashboard',  // Tiêu đề của Dashboard
+          }}
+          // router={router}
+          theme={demoTheme}
+        // window={demoWindow}
+        >
+          <DashboardLayout>
+            <Outlet /> {/* Outlet sẽ render các route con như dashboard, report, static */}
+          </DashboardLayout>
+        </AppProvider>
+      </div>
     </div>
   );
 }

@@ -58,6 +58,7 @@ const App = () => {
           element: <Statistic />,
           children: [
             { path: "", Component: Dashboard },
+            { path: "dashboard", Component: Dashboard },
             { path: "report", Component: Report },
             { path: "static", Component: Static },
           ],
