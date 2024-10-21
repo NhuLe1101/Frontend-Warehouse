@@ -10,6 +10,7 @@ import { AppProvider } from '@toolpad/core/react-router-dom'; // React Router ve
 import { DashboardLayout } from '@toolpad/core/DashboardLayout';
 import { Outlet, Link } from 'react-router-dom';  // Sử dụng Link từ react-router-dom
 import { useDemoRouter } from '@toolpad/core/internal';
+import zIndex from '@mui/material/styles/zIndex';
 
 // Cấu hình các mục navigation với đường dẫn tương ứng
 const NAVIGATION = [
@@ -68,6 +69,7 @@ function Statistic(props) {
           <Outlet /> {/* Outlet sẽ render các route con như dashboard, report, static */}
         </DashboardLayout>
       </AppProvider>
+
     </div>
   );
 }
