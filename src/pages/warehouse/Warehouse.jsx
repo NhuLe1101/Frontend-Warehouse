@@ -139,7 +139,7 @@ const Warehouse = () => {
     <div className='warehouse' style={{ marginTop: '0px' }}>
       <WarehouseView selectedView={selectedView} setSelectedView={setSelectedView} />
 
-      <Canvas style={{ width: '100%', height: '100vh', background: 'black' }} shadows camera={{ position: [5, 8, 18], fov: 60 }}>
+      <Canvas style={{ width: '100%', height: '100vh', background: 'black' }} shadows camera={{ position: [5, 10, 18], fov: 60 }}>
         <Scene />
         <OrbitControls />
         <Ground />

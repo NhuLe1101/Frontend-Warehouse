@@ -1,10 +1,10 @@
-// eslint-disable-next-line
 import './App.css';
 import './hello.css';
 import {
   createBrowserRouter,
   RouterProvider,
   Outlet,
+  Route,
 } from "react-router-dom";
 import Home from './pages/home/Home';
 import Warehouse from './pages/warehouse/Warehouse';
@@ -15,84 +15,72 @@ import Navbar from './Components/Navbar/Navbar';
 import Footer from './Components/Footer/Footer';
 import PrivateRoute from './Components/PrivateRoute/PrivateRoute';
 import Statistic from './pages/statistic/Statistic';
+import Dashboard from './Components/Dashboard/Dashboard';
+import Report from './Components/Report/Report';
+import Static from './Components/Static/Static';
 
 const App = () => {
-  {
-    const Layout = () => {
-      return (
-        <div>
-          <Navbar />
-          <Outlet />
-          <Footer />
-        </div>
-      )
-    }
-    const Layout2 = () => {
-      return (
-        <div>
-          <Navbar />
-          <Outlet />
-        </div>
-      );
-    };
-    const router = createBrowserRouter([
-      {
-        path: "/",
-        element: <Layout />,
-        children: [
-          {
-            path: "/",
-            element: <Home />,
-          },
-          {
-            path: "/booking",
-            element: (
-              // <PrivateRoute>
-                <Booking />
-              // </PrivateRoute>
-            ),
-          },
-          {
-            path: "/product",
-            element: (
-              // <PrivateRoute>
-              //  <Product />
-                  <Product/>
-              // </PrivateRoute>
-            ),
-          },
-          {
-            path: "/statistic",
-            element: (
-              // <PrivateRoute>
-              //  <Product />
-                  <Statistic/>
-              // </PrivateRoute>
-            ),
-          },
-          {
-            path: "/login",
-            element: <Login />,
-          },
-        ],
-      },
-      {
-        path: "/",
-        element: <Layout2 />,
-        children: [
-          {
-            path: "/warehouse",
-            element: (
-              // <PrivateRoute>
-                <Warehouse />
-              // </PrivateRoute>
-            ),
-          },
-        ],
-      },
-    ]);
+  const Layout = () => {
+    return (
+      <div>
+        <Navbar />
+        <Outlet />
+        <Footer />
+      </div>
+    )
+  }
 
-    return <RouterProvider router={router} />
+  const Layout2 = () => {
+    return (
+      <div>
+        <Navbar />
+        <Outlet />
+      </div>
+    );
   };
-}
+
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <Layout />,
+      children: [
+        { path: "/", element: <Home /> },
+        {
+          path: "/booking",
+          element: <Booking />,
+        },
+        {
+          path: "/product",
+          element: <Product />,
+        },
+        {
+          path: "/statistic",
+          element: <Statistic />,
+          children: [
+            { path: "", Component: Dashboard },
+            { path: "report", Component: Report },
+            { path: "static", Component: Static },
+          ],
+        },
+        {
+          path: "/login",
+          element: <Login />,
+        },
+      ],
+    },
+    {
+      path: "/",
+      element: <Layout2 />,
+      children: [
+        {
+          path: "/warehouse",
+          element: <Warehouse />,
+        },
+      ],
+    },
+  ]);
+
+  return <RouterProvider router={router} />;
+};
+
 export default App;

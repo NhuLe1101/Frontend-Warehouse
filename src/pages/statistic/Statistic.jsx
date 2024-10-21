@@ -6,58 +6,29 @@ import { createTheme } from '@mui/material/styles';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import BarChartIcon from '@mui/icons-material/BarChart';
-import DescriptionIcon from '@mui/icons-material/Description';
-import LayersIcon from '@mui/icons-material/Layers';
-import { AppProvider } from '@toolpad/core/AppProvider';
+import { AppProvider } from '@toolpad/core/react-router-dom'; // React Router version
 import { DashboardLayout } from '@toolpad/core/DashboardLayout';
+import { Outlet, Link } from 'react-router-dom';  // Sử dụng Link từ react-router-dom
 import { useDemoRouter } from '@toolpad/core/internal';
 
+// Cấu hình các mục navigation với đường dẫn tương ứng
 const NAVIGATION = [
   {
-    kind: 'header',
-    title: 'Main items',
-  },
-  {
-    segment: 'dashboard',
     title: 'Dashboard',
     icon: <DashboardIcon />,
   },
   {
-    segment: 'orders',
-    title: 'Orders',
+    segment: 'statistic/report',
+    title: 'Report',
     icon: <ShoppingCartIcon />,
   },
   {
-    kind: 'divider',
-  },
-  {
-    kind: 'header',
-    title: 'Analytics',
-  },
-  {
-    segment: 'reports',
-    title: 'Reports',
+    segment: 'statistic/static',
+    title: 'Static',
     icon: <BarChartIcon />,
-    children: [
-      {
-        segment: 'sales',
-        title: 'Sales',
-        icon: <DescriptionIcon />,
-      },
-      {
-        segment: 'traffic',
-        title: 'Traffic',
-        icon: <DescriptionIcon />,
-      },
-    ],
-  },
-  {
-    segment: 'integrations',
-    title: 'Integrations',
-    icon: <LayersIcon />,
   },
 ];
-
+// Tạo theme cho dashboard
 const demoTheme = createTheme({
   cssVariables: {
     colorSchemeSelector: 'data-toolpad-color-scheme',
@@ -74,44 +45,27 @@ const demoTheme = createTheme({
   },
 });
 
-function DemoPageContent({ pathname }) {
-  return (
-    <Box
-      sx={{
-        py: 4,
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        textAlign: 'center',
-      }}
-    >
-      <Typography>Dashboard content for {pathname}</Typography>
-    </Box>
-  );
-}
-
-DemoPageContent.propTypes = {
-  pathname: PropTypes.string.isRequired,
-};
-
+// Component chính của Statistic
 function Statistic(props) {
   const { window } = props;
 
-  const router = useDemoRouter('/dashboard');
-
-  // Remove this const when copying and pasting into your project.
-  const demoWindow = window !== undefined ? window() : undefined;
+  // Sử dụng router demo từ toolpad
+  // const router = useDemoRouter('/dashboard');
+  // const demoWindow = window !== undefined ? window() : undefined;
 
   return (
-    <div className='statistic' style={{ marginTop: '56px' }}>
+    <div className='statistic' style={{ marginTop: '56px', overflow: 'hidden' }}>
       <AppProvider
         navigation={NAVIGATION}
-        router={router}
+        branding={{
+          title: 'My Dashboard',  // Tiêu đề của Dashboard
+        }}
+        // router={router}
         theme={demoTheme}
-        window={demoWindow}
+        // window={demoWindow}
       >
         <DashboardLayout>
-          <DemoPageContent pathname={router.pathname} />
+          <Outlet /> {/* Outlet sẽ render các route con như dashboard, report, static */}
         </DashboardLayout>
       </AppProvider>
     </div>
@@ -119,10 +73,6 @@ function Statistic(props) {
 }
 
 Statistic.propTypes = {
-  /**
-   * Injected by the documentation to work in an iframe.
-   * Remove this when copying and pasting into your project.
-   */
   window: PropTypes.func,
 };
 
