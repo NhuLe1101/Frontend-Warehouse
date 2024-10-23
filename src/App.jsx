@@ -16,9 +16,9 @@ import Footer from './Components/Footer/Footer';
 import PrivateRoute from './Components/PrivateRoute/PrivateRoute';
 import Statistic from './pages/statistic/Statistic';
 import Dashboard from './Components/Dashboard/Dashboard';
-import Report from './Components/Report/Report';
 import Static from './Components/Static/Static';
-
+import CheckoutListReport from './Components/CheckoutListReport/CheckoutListReport';
+import DeliveryReport from './Components/DeliveryReport/DeliveryReport';
 const App = () => {
   const Layout = () => {
     return (
@@ -59,7 +59,8 @@ const App = () => {
           children: [
             { path: "", Component: Dashboard },
             { path: "dashboard", Component: Dashboard },
-            { path: "report", Component: Report },
+            { path: "report/checkout-list", Component: CheckoutListReport },
+            { path: "report/delivery-confirmation", Component: DeliveryReport },
             { path: "static", Component: Static },
           ],
         },

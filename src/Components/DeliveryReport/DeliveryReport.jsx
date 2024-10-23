@@ -1,7 +1,7 @@
 import React from 'react'
 import { Box, Typography } from '@mui/material';
 
-const Report = () => {
+const DeliveryReport = () => {
   return (
     <Box
       sx={{
@@ -12,10 +12,10 @@ const Report = () => {
         textAlign: 'center',
       }}
     >
-      <Typography variant="h4">Report Page</Typography>
-      <Typography>All reports are displayed here.</Typography>
+      <Typography variant="h4">DeliveryReport Page</Typography>
+      <Typography>Welcome to the Dashboard!</Typography>
     </Box>
   );
 }
 
-export default Report
+export default DeliveryReport

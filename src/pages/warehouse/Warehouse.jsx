@@ -11,6 +11,7 @@ import TruckModel from '../../Components/Model3D/TruckModel';
 import Compartment from '../../Components/Model3D/Compartment';
 import WarehouseView from '../../Components/WarehouseView/WarehouseView';
 
+
 const Warehouse = () => {
   const [compartments, setCompartments] = useState([]);
   const [popupVisible, setPopupVisible] = useState(false);
@@ -63,17 +64,16 @@ const Warehouse = () => {
       .then((compartmentFromServer) => {
         if (compartmentFromServer) {
           setSelectedCompartment(compartmentFromServer);
-          setPopupVisible(true);
         } else {
           createCompartment(compartmentIdentifier)
             .then((newCompartment) => {
               setSelectedCompartment(newCompartment);
-              setPopupVisible(true);
             })
             .catch((error) => {
               console.error('Error creating compartment:', error);
             });
         }
+        setPopupVisible(true);
       })
       .catch((error) => {
         console.error('Error fetching compartment:', error);
@@ -97,7 +97,7 @@ const Warehouse = () => {
       .then(response => response.json())
       .then(data => {
         if (Array.isArray(data)) {
-          setCompartments(data); 
+          setCompartments(data);
         } else {
           console.error("Invalid data format:", data);
         }
@@ -107,35 +107,51 @@ const Warehouse = () => {
       });
   }, []);
 
-
   const getCompartmentColor = (compartments, shelfId, nameComp) => {
-    // Kiểm tra compartments có phải là mảng hay không, nếu không thì gán là mảng rỗng
     if (!Array.isArray(compartments)) {
       console.error("Compartments is not an array:", compartments);
       compartments = [];
     }
-  
-    // Tìm compartment dựa trên shelfId và nameComp
+
     const compartment = compartments.find(c => c.shelf.shelfId === shelfId && c.nameComp === nameComp);
-  
+
     if (!compartment) {
-      return '#e6b07a';  // Màu mặc định nếu không tìm thấy compartment
+      return '#e6b07a';
     }
-  
+
     if (selectedView === 'available' && compartment.item) {
-      return '#4CAF50';  // Màu xanh nếu có item trong chế độ "available"
+      return '#4CAF50';
     }
-  
+
     if (selectedView === 'checkout' && compartment.item && new Date(compartment.item.checkout) < new Date()) {
-      return '#FF0000';  // Màu đỏ nếu item bị quá hạn checkout trong chế độ "checkout"
+      return '#FF0000';
     }
-  
-    return '#e6b07a';  // Màu mặc định nếu không có điều kiện nào phù hợp
+
+    return '#e6b07a';
   };
-  
-  const compartmentWidth = 0.5;  // Khoảng cách giữa các ngăn
+
+  const compartmentWidth = 0.5;
   const layerHeights = [0.4, 0.4, 0.4, 0.4, 0.4];
-  const baseHeightOffset = 0.35; // Điều chỉnh chiều cao của box cho khỏi nằm giữa mặt đất
+  const baseHeightOffset = 0.35;
+  // Hàm xử lý khi quét mã QR thành công
+  const handleQrScanSuccess = (compartmentData) => {
+    if (compartmentData) {
+      setSelectedCompartment(compartmentData);
+      setPopupVisible(true);
+    } else {
+      console.error("QR code data is invalid or not found.");
+    }
+  };
+  const handlePrintQR = (compartment) => {
+    const printWindow = window.open('', '_blank');
+    printWindow.document.write('<html><head><title>Print QR Code</title></head><body>');
+    printWindow.document.write(`<div style="text-align: center;"><h3>Compartment: ${compartment.nameComp}</h3>`);
+    printWindow.document.write('<img src="' + document.getElementById(`qr-${compartment.shelfId}-${compartment.nameComp}`).toDataURL() + '" />');
+    printWindow.document.write('</div></body></html>');
+    printWindow.document.close();
+    printWindow.print();
+  };
+
   return (
     <div className='warehouse' style={{ marginTop: '0px' }}>
       <WarehouseView selectedView={selectedView} setSelectedView={setSelectedView} />
@@ -146,7 +162,7 @@ const Warehouse = () => {
         <Ground />
         {shelves.length > 0 && shelves.map((shelf, shelfIndex) => (
           <group key={shelf.shelfId}>
-            <ShelfModel position={[shelf.position.xCoord, shelf.position.yCoord, shelf.position.zCoord]} /> {/* Vị trí kệ */}
+            <ShelfModel position={[shelf.position.xCoord, shelf.position.yCoord, shelf.position.zCoord]} />
 
             {layerHeights.map((height, layerIndex) => (
               <group
@@ -159,28 +175,30 @@ const Warehouse = () => {
               >
                 <Compartment
                   position={[-compartmentWidth, 0, 0]}
-                  color={getCompartmentColor(compartments, shelf.shelfId, `N${layerIndex}01`)}  // Truyền shelfId và nameComp
+                  color={getCompartmentColor(compartments, shelf.shelfId, `N${layerIndex}01`)}
                   onClick={() => handleCompartmentClick(shelf, shelfIndex, layerIndex, 1)}
-                  nameComp={`N${layerIndex}01`}  // Left side compartment name
+                  nameComp={`N${layerIndex}01`}
+                  compartmentData={compartments.find(c => c.shelf.shelfId === shelf.shelfId && c.nameComp === `N${layerIndex}01`)}
                 />
                 <Compartment
                   position={[0, 0, 0]}
-                  color={getCompartmentColor(compartments, shelf.shelfId, `N${layerIndex}02`)}  // Truyền shelfId và nameComp
+                  color={getCompartmentColor(compartments, shelf.shelfId, `N${layerIndex}02`)}
                   onClick={() => handleCompartmentClick(shelf, shelfIndex, layerIndex, 2)}
-                  nameComp={`N${layerIndex}02`}  // Middle side compartment name
+                  nameComp={`N${layerIndex}02`}
+                  compartmentData={compartments.find(c => c.shelf.shelfId === shelf.shelfId && c.nameComp === `N${layerIndex}02`)}
                 />
                 <Compartment
                   position={[compartmentWidth, 0, 0]}
-                  color={getCompartmentColor(compartments, shelf.shelfId, `N${layerIndex}03`)}  // Truyền shelfId và nameComp
+                  color={getCompartmentColor(compartments, shelf.shelfId, `N${layerIndex}03`)}
                   onClick={() => handleCompartmentClick(shelf, shelfIndex, layerIndex, 3)}
-                  nameComp={`N${layerIndex}03`}  // Right side compartment name
+                  nameComp={`N${layerIndex}03`}
+                  compartmentData={compartments.find(c => c.shelf.shelfId === shelf.shelfId && c.nameComp === `N${layerIndex}03`)}
                 />
               </group>
             ))}
           </group>
         ))}
-
-        <TruckModel position={[5, 1, 11]} scale={[0.5, 0.5, 0.5]} /> 
+          <TruckModel position={[5, 1, 11]} scale={[0.5, 0.5, 0.5]} /> 
         <TruckModel position={[8, 1, 11]} scale={[0.5, 0.5, 0.5]} /> 
         <AssetsModel position={[-6, 0.1, 8]} scale={[0.5, 0.5, 0.5]} />
       </Canvas>
@@ -188,12 +206,9 @@ const Warehouse = () => {
         <PopupItems
           compartmentData={selectedCompartment}
           onClose={() => setPopupVisible(false)}
-          isItemPresent={selectedCompartment.hasItem} 
+          isItemPresent={selectedCompartment.hasItem}
         />
       )}
-
-
-
     </div>
   );
 };

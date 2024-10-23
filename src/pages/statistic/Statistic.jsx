@@ -4,29 +4,41 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { createTheme } from '@mui/material/styles';
 import DashboardIcon from '@mui/icons-material/Dashboard';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import SummarizeIcon from '@mui/icons-material/Summarize';
+import DescriptionIcon from '@mui/icons-material/Description';
 import BarChartIcon from '@mui/icons-material/BarChart';
 import { AppProvider } from '@toolpad/core/react-router-dom'; // React Router version
 import { DashboardLayout } from '@toolpad/core/DashboardLayout';
 import { Outlet, Link } from 'react-router-dom';  // Sử dụng Link từ react-router-dom
-import { useDemoRouter } from '@toolpad/core/internal';
-import zIndex from '@mui/material/styles/zIndex';
+
 
 // Cấu hình các mục navigation với đường dẫn tương ứng
 const NAVIGATION = [
   {
     segment: 'statistic/dashboard',
-    title: 'Dashboard',
+    title: 'Tổng quan',
     icon: <DashboardIcon />,
   },
   {
     segment: 'statistic/report',
-    title: 'Report',
-    icon: <ShoppingCartIcon />,
+    title: 'Báo cáo',
+    icon: <SummarizeIcon />,
+    children: [
+      {
+        segment: 'checkout-list',
+        title: 'Sản phẩm xuất kho',
+        icon: <DescriptionIcon />,
+      },
+      {
+        segment: 'delivery-confirmation',
+        title: 'Vận chuyển',
+        icon: <DescriptionIcon />,
+      },
+    ],
   },
   {
     segment: 'statistic/static',
-    title: 'Static',
+    title: 'Thống kê',
     icon: <BarChartIcon />,
   },
 ];
@@ -62,7 +74,7 @@ function Statistic(props) {
         <AppProvider
           navigation={NAVIGATION}
           branding={{
-            title: 'My Dashboard',  // Tiêu đề của Dashboard
+            title: 'Thống kê và báo cáo',  // Tiêu đề của Dashboard
           }}
           // router={router}
           theme={demoTheme}
