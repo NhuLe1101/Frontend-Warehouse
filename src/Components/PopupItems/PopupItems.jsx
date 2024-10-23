@@ -184,7 +184,7 @@ const PopupItems = ({ compartmentData, onClose, isItemPresent }) => {
             ) : (
                 <>
                     {/* Nếu ngăn chưa có item, hiển thị giao diện thêm item */}
-                    <h2>Chọn sản phẩm để thêm vào kiện hàng</h2>
+                    <h2>Chọn sản phẩm để thêm vào ngăn {compartmentData.nameComp} kệ {compartmentData.shelf.nameShelf}</h2>
                     <div className='product_page'>
                         <div className='search_and_filter_product_container'>
                             <div className='container_tittle'>

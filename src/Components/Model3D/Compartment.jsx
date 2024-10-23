@@ -7,25 +7,30 @@ const Compartment = ({ position, color, onClick, nameComp, compartmentData }) =>
   const [qrCodeUrl, setQrCodeUrl] = useState(null);
   const [qrTexture, setQrTexture] = useState(null);
 
-  // Generate the QR code when compartmentData changes
   useEffect(() => {
     if (compartmentData && compartmentData.item) {
       const itemData = compartmentData.item;
 
-      // Convert item to string (use item.name or JSON.stringify)
-      const itemString = JSON.stringify(itemData); // or use itemData.name
+      // Thêm thông tin vị trí (Ngăn và Kệ) vào chuỗi mã QR
+      const itemString = `
+        Tên sản phẩm: ${itemData.name},
+        Số lượng: ${compartmentData.quantity},
+        Ngăn: ${compartmentData.nameComp},
+        Kệ: ${compartmentData.shelf ? compartmentData.shelf.nameShelf : 'Không xác định'}
+      `;
 
       QRCode.toDataURL(itemString)
         .then((url) => {
-          setQrCodeUrl(url); // Set QR code URL after generation
+          setQrCodeUrl(url); // Set QR code URL sau khi tạo
         })
         .catch((err) => {
           console.error("Failed to generate QR code:", err);
         });
     } else {
-      setQrCodeUrl(null); // Reset QR code URL if no item
+      setQrCodeUrl(null); // Reset QR code URL nếu không có item
     }
   }, [compartmentData]);
+
 
   // Load the texture only after qrCodeUrl is set
   useEffect(() => {

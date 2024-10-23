@@ -10,7 +10,7 @@ import ShelfModel from '../../Components/Model3D/ShelfModel';
 import TruckModel from '../../Components/Model3D/TruckModel';
 import Compartment from '../../Components/Model3D/Compartment';
 import WarehouseView from '../../Components/WarehouseView/WarehouseView';
-
+// import QRCodeScanner from '../../Components/QRCodeScanner/QRCodeScanner';
 
 const Warehouse = () => {
   const [compartments, setCompartments] = useState([]);
@@ -133,24 +133,6 @@ const Warehouse = () => {
   const compartmentWidth = 0.5;
   const layerHeights = [0.4, 0.4, 0.4, 0.4, 0.4];
   const baseHeightOffset = 0.35;
-  // Hàm xử lý khi quét mã QR thành công
-  const handleQrScanSuccess = (compartmentData) => {
-    if (compartmentData) {
-      setSelectedCompartment(compartmentData);
-      setPopupVisible(true);
-    } else {
-      console.error("QR code data is invalid or not found.");
-    }
-  };
-  const handlePrintQR = (compartment) => {
-    const printWindow = window.open('', '_blank');
-    printWindow.document.write('<html><head><title>Print QR Code</title></head><body>');
-    printWindow.document.write(`<div style="text-align: center;"><h3>Compartment: ${compartment.nameComp}</h3>`);
-    printWindow.document.write('<img src="' + document.getElementById(`qr-${compartment.shelfId}-${compartment.nameComp}`).toDataURL() + '" />');
-    printWindow.document.write('</div></body></html>');
-    printWindow.document.close();
-    printWindow.print();
-  };
 
   return (
     <div className='warehouse' style={{ marginTop: '0px' }}>
@@ -198,8 +180,8 @@ const Warehouse = () => {
             ))}
           </group>
         ))}
-          <TruckModel position={[5, 1, 11]} scale={[0.5, 0.5, 0.5]} /> 
-        <TruckModel position={[8, 1, 11]} scale={[0.5, 0.5, 0.5]} /> 
+        <TruckModel position={[5, 1, 11]} scale={[0.5, 0.5, 0.5]} />
+        <TruckModel position={[8, 1, 11]} scale={[0.5, 0.5, 0.5]} />
         <AssetsModel position={[-6, 0.1, 8]} scale={[0.5, 0.5, 0.5]} />
       </Canvas>
       {popupVisible && selectedCompartment && (
