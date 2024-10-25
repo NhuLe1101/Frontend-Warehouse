@@ -4,11 +4,19 @@ import ProductService from '../../../api/product';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import Swal from 'sweetalert2';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 
 const EditProduct = ({ product, onClose }) => {
     const [formData, setFormData] = useState(product);
     const [saveStatus, setSaveStatus] = useState(null);
 
+    const [showDelivery, setShowDelivery] = useState(false);
+    const [deliveryValue, setDeliveryValue] = useState('');
+
+    const toggleDeliveryVisibility = () => {
+        setShowDelivery(!showDelivery);
+    };
 
     useEffect(() => {
         setFormData(product);
@@ -131,11 +139,16 @@ const EditProduct = ({ product, onClose }) => {
                     <label>
                         Vận chuyển:
                         <input
-                            type="text"
+                            type={showDelivery ? 'text' : 'password'}
                             name="delivery"
                             value={formData.delivery}
                             onChange={handleInputChange}
+                            readOnly
+                            disabled
                         />
+                        <span style={{position:'absolute', right:'40px'}} className="input-group-text" onClick={toggleDeliveryVisibility}>
+                            <FontAwesomeIcon icon={showDelivery ? faEyeSlash : faEye} />
+                        </span>
                     </label>
 
 
