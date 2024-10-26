@@ -131,7 +131,7 @@ const BookingTableNew = () => {
                                             startIcon={<FaPrint />}
                                             onClick={() => handlePrintClick(index)}
                                         >
-                                            In
+                                            Xuất PDF
                                         </Button>
                                     </TableCell>
                                 </TableRow>

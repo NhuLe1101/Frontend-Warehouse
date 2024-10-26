@@ -6,7 +6,7 @@ import './btnaddnewbooking.css'
 import Swal from 'sweetalert2';
 import CloseIcon from '@mui/icons-material/Close';
 
-const BtnAddNewBooking = ({onClose}) => {
+const BtnAddNewBooking = ({ onClose }) => {
     const [fileName, setFileName] = useState('');
     const [file, setFile] = useState(null);
 
@@ -19,11 +19,11 @@ const BtnAddNewBooking = ({onClose}) => {
         });
     };
 
-    const AlertFail = () => {
+    const AlertFail = (message = "Bạn chưa thêm tệp, hãy chọn tệp của bạn trước khi nhấn nút Lưu!") => {
         Swal.fire({
             icon: "error",
-            text: "Bạn chưa thêm tệp, hãy chọn tệp của bạn trước khi nhấn nút Lưu!",
-        })
+            text: message,
+        });
     };
 
     const handleSubmit = async () => {
@@ -35,17 +35,24 @@ const BtnAddNewBooking = ({onClose}) => {
         try {
             const message = await BookingService.upload(file);
             AlertSuccess();
-          } catch (error) {
+        } catch (error) {
             console.error("Có lỗi xảy ra khi lưu tập tin:", error);
-          }
+        }
     };
 
     return (
         <div className='btn_add_new_booking'>
             <Dropzone onDrop={acceptedFiles => {
-                setFile(acceptedFiles[0]);
-                setFileName(acceptedFiles[0].name);
-            }}>
+                const uploadedFile = acceptedFiles[0];
+                if (uploadedFile && uploadedFile.type === 'text/csv') {
+                    setFile(uploadedFile);
+                    setFileName(uploadedFile.name);
+                } else {
+                    AlertFail("Vui lòng chỉ chọn tệp CSV.");
+                }
+            }}
+                accept=".csv"
+            >
                 {({ getRootProps, getInputProps }) => (
                     <section>
                         <div {...getRootProps({ className: 'dropzone' })}>
