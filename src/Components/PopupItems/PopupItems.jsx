@@ -94,6 +94,9 @@ const PopupItems = ({ compartmentData, onClose, isItemPresent }) => {
                     setSnackbarSeverity('success');
                     setOpenSnackbar(true);
                     setPopupQuantityVisible(false);
+                    setTimeout(() => {
+                        onClose();
+                    }, 2000); 
                 })
                 .catch((error) => {
                     setSnackbarMessage(error.response.data.message || 'Có lỗi xảy ra');
@@ -107,6 +110,9 @@ const PopupItems = ({ compartmentData, onClose, isItemPresent }) => {
                     setSnackbarSeverity('success');
                     setOpenSnackbar(true);
                     setPopupQuantityVisible(false);
+                    setTimeout(() => {
+                        window.location.reload(); 
+                    }, 2000); 
                 })
                 .catch((error) => {
                     setSnackbarMessage(error.response.data.message || 'Có lỗi xảy ra');
@@ -158,17 +164,16 @@ const PopupItems = ({ compartmentData, onClose, isItemPresent }) => {
         setOpenDeleteDialog(false);
     };
 
-    const [isPopupCheckoutOpen, setIsPopupCheckoutOpen] = useState(false);
-
     const handleSnackbarClose = (event, reason) => {
         if (reason === 'clickaway') {
             return; // Không đóng snackbar nếu lý do là clickaway
         }
 
         setOpenSnackbar(false);
-
-        onClose();
     };
+
+    const [isPopupCheckoutOpen, setIsPopupCheckoutOpen] = useState(false);
+
     const handleCheckout = () => {
         setIsPopupCheckoutOpen(true); // Mở popup khi nhấn nút Checkout
     };
@@ -178,11 +183,29 @@ const PopupItems = ({ compartmentData, onClose, isItemPresent }) => {
     };
 
     const handleConfirmCheckout = (referenceNo, plateNumber) => {
-        console.log('Mã xác nhận:', referenceNo);
-        console.log('Biển số xe:', plateNumber);
-        setIsPopupCheckoutOpen(false); // Đóng popup sau khi xác nhận
+        const compartmentId = compartmentData.compId;
+        const itemId = compartmentData.item.itemId;
+    
+        // Đóng popup sau khi xác nhận thông tin
+        setIsPopupCheckoutOpen(false);
+    
+        // Gọi API checkoutItem để xử lý checkout với mã xác nhận và biển số xe
+        CompartmentService.checkoutItem(compartmentId, itemId, referenceNo, plateNumber)
+            .then((response) => {
+                setSnackbarMessage('Checkout thành công.');
+                setSnackbarSeverity('success');
+                setOpenSnackbar(true);
+                setTimeout(() => {
+                    window.location.reload(); 
+                }, 2000);
+            })
+            .catch((error) => {
+                setSnackbarMessage(error.response?.data.message || 'Có lỗi xảy ra trong quá trình checkout');
+                setSnackbarSeverity('error');
+                setOpenSnackbar(true);
+            });
     };
-
+    
     return (
         <div className="popup-items">
             <button className='close-btn' onClick={onClose}></button>
@@ -224,8 +247,7 @@ const PopupItems = ({ compartmentData, onClose, isItemPresent }) => {
                 <PopupQuantity
                     open={popupQuantityVisible}
                     onClose={() => setPopupQuantityVisible(false)}
-                    maxQuantity={isEditMode ? compartmentData.item.quantity : selectedProduct.quantity}  // Sử dụng quantity từ compartment khi ở chế độ edit
-                    onConfirm={handleQuantityConfirm}  // Gọi hàm xác nhận dựa trên chế độ "add" hoặc "edit"
+                    onConfirm={handleQuantityConfirm}
                 />
             )}
             <Dialog

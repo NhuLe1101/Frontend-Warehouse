@@ -1,11 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Text } from '@react-three/drei';
 import QRCode from 'qrcode';
-import { TextureLoader } from 'three';
+import { TextureLoader, Raycaster } from 'three';
+import { useThree } from '@react-three/fiber';
 
 const Compartment = ({ position, color, onClick, nameComp, compartmentData }) => {
+  const { camera, scene } = useThree();
   const [qrCodeUrl, setQrCodeUrl] = useState(null);
   const [qrTexture, setQrTexture] = useState(null);
+  const raycaster = useRef(new Raycaster());
 
   useEffect(() => {
     if (compartmentData && compartmentData.item) {
@@ -31,7 +34,6 @@ const Compartment = ({ position, color, onClick, nameComp, compartmentData }) =>
     }
   }, [compartmentData]);
 
-
   // Load the texture only after qrCodeUrl is set
   useEffect(() => {
     if (qrCodeUrl) {
@@ -51,8 +53,25 @@ const Compartment = ({ position, color, onClick, nameComp, compartmentData }) =>
     }
   }, [qrCodeUrl]);
 
+  const handleClick = (event) => {
+    // Lấy vị trí chuột và tạo raycaster
+    const mouse = {
+      x: (event.clientX / window.innerWidth) * 2 - 1,
+      y: -(event.clientY / window.innerHeight) * 2 + 1
+    };
+    raycaster.current.setFromCamera(mouse, camera);
+
+    // Kiểm tra va chạm từ raycaster
+    const intersects = raycaster.current.intersectObjects(scene.children, true);
+
+    // Chỉ lấy đối tượng gần nhất (nếu có) và kiểm tra với đối tượng hiện tại
+    if (intersects.length > 0 && intersects[0].object === event.object) {
+      onClick(); // Chỉ gọi onClick nếu là đối tượng gần nhất
+    }
+  };
+
   return (
-    <mesh position={position} onClick={onClick}>
+    <mesh position={position} onClick={handleClick}>
       <boxGeometry args={[0.4, 0.35, 0.4]} />
       <meshStandardMaterial color={color} roughness={0.6} metalness={0.1} />
       

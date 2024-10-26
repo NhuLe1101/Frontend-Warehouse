@@ -1,23 +1,18 @@
 import React, { useState } from 'react';
 import { Button, TextField, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
 
-const PopupQuantity = ({ open, onClose, maxQuantity, onConfirm }) => {
-  const [quantity, setQuantity] = useState(1);  // Số lượng mặc định ban đầu là 1
+const PopupQuantity = ({ open, onClose, onConfirm }) => {
+  const [quantity, setQuantity] = useState(1);
 
   // Xử lý sự kiện khi thay đổi giá trị input số lượng
   const handleQuantityChange = (event) => {
-    const value = event.target.value;
-    if (value > 0 && value <= maxQuantity) {
-      setQuantity(value);
-    } else {
-      setQuantity(maxQuantity);
-    }
+    const value = parseInt(event.target.value, 10);
+    setQuantity(value > 0 ? value : 1); // Đảm bảo số lượng luôn lớn hơn 0
   };
 
-  // Gọi hàm onConfirm khi người dùng xác nhận số lượng
   const handleConfirm = () => {
-    onConfirm(quantity);  // Truyền số lượng đã nhập về cho component cha
-    onClose();  // Đóng popup sau khi xác nhận
+    onConfirm(quantity);
+    onClose();
   };
 
   return (
@@ -28,14 +23,13 @@ const PopupQuantity = ({ open, onClose, maxQuantity, onConfirm }) => {
           autoFocus
           margin="dense"
           id="quantity"
-          variant="standard" 
-
-          label={`Số lượng (tối đa ${maxQuantity})`}
+          variant="standard"
+          label="Số lượng"
           type="number"
           fullWidth
           value={quantity}
           onChange={handleQuantityChange}
-          inputProps={{ min: 1, max: maxQuantity }}
+          inputProps={{ min: 1 }}  // Chỉ giới hạn giá trị nhỏ nhất là 1
         />
       </DialogContent>
       <DialogActions>
