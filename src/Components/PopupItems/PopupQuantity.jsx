@@ -28,6 +28,8 @@ const PopupQuantity = ({ open, onClose, maxQuantity, onConfirm }) => {
           autoFocus
           margin="dense"
           id="quantity"
+          variant="standard" 
+
           label={`Số lượng (tối đa ${maxQuantity})`}
           type="number"
           fullWidth

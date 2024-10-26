@@ -9,7 +9,7 @@ import { Button, Dialog, DialogActions, DialogContent, DialogContentText, Dialog
 import CompartmentService from './../../api/compartment';
 import ProductService from '../../api/product';
 import SelectSmall from '../Product/Select/SelectComponent';
-
+import PopupCheckout from './PopupCheckout';
 const PopupItems = ({ compartmentData, onClose, isItemPresent }) => {
     const [productsByName, setProductsByName] = useState(null);
     const [searchData, setSearchData] = useState(null);
@@ -158,9 +158,8 @@ const PopupItems = ({ compartmentData, onClose, isItemPresent }) => {
         setOpenDeleteDialog(false);
     };
 
-    const handleCheckout = () => {
-        console.log('Checkout sản phẩm');
-    };
+    const [isPopupCheckoutOpen, setIsPopupCheckoutOpen] = useState(false);
+
     const handleSnackbarClose = (event, reason) => {
         if (reason === 'clickaway') {
             return; // Không đóng snackbar nếu lý do là clickaway
@@ -169,6 +168,19 @@ const PopupItems = ({ compartmentData, onClose, isItemPresent }) => {
         setOpenSnackbar(false);
 
         onClose();
+    };
+    const handleCheckout = () => {
+        setIsPopupCheckoutOpen(true); // Mở popup khi nhấn nút Checkout
+    };
+
+    const handleCloseCheckout = () => {
+        setIsPopupCheckoutOpen(false); // Đóng popup
+    };
+
+    const handleConfirmCheckout = (referenceNo, plateNumber) => {
+        console.log('Mã xác nhận:', referenceNo);
+        console.log('Biển số xe:', plateNumber);
+        setIsPopupCheckoutOpen(false); // Đóng popup sau khi xác nhận
     };
 
     return (
@@ -247,7 +259,11 @@ const PopupItems = ({ compartmentData, onClose, isItemPresent }) => {
                     {snackbarMessage}
                 </Alert>
             </Snackbar>
-
+            <PopupCheckout
+                open={isPopupCheckoutOpen}
+                onClose={handleCloseCheckout}
+                handleConfirm={handleConfirmCheckout}
+            />
         </div>
     );
 };

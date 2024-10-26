@@ -101,7 +101,7 @@ const ItemInfo = ({ compartmentData, onEdit, onDelete, onCheckout }) => {
                             variant="contained"
                             color="primary"
                             startIcon={<LocalShippingIcon />}
-                            onClick={onCheckout}>Checkout
+                            onClick={onCheckout}>Xuất hàng
                         </Button>
                         {/* Nút để in QR Code */}
                         <Button

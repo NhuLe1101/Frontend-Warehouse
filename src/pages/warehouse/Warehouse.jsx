@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Canvas } from '@react-three/fiber';
-import { OrbitControls } from '@react-three/drei';
+import { OrbitControls, Text } from '@react-three/drei';
 import PopupItems from '../../Components/PopupItems/PopupItems';
 import ShelfService from '../../api/shelf';
 import Scene from '../../Components/Model3D/Scene';
@@ -145,7 +145,16 @@ const Warehouse = () => {
         {shelves.length > 0 && shelves.map((shelf, shelfIndex) => (
           <group key={shelf.shelfId}>
             <ShelfModel position={[shelf.position.xCoord, shelf.position.yCoord, shelf.position.zCoord]} />
-
+            <Text
+              position={[shelf.position.xCoord, shelf.position.yCoord + 0.001, shelf.position.zCoord + 0.5]} // Đặt vị trí y thấp hơn mặt sàn, z để cách kệ
+              fontSize={0.5} // Kích thước chữ
+              color="white" // Màu chữ
+              rotation={[-Math.PI / 2, 0, 0]} // Xoay chữ để nằm phẳng trên mặt đất (theo trục X)
+              anchorX="center"
+              anchorY="middle"
+            >
+              {`${shelf.nameShelf}`} {/* Nội dung hiển thị tên kệ */}
+            </Text>
             {layerHeights.map((height, layerIndex) => (
               <group
                 key={layerIndex}
