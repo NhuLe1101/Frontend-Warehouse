@@ -5,10 +5,11 @@
     transform: translate(-50%, -50%);
     width: 750px;
     background: rgba(255, 255, 255, 1);
-    padding: 30px;
+    padding: 0;
     border-radius: 10px;
     box-shadow: 0 0 0px 100vh rgba(0, 0, 0, 0.7);
     z-index: 1000;
+    height: 480px;
 }
 
 .popup-pd h2{
@@ -42,6 +43,7 @@
 
 .popup-content {
     position: relative;
+    height: inherit;
 }
 
 .popup h2 {

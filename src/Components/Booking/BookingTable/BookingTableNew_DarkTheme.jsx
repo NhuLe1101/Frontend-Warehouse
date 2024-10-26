@@ -4,7 +4,7 @@ import React, { Fragment } from 'react';
 import { Table, TableHead, TableRow, TableCell, TableBody, TableContainer, Paper, Button, TablePagination } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import BookingService from '../../../api/booking';
-import { FaDownload, FaEdit } from 'react-icons/fa';
+import { FaDownload, FaEdit, FaPrint } from 'react-icons/fa';
 import EditBooking from '../EditBooking/EditBooking';
 import Swal from 'sweetalert2';
 
@@ -46,6 +46,16 @@ const BookingTableNew = () => {
         setIsEditing(true);
     };
 
+    const handlePrintClick = (rowIndex) => {
+        Swal.fire({
+            title: "Đang in...",
+            timer: 1000,
+            didOpen: () => {
+                Swal.showLoading();
+            }
+        });
+    };
+
     const handleClosePopup = () => {
         setIsEditing(false);
         setSelectedBooking(null);
@@ -84,7 +94,7 @@ const BookingTableNew = () => {
                                 <TableCell>EMAIL</TableCell>
                                 <TableCell>SỐ ĐIỆN THOẠI</TableCell>
                                 <TableCell>FILE BOOKING</TableCell>
-                                <TableCell>THAO TÁC</TableCell>
+                                <TableCell colSpan={2}>THAO TÁC</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
@@ -112,6 +122,16 @@ const BookingTableNew = () => {
                                             onClick={() => handleEditClick(index)}
                                         >
                                             Sửa
+                                        </Button>
+                                    </TableCell>
+                                    <TableCell>
+                                        <Button
+                                            variant="contained"
+                                            color="primary"
+                                            startIcon={<FaPrint />}
+                                            onClick={() => handlePrintClick(index)}
+                                        >
+                                            In
                                         </Button>
                                     </TableCell>
                                 </TableRow>

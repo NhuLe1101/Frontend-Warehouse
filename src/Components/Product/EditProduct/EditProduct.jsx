@@ -11,11 +11,11 @@ const EditProduct = ({ product, onClose }) => {
     const [formData, setFormData] = useState(product);
     const [saveStatus, setSaveStatus] = useState(null);
 
-    const [showDelivery, setShowDelivery] = useState(false);
+    const [showReferenceNo, setShowReferenceNo] = useState(false);
     const [deliveryValue, setDeliveryValue] = useState('');
 
     const toggleDeliveryVisibility = () => {
-        setShowDelivery(!showDelivery);
+        setShowReferenceNo(!showReferenceNo);
     };
 
     useEffect(() => {
@@ -139,15 +139,27 @@ const EditProduct = ({ product, onClose }) => {
                     <label>
                         Vận chuyển:
                         <input
-                            type={showDelivery ? 'text' : 'password'}
+                            type='text'
                             name="delivery"
                             value={formData.delivery}
                             onChange={handleInputChange}
                             readOnly
                             disabled
                         />
+                    </label>
+                    <label>
+                    </label>
+                    <label>
+                        Mã xác nhận:
+                        <input
+                            type={showReferenceNo ? 'text' : 'password'}
+                            name="referenceNo"
+                            value={formData.booking.referenceNo}
+                            readOnly
+                            disabled
+                        />
                         <span style={{position:'absolute', right:'40px'}} className="input-group-text" onClick={toggleDeliveryVisibility}>
-                            <FontAwesomeIcon icon={showDelivery ? faEyeSlash : faEye} />
+                            <FontAwesomeIcon icon={showReferenceNo ? faEyeSlash : faEye} />
                         </span>
                     </label>
 
