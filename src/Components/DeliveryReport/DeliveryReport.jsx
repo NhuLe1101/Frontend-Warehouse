@@ -108,6 +108,7 @@ const DeliveryReport = () => {
                     <TableCell>Phân loại</TableCell>
                     <TableCell>Ngăn chứa</TableCell>
                     <TableCell>Kệ</TableCell>
+                    <TableCell>Tổng thời gian lưu kho (ngày)</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -115,11 +116,12 @@ const DeliveryReport = () => {
                     <TableRow key={idx}>
                       <TableCell>{idx + 1}</TableCell>
                       <TableCell>{record.item.name}</TableCell>
-                      <TableCell>{record.item.quantity}</TableCell>
+                      <TableCell>{record.quantity}</TableCell> 
                       <TableCell>{record.item.weight}</TableCell>
                       <TableCell>{record.item.type}</TableCell>
                       <TableCell>{record.compartment.nameComp}</TableCell>
                       <TableCell>{record.compartment.shelf.nameShelf}</TableCell>
+                      <TableCell>{record.storageDuration}</TableCell> 
                     </TableRow>
                   ))}
                 </TableBody>
