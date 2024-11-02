@@ -1,17 +1,26 @@
-import React, { useState, useEffect } from 'react';
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, TablePagination } from '@mui/material';
-import TableRowComponent from './TableRowComponent';
-import TablePaginationActions from './TablePaginationActions';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
-import ProductService from '../../api/product';  // Import your API service
-import './ProductTable.css';
+import React, { useState, useEffect } from "react";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  TablePagination,
+} from "@mui/material";
+import TableRowComponent from "./TableRowComponent";
+import TablePaginationActions from "./TablePaginationActions";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
+import ProductService from "../../api/product"; // Import your API service
+import "./ProductTable.css";
 
 const darkTheme = createTheme({
   palette: {
-    mode: 'dark',
+    mode: "dark",
     background: {
-      default: '#0b0b16',
-      paper: '#0b0b16',
+      default: "#0b0b16",
+      paper: "#0b0b16",
     },
   },
   typography: {
@@ -21,9 +30,13 @@ const darkTheme = createTheme({
   },
 });
 
-export default function ProductTable({ isPopup, onSelectProduct, productsByName }) {
+export default function ProductTable({
+  isPopup,
+  onSelectProduct,
+  productsByName,
+}) {
   const [products, setProducts] = React.useState([]);
-  const [loading, setLoading] = React.useState(true);  // State cho trạng thái loading
+  const [loading, setLoading] = React.useState(true); // State cho trạng thái loading
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [allProduct, setAllProduct] = useState([]);
@@ -33,7 +46,7 @@ export default function ProductTable({ isPopup, onSelectProduct, productsByName 
       const a = await ProductService.getAllProducts();
       setAllProduct(a);
     } catch (error) {
-      console.error('Failed to fetch products:', error);
+      console.error("Failed to fetch products:", error);
     }
   };
 
@@ -45,8 +58,7 @@ export default function ProductTable({ isPopup, onSelectProduct, productsByName 
     if (productsByName) {
       setProducts(Array.isArray(productsByName) ? productsByName : allProduct);
       setLoading(false);
-    }
-    else {
+    } else {
       ProductService.getAllProducts()
         .then((data) => {
           setProducts(Array.isArray(data) ? data : []);
@@ -73,24 +85,28 @@ export default function ProductTable({ isPopup, onSelectProduct, productsByName 
               <TableCell variant="indam">STT</TableCell>
               <TableCell variant="indam">HÌNH ẢNH</TableCell>
               <TableCell variant="indam">TÊN</TableCell>
-              <TableCell variant="indam">SỐ LƯỢNG</TableCell>
+              <TableCell variant="indam">TỔNG SỐ LƯỢNG</TableCell>
               <TableCell variant="indam">NGÀY NHẬP</TableCell>
               <TableCell variant="indam">NGÀY XUẤT</TableCell>
               <TableCell variant="indam">TRẠNG THÁI</TableCell>
               <TableCell variant="indam">BOOKING</TableCell>
-              <TableCell variant="indam" colSpan={3}>THAO TÁC</TableCell>
+              <TableCell variant="indam" colSpan={3}>
+                THAO TÁC
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {products.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((product, index) => (
-              <TableRowComponent
-                key={product.itemId}
-                product={product}
-                index={index}
-                isPopup={isPopup}
-                onSelectProduct={onSelectProduct}
-              />
-            ))}
+            {products
+              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+              .map((product, index) => (
+                <TableRowComponent
+                  key={product.itemId}
+                  product={product}
+                  index={index}
+                  isPopup={isPopup}
+                  onSelectProduct={onSelectProduct}
+                />
+              ))}
           </TableBody>
         </Table>
         <TablePagination

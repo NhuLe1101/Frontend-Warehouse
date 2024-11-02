@@ -1,11 +1,25 @@
-import React, { useState, useEffect } from 'react';
-import { Box, Typography, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button, Snackbar, Alert } from '@mui/material';
-import CompartmentService from './../../api/compartment';
+import React, { useState, useEffect } from "react";
+import {
+  Box,
+  Typography,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  Button,
+  Snackbar,
+  Alert,
+} from "@mui/material";
+import CompartmentService from "./../../api/compartment";
+import Swal from "sweetalert2";
 
 const DeliveryReport = () => {
   const [checkoutGroups, setCheckoutGroups] = useState([]);
-  const [snackbarMessage, setSnackbarMessage] = useState('');
-  const [snackbarSeverity, setSnackbarSeverity] = useState('info');
+  const [snackbarMessage, setSnackbarMessage] = useState("");
+  const [snackbarSeverity, setSnackbarSeverity] = useState("info");
   const [openSnackbar, setOpenSnackbar] = useState(false);
 
   useEffect(() => {
@@ -19,8 +33,11 @@ const DeliveryReport = () => {
         setCheckoutGroups(groupedData);
       })
       .catch((error) => {
-        setSnackbarMessage('Error fetching data: ' + (error.response?.data?.message || 'Network error'));
-        setSnackbarSeverity('error');
+        setSnackbarMessage(
+          "Error fetching data: " +
+            (error.response?.data?.message || "Network error")
+        );
+        setSnackbarSeverity("error");
         setOpenSnackbar(true);
       });
   };
@@ -35,7 +52,7 @@ const DeliveryReport = () => {
           referenceNo: record.referenceNo,
           delivery: record.delivery,
           checkoutDate: record.checkoutDate,
-          employeeName: record.user?.profileName || 'N/A', // Lấy tên nhân viên từ CheckoutRecord
+          employeeName: record.user?.profileName || "N/A", // Lấy tên nhân viên từ CheckoutRecord
           items: [],
         };
       }
@@ -45,56 +62,125 @@ const DeliveryReport = () => {
   };
 
   const handleConfirmCheckoutGroup = (group) => {
-    Promise.all(group.items.map((record) => CompartmentService.confirmCheckout(record.id)))
+    Promise.all(
+      group.items.map((record) => CompartmentService.confirmCheckout(record.id))
+    )
       .then(() => {
-        setSnackbarMessage('Xuất hàng đã được xác nhận thành công!');
-        setSnackbarSeverity('success');
+        setSnackbarMessage("Xuất hàng đã được xác nhận thành công!");
+        setSnackbarSeverity("success");
         setOpenSnackbar(true);
         fetchPendingCheckoutItems(); // Cập nhật lại danh sách sau khi xác nhận
       })
       .catch((error) => {
-        setSnackbarMessage(error.response?.data.message || 'Có lỗi xảy ra trong quá trình xác nhận checkout');
-        setSnackbarSeverity('error');
+        setSnackbarMessage(
+          error.response?.data.message ||
+            "Có lỗi xảy ra trong quá trình xác nhận checkout"
+        );
+        setSnackbarSeverity("error");
         setOpenSnackbar(true);
       });
   };
 
+  const handlePrintCheckoutGroup = async (group) => {
+    console.log(group);
+    Swal.fire({
+      title: "Đang in...",
+      allowOutsideClick: false,
+      didOpen: () => {
+        Swal.showLoading();
+      },
+    });
+
+    try {
+      const response = await fetch(
+        "http://localhost:8080/api/jasper/generate-pdf-delivery-report",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(group),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to generate PDF");
+      }
+
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+
+      // Mở PDF trong một tab mới
+      const newWindow = window.open(url, "_blank");
+      if (newWindow) {
+        newWindow.addEventListener("load", () => {
+          newWindow.print(); // Tự động gọi hộp thoại in
+        });
+      }
+
+      Swal.close(); // Đóng thông báo sau khi mở PDF
+    } catch (error) {
+      Swal.fire({
+        icon: "error",
+        title: "Lỗi",
+        text: "Không thể tạo PDF. Vui lòng thử lại.",
+      });
+      console.error("Error generating PDF:", error);
+    }
+  };
+
   const handleCancelCheckoutGroup = (group) => {
-    Promise.all(group.items.map((record) => CompartmentService.cancelCheckout(record.id)))
+    Promise.all(
+      group.items.map((record) => CompartmentService.cancelCheckout(record.id))
+    )
       .then(() => {
-        setSnackbarMessage('Xuất hàng đã bị hủy và sản phẩm đã được trả lại vào ngăn!');
-        setSnackbarSeverity('success');
+        setSnackbarMessage(
+          "Xuất hàng đã bị hủy và sản phẩm đã được trả lại vào ngăn!"
+        );
+        setSnackbarSeverity("success");
         setOpenSnackbar(true);
         fetchPendingCheckoutItems(); // Cập nhật lại danh sách sau khi hủy
       })
       .catch((error) => {
-        setSnackbarMessage(error.response?.data.message || 'Có lỗi xảy ra trong quá trình hủy checkout');
-        setSnackbarSeverity('error');
+        setSnackbarMessage(
+          error.response?.data.message ||
+            "Có lỗi xảy ra trong quá trình hủy checkout"
+        );
+        setSnackbarSeverity("error");
         setOpenSnackbar(true);
       });
   };
 
   const handleSnackbarClose = (event, reason) => {
-    if (reason === 'clickaway') return;
+    if (reason === "clickaway") return;
     setOpenSnackbar(false);
   };
 
   return (
-    <Box sx={{ py: 4, width: '80%', margin: '0 auto' }}>
-      <Typography variant="h4" sx={{ mb: 2, textAlign: 'center' }}>Delivery Report</Typography>
+    <Box sx={{ py: 4, width: "80%", margin: "0 auto" }}>
+      <Typography variant="h4" sx={{ mb: 2, textAlign: "center" }}>
+        Delivery Report
+      </Typography>
 
       {checkoutGroups.length === 0 ? (
-        <Typography variant="h6" sx={{ textAlign: 'center', color: 'gray' }}>
+        <Typography variant="h6" sx={{ textAlign: "center", color: "gray" }}>
           Không có item nào đang chờ xuất hàng.
         </Typography>
       ) : (
         checkoutGroups.map((group, index) => (
           <Box key={index} sx={{ mb: 4 }}>
-            <Box sx={{ textAlign: 'left', mb: 2 }}>
+            <Box sx={{ textAlign: "left", mb: 2 }}>
               <Typography variant="h6">Biển số xe: {group.delivery}</Typography>
-              <Typography variant="h6">Mã xác nhận: {group.referenceNo}</Typography>
-              <Typography variant="h6">Ngày xuất hàng: {group.checkoutDate}</Typography>
-              <Typography variant="h6">Nhân viên xuất hàng: {group.employeeName}</Typography> {/* Lấy tên nhân viên từ bản ghi */}
+              <Typography variant="h6">
+                Mã xác nhận: {group.referenceNo}
+              </Typography>
+              <Typography variant="h6">
+                Ngày xuất hàng: {group.checkoutDate}
+              </Typography>
+              <Typography variant="h6">
+                Nhân viên xuất hàng: {group.employeeName}
+              </Typography>{" "}
+              {/* Lấy tên nhân viên từ bản ghi */}
             </Box>
 
             <TableContainer component={Paper}>
@@ -116,38 +202,60 @@ const DeliveryReport = () => {
                     <TableRow key={idx}>
                       <TableCell>{idx + 1}</TableCell>
                       <TableCell>{record.item.name}</TableCell>
-                      <TableCell>{record.quantity}</TableCell> 
+                      <TableCell>{record.quantity}</TableCell>
                       <TableCell>{record.item.weight}</TableCell>
                       <TableCell>{record.item.type}</TableCell>
                       <TableCell>{record.compartment.nameComp}</TableCell>
-                      <TableCell>{record.compartment.shelf.nameShelf}</TableCell>
-                      <TableCell>{record.storageDuration}</TableCell> 
+                      <TableCell>
+                        {record.compartment.shelf.nameShelf}
+                      </TableCell>
+                      <TableCell>{record.storageDuration}</TableCell>
                     </TableRow>
                   ))}
                 </TableBody>
               </Table>
             </TableContainer>
 
-            <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
-              <Button variant="contained" color="error" sx={{ mr: 2 }} onClick={() => handleCancelCheckoutGroup(group)}>
+            <Box sx={{ display: "flex", justifyContent: "center", mt: 2 }}>
+              <Button
+                variant="contained"
+                color="error"
+                sx={{ mr: 2 }}
+                onClick={() => handleCancelCheckoutGroup(group)}
+              >
                 Hủy
               </Button>
-              <Button variant="contained" color="primary" onClick={() => handleConfirmCheckoutGroup(group)}>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={() => handleConfirmCheckoutGroup(group)}
+              >
                 Xác nhận
               </Button>
               <Button
                 variant="contained"
                 color="secondary"
                 sx={{ ml: 2 }}
-              >In PDF
+                onClick={() => handlePrintCheckoutGroup(group)}
+              >
+                In PDF
               </Button>
             </Box>
           </Box>
         ))
       )}
 
-      <Snackbar open={openSnackbar} autoHideDuration={6000} onClose={handleSnackbarClose} anchorOrigin={{ vertical: 'center', horizontal: 'center' }}>
-        <Alert onClose={handleSnackbarClose} severity={snackbarSeverity} sx={{ width: '100%' }}>
+      <Snackbar
+        open={openSnackbar}
+        autoHideDuration={6000}
+        onClose={handleSnackbarClose}
+        anchorOrigin={{ vertical: "center", horizontal: "center" }}
+      >
+        <Alert
+          onClose={handleSnackbarClose}
+          severity={snackbarSeverity}
+          sx={{ width: "100%" }}
+        >
           {snackbarMessage}
         </Alert>
       </Snackbar>

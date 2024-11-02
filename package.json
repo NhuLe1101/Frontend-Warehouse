@@ -11,7 +11,7 @@
     "@mui/icons-material": "^6",
     "@mui/material": "^6",
     "@mui/x-data-grid": "^7.18.0",
-    "@mui/x-date-pickers": "^7.18.0",
+    "@mui/x-date-pickers": "^7.22.1",
     "@react-three/drei": "^9.108.1",
     "@react-three/fiber": "^8.16.8",
     "@testing-library/jest-dom": "^5.17.0",
