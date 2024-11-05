@@ -147,51 +147,59 @@ const BookingTableNew = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {bookings
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((booking, index) => (
-                  <TableRow key={booking.id}>
-                    <TableCell>{index + 1}</TableCell>
-                    <TableCell>{booking.customerName}</TableCell>
-                    <TableCell>{booking.customerEmail}</TableCell>
-                    <TableCell>{booking.numberphone}</TableCell>
-                    <TableCell>
-                      <Button
-                        variant="contained"
-                        color="primary"
-                        startIcon={<FaDownload />}
-                        onClick={() => downloadClicked(index)}
-                      >
-                        Booking File
-                      </Button>
-                    </TableCell>
-                    <TableCell>
-                      <Button
-                        variant="contained"
-                        color="primary"
-                        startIcon={<FaEdit />}
-                        onClick={() => handleEditClick(index)}
-                      >
-                        Sửa
-                      </Button>
-                    </TableCell>
-                    <TableCell>
-                      <Button
-                        variant="contained"
-                        color="primary"
-                        startIcon={<FaPrint />}
-                        onClick={() => handlePrintClick(index)}
-                      >
-                        Xuất PDF
-                      </Button>
-                    </TableCell>
-                  </TableRow>
-                ))}
+              {Array.isArray(bookings) && bookings.length > 0 ? (
+                bookings
+                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  .map((booking, index) => (
+                    <TableRow key={booking.id}>
+                      <TableCell>{index + 1}</TableCell>
+                      <TableCell>{booking.customerName}</TableCell>
+                      <TableCell>{booking.customerEmail}</TableCell>
+                      <TableCell>{booking.numberphone}</TableCell>
+                      <TableCell>
+                        <Button
+                          variant="contained"
+                          color="primary"
+                          startIcon={<FaDownload />}
+                          onClick={() => downloadClicked(index)}
+                        >
+                          Booking File
+                        </Button>
+                      </TableCell>
+                      <TableCell>
+                        <Button
+                          variant="contained"
+                          color="primary"
+                          startIcon={<FaEdit />}
+                          onClick={() => handleEditClick(index)}
+                        >
+                          Sửa
+                        </Button>
+                      </TableCell>
+                      <TableCell>
+                        <Button
+                          variant="contained"
+                          color="primary"
+                          startIcon={<FaPrint />}
+                          onClick={() => handlePrintClick(index)}
+                        >
+                          Xuất PDF
+                        </Button>
+                      </TableCell>
+                    </TableRow>
+                  ))
+              ) : (
+                <TableRow>
+                  <TableCell colSpan={7} align="center">
+                    Không có dữ liệu
+                  </TableCell>
+                </TableRow>
+              )}
             </TableBody>
           </Table>
           <TablePagination
             component="div"
-            count={bookings.length}
+            count={Array.isArray(bookings) ? bookings.length : 0}
             page={page}
             onPageChange={handleChangePage}
             rowsPerPage={rowsPerPage}

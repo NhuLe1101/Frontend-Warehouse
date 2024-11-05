@@ -20,6 +20,8 @@
     "@toolpad/core": "latest",
     "axios": "^1.7.5",
     "dayjs": "^1.11.13",
+    "dotenv": "^16.4.5",
+    "emailjs-com": "^3.2.0",
     "qrcode": "^1.5.4",
     "qrcode.react": "^4.1.0",
     "react": "^18.3.1",

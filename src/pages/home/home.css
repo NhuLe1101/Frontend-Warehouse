@@ -1,17 +1,102 @@
-.home {
-  height: 800px;
-  background-color: #262838;
-  position: relative;
+@keyframes gradientBackground {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
-.home p {
-  position: absolute;
-  font-size: 40px;
-  font-weight: bold;
-  color: #fff;
+body {
+  background: linear-gradient(270deg, #ff7e5f, #feb47b, #ff7e5f);
+  background-size: 600% 600%;
+  animation: gradientBackground 15s ease infinite;
+}
+
+.home {
+  margin-top: 56px;
   text-align: center;
-  top: 30%;
-  left: 50%;
-  transform: translateX(-50%);
+}
+.home main section {
+  height: 100vh;
+  background-color: #262838;
+  padding-top: 3vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  padding-left: 3rem;
+  padding-right: 3rem;
+  padding-bottom: 3rem;
+}
+.home main section h2 {
+  font-size: 2em;
+  margin-bottom: 1rem;
+  color: #fff;
+}
+.home main section .home_content {
+  display: flex;
+  width: 100%;
+}
+.home main section .home_content div {
+  width: 50%;
+  padding: 0 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.home main section p {
+  font-size: 1.2em;
+}
+.home main section ul {
+  list-style: none;
+  padding: 0;
+}
+.home main section ul li {
+  font-size: 1.2em;
+  margin-bottom: 5px;
+}
+.home main section form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 600px;
+  width: 500px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  background-color: #f9f9f9;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.home main section form label {
+  font-size: 1.2em;
+  margin: 10px 0 5px;
+  align-self: flex-start;
+}
+.home main section form input,
+.home main section form textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1em;
+}
+.home main section form button {
+  padding: 10px 20px;
+  font-size: 1.2em;
+  color: #fff;
+  background-color: #333;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.home main section form button:hover {
+  background-color: #555;
 }
 
 /*# sourceMappingURL=home.css.map */
