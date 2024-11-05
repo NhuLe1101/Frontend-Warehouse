@@ -12,6 +12,8 @@ import {
   Button,
   Snackbar,
   Alert,
+  Select,
+  MenuItem,
 } from "@mui/material";
 import Swal from "sweetalert2";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -20,11 +22,14 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import dayjs from "dayjs";
 
 const CheckoutListReport = () => {
+  const today = dayjs();
   const [checkoutGroups, setCheckoutGroups] = useState({});
   const [snackbarMessage, setSnackbarMessage] = useState("");
   const [snackbarSeverity, setSnackbarSeverity] = useState("info");
   const [openSnackbar, setOpenSnackbar] = useState(false);
-  const [selectedDate, setSelectedDate] = useState(dayjs());
+  const [startDate, setStartDate] = useState(today.subtract(1, "day"));
+  const [endDate, setEndDate] = useState(today);
+  const [selectedRange, setSelectedRange] = useState("today");
 
   useEffect(() => {
     fetchPendingCheckoutItems();
@@ -107,17 +112,49 @@ const CheckoutListReport = () => {
     return [...new Set(array)];
   };
 
-  const handleDateChange = (date) => {
-    setSelectedDate(date);
+  const handleDateChange = (date, type) => {
+    if (type === "start") {
+      setStartDate(date);
+    } else {
+      setEndDate(date);
+    }
   };
 
-  const filteredCheckoutGroups = selectedDate
-    ? Object.entries(checkoutGroups).filter(
-        ([date]) =>
-          new Date(date).toDateString() ===
-          dayjs(selectedDate).toDate().toDateString()
-      )
-    : Object.entries(checkoutGroups);
+  const handleSelectChange = (event) => {
+    const value = event.target.value;
+    const today = dayjs();
+    setSelectedRange(value);
+    switch (value) {
+      case "today":
+        setStartDate(today.subtract(1, "day"));
+        setEndDate(today);
+        break;
+      case "3days":
+        setStartDate(today.subtract(3, "day"));
+        setEndDate(today);
+        break;
+      case "7days":
+        setStartDate(today.subtract(7, "day"));
+        setEndDate(today);
+        break;
+      case "30days":
+        setStartDate(today.subtract(30, "day"));
+        setEndDate(today);
+        break;
+      default:
+        break;
+    }
+  };
+
+  const filteredCheckoutGroups = Object.entries(checkoutGroups).filter(
+    ([date]) => {
+      const currentDate = new Date(date);
+      return (
+        currentDate >= dayjs(startDate).toDate() &&
+        currentDate <= dayjs(endDate).toDate()
+      );
+    }
+  );
 
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -126,10 +163,40 @@ const CheckoutListReport = () => {
           Danh sách sản phẩm xuất kho
         </Typography>
         <div style={{ display: "flex", alignItems: "center" }}>
+          <Select
+            value={selectedRange}
+            onChange={handleSelectChange}
+            displayEmpty
+            sx={{ marginRight: "1rem" }}
+          >
+            <MenuItem value="" disabled>
+              Chọn khoảng thời gian
+            </MenuItem>
+            <MenuItem value="today">Hôm nay</MenuItem>
+            <MenuItem value="3days">3 ngày trước</MenuItem>
+            <MenuItem value="7days">7 ngày trước</MenuItem>
+            <MenuItem value="30days">30 ngày trước</MenuItem>
+          </Select>
           <div style={{ display: "inline-flex", marginRight: "1rem" }}>
-            <Typography variant="h8">Ngày xuất hàng: </Typography>
+            <Typography variant="h8">Ngày bắt đầu: </Typography>
           </div>
-          <DatePicker value={selectedDate} onChange={handleDateChange} />
+          <DatePicker
+            value={startDate}
+            onChange={(date) => handleDateChange(date, "start")}
+          />
+          <div
+            style={{
+              display: "inline-flex",
+              marginRight: "1rem",
+              marginLeft: "1rem",
+            }}
+          >
+            <Typography variant="h8">Ngày kết thúc: </Typography>
+          </div>
+          <DatePicker
+            value={endDate}
+            onChange={(date) => handleDateChange(date, "end")}
+          />
         </div>
         {filteredCheckoutGroups.length === 0 ? (
           <Typography
