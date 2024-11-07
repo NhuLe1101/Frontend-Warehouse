@@ -1,13 +1,26 @@
+import * as React from "react";
+import {
+  TableRow,
+  TableCell,
+  IconButton,
+  Collapse,
+  Box,
+  Typography,
+  TableHead,
+  TableBody,
+} from "@mui/material";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+import { useEffect, useState } from "react";
+import { FaEdit } from "react-icons/fa"; // Import the download icon from FontAwesome
+import EditProduct from "./EditProduct/EditProduct";
 
-import * as React from 'react';
-import { TableRow, TableCell, IconButton, Collapse, Box, Typography, TableHead, TableBody } from '@mui/material';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-import { useEffect, useState } from 'react';
-import { FaEdit } from 'react-icons/fa'; // Import the download icon from FontAwesome
-import EditProduct from './EditProduct/EditProduct';
-
-export default function TableRowComponent({ product, index, isPopup, onSelectProduct }) {
+export default function TableRowComponent({
+  product,
+  index,
+  isPopup,
+  onSelectProduct,
+}) {
   const [open, setOpen] = React.useState(false);
   const [compartments, setCompartments] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -16,7 +29,7 @@ export default function TableRowComponent({ product, index, isPopup, onSelectPro
   const handleButtonClick = () => {
     if (product.quantity === 1) {
       // Nếu quantity là 1, tự động thêm vào compartment
-      onSelectProduct(product, 1);  // Gửi số lượng mặc định là 1
+      onSelectProduct(product, 1); // Gửi số lượng mặc định là 1
     } else {
       // Nếu quantity > 1, mở popup để nhập số lượng
       onSelectProduct(product);
@@ -27,7 +40,7 @@ export default function TableRowComponent({ product, index, isPopup, onSelectPro
       fetch(`http://localhost:8080/api/product/${product.itemId}/compartments`)
         .then((response) => {
           if (!response.ok) {
-            throw new Error('Failed to fetch compartments');
+            throw new Error("Failed to fetch compartments");
           }
           return response.json();
         })
@@ -56,8 +69,8 @@ export default function TableRowComponent({ product, index, isPopup, onSelectPro
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
-    const day = String(date.getDate()).padStart(2, '0');
-    const month = String(date.getMonth() + 1).padStart(2, '0'); // Tháng bắt đầu từ 0
+    const day = String(date.getDate()).padStart(2, "0");
+    const month = String(date.getMonth() + 1).padStart(2, "0"); // Tháng bắt đầu từ 0
     const year = date.getFullYear();
     return `${day}/${month}/${year}`;
   };
@@ -65,10 +78,14 @@ export default function TableRowComponent({ product, index, isPopup, onSelectPro
   return (
     <>
       <TableRow>
-        <TableCell>{product.itemId}</TableCell>
+        <TableCell>{index + 1}</TableCell>
         <TableCell>
-          <div className='imgPrdContainer'>
-            <img className='imgPrd' src={product.image || '/favicon.ico'} alt="" />
+          <div className="imgPrdContainer">
+            <img
+              className="imgPrd"
+              src={product.image || "/favicon.ico"}
+              alt=""
+            />
           </div>
         </TableCell>
         <TableCell>{product.name}</TableCell>
@@ -78,7 +95,7 @@ export default function TableRowComponent({ product, index, isPopup, onSelectPro
         <TableCell>{product.status}</TableCell>
         <TableCell>{product.booking.id}</TableCell>
         <TableCell>
-          <IconButton size="small" onClick={() => handleEditClick(product)} >
+          <IconButton size="small" onClick={() => handleEditClick(product)}>
             <FaEdit />
           </IconButton>
         </TableCell>
@@ -89,7 +106,11 @@ export default function TableRowComponent({ product, index, isPopup, onSelectPro
         </TableCell>
         {isPopup && (
           <TableCell>
-            <button variant="contained" color="primary" onClick={handleButtonClick}>
+            <button
+              variant="contained"
+              color="primary"
+              onClick={handleButtonClick}
+            >
               Select
             </button>
           </TableCell>
@@ -100,17 +121,17 @@ export default function TableRowComponent({ product, index, isPopup, onSelectPro
           <Collapse in={open} timeout="auto" unmountOnExit>
             <Box margin={1}>
               <Typography variant="h6" gutterBottom>
-                <TableHead style={{ display: 'block', width: '100%' }}>
-                  <TableRow style={{ display: 'flex', width: '100%' }}>
-                    <TableCell width={'25%'}>STT</TableCell>
-                    <TableCell width={'25%'}>Kệ</TableCell>
-                    <TableCell width={'25%'}>Ngăn chứa</TableCell>
-                    <TableCell width={'25%'}>Số lượng</TableCell>
+                <TableHead style={{ display: "block", width: "100%" }}>
+                  <TableRow style={{ display: "flex", width: "100%" }}>
+                    <TableCell width={"25%"}>STT</TableCell>
+                    <TableCell width={"25%"}>Kệ</TableCell>
+                    <TableCell width={"25%"}>Ngăn chứa</TableCell>
+                    <TableCell width={"25%"}>Số lượng</TableCell>
                   </TableRow>
                 </TableHead>
               </Typography>
               <Typography variant="body2">
-                <TableBody style={{ display: 'block', width: '100%' }}>
+                <TableBody style={{ display: "block", width: "100%" }}>
                   {loading ? (
                     <TableRow>
                       <TableCell colSpan={4}>Đang tải...</TableCell>
@@ -121,11 +142,20 @@ export default function TableRowComponent({ product, index, isPopup, onSelectPro
                     </TableRow>
                   ) : compartments.length > 0 ? (
                     compartments.map((compartment, idx) => (
-                      <TableRow key={compartment.compId} style={{ display: 'flex', width: '100%' }}>
-                        <TableCell width={'25%'}>{count++}</TableCell>
-                        <TableCell width={'25%'}>{compartment.shelf?.nameShelf || 'Không xác định'}</TableCell>
-                        <TableCell width={'25%'}>{compartment.nameComp}</TableCell>
-                        <TableCell width={'25%'}>{compartment.quantity}</TableCell>
+                      <TableRow
+                        key={compartment.compId}
+                        style={{ display: "flex", width: "100%" }}
+                      >
+                        <TableCell width={"25%"}>{count++}</TableCell>
+                        <TableCell width={"25%"}>
+                          {compartment.shelf?.nameShelf || "Không xác định"}
+                        </TableCell>
+                        <TableCell width={"25%"}>
+                          {compartment.nameComp}
+                        </TableCell>
+                        <TableCell width={"25%"}>
+                          {compartment.quantity}
+                        </TableCell>
                       </TableRow>
                     ))
                   ) : (
@@ -140,11 +170,8 @@ export default function TableRowComponent({ product, index, isPopup, onSelectPro
         </TableCell>
       </TableRow>
       {isEditing && (
-                <EditProduct
-                    product={selectedProduct}
-                    onClose={handleClosePopup}
-                />
-            )}
+        <EditProduct product={selectedProduct} onClose={handleClosePopup} />
+      )}
     </>
   );
 }

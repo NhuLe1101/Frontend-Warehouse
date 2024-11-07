@@ -43,7 +43,7 @@ export default function ProductTable({
 
   const allProducts = async () => {
     try {
-      const a = await ProductService.getAllProducts();
+      const a = await ProductService.getProductsByStatus();
       setAllProduct(a);
     } catch (error) {
       console.error("Failed to fetch products:", error);
@@ -59,7 +59,7 @@ export default function ProductTable({
       setProducts(Array.isArray(productsByName) ? productsByName : allProduct);
       setLoading(false);
     } else {
-      ProductService.getAllProducts()
+      ProductService.getProductsByStatus()
         .then((data) => {
           setProducts(Array.isArray(data) ? data : []);
         })

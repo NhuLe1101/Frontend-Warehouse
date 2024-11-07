@@ -20,6 +20,24 @@ const getAllProducts = () => {
     });
 };
 
+const getProductsByStatus = () => {
+  return axios
+    .get(API_URL + "byStatus")
+    .then((response) => {
+      console.log(response.data);
+      return response.data;
+    })
+    .catch((error) => {
+      console.error("Có lỗi xảy ra khi lấy dữ liệu:", error);
+      if (error.response) {
+        console.log(error.response.data.message);
+        return error.response.data.message;
+      } else {
+        return "Có lỗi không xác định xảy ra.";
+      }
+    });
+};
+
 const getProductsIsNullCompartment = () => {
   return axios
     .get(API_URL + "items-not-in-compartments")
@@ -113,7 +131,7 @@ const getProductsByCheckoutDecrease = () => {
 const getProductsByName = (name) => {
   return axios
     .get(`${API_URL}search`, {
-      params: { name }  // Gửi tham số name qua query params
+      params: { name }, // Gửi tham số name qua query params
     })
     .then((response) => {
       console.log(response.data);
@@ -129,7 +147,6 @@ const getProductsByName = (name) => {
       }
     });
 };
-
 
 const updateProduct = (product) => {
   const formData = new FormData();
@@ -171,7 +188,7 @@ const ProductService = {
   getProductsByCheckinIncrease,
   getProductsByCheckoutDecrease,
   getProductsByCheckoutIncrease,
+  getProductsByStatus,
 };
-
 
 export default ProductService;
