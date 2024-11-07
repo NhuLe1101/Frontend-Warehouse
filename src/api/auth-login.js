@@ -26,10 +26,17 @@ const getCurrentUser = () => {
   }
 };
 
+const countUsers = () => {
+  return axios
+    .get(API_URL + "countUser")
+    .then(response => response.data);
+};
+
 const AuthService = {
   login,
   logout,
   getCurrentUser,
+  countUsers,
 };
 
 export default AuthService;
