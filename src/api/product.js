@@ -179,6 +179,41 @@ const updateProduct = (product) => {
     });
 };
 
+const getTotalItemsInStock = () => {
+  return axios
+    .get(API_URL + "totalItemsInStock")
+    .then((response) => {
+      console.log("Tổng số lượng item đang lưu kho:", response.data);
+      return response.data; // Trả về tổng số lượng item
+    })
+    .catch((error) => {
+      console.error("Có lỗi xảy ra khi lấy tổng số lượng item:", error);
+      if (error.response) {
+        console.log(error.response.data.message);
+        return error.response.data.message;
+      } else {
+        return "Có lỗi không xác định xảy ra.";
+      }
+    });
+};
+
+const getMonthlyItemCount = () => {
+  return axios
+    .get(API_URL + "monthlyItemCount")
+    .then((response) => {
+      console.log("Thống kê số lượng hàng nhập theo tháng:", response.data);
+      return response.data; // Trả về dữ liệu thống kê theo tháng (gồm tháng và tổng số lượng)
+    })
+    .catch((error) => {
+      console.error("Có lỗi xảy ra khi lấy dữ liệu thống kê theo tháng:", error);
+      if (error.response) {
+        console.log(error.response.data.message);
+        return error.response.data.message;
+      } else {
+        return "Có lỗi không xác định xảy ra.";
+      }
+    });
+};
 const ProductService = {
   getAllProducts,
   updateProduct,
@@ -189,6 +224,8 @@ const ProductService = {
   getProductsByCheckoutDecrease,
   getProductsByCheckoutIncrease,
   getProductsByStatus,
+  getTotalItemsInStock,
+  getMonthlyItemCount,
 };
 
 export default ProductService;

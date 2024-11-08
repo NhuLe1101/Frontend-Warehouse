@@ -76,11 +76,28 @@ const updateBooking = ( booking) => {
     });
 };
 
-
+const getTotalCustomers = () => {
+  return axios
+    .get(API_URL + "totalCustomers")
+    .then((response) => {
+      console.log("Tổng số lượng khách hàng:", response.data);
+      return response.data; // Trả về tổng số lượng khách hàng
+    })
+    .catch((error) => {
+      console.error("Có lỗi xảy ra khi lấy tổng số lượng khách hàng:", error);
+      if (error.response) {
+        console.log(error.response.data.message);
+        return error.response.data.message;
+      } else {
+        return "Có lỗi không xác định xảy ra.";
+      }
+    });
+};
 const BookingService = {
   upload,
   getAllBookings,
   updateBooking,
+  getTotalCustomers,
 };
 
 export default BookingService;

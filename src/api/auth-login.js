@@ -28,7 +28,7 @@ const getCurrentUser = () => {
 
 const countUsers = () => {
   return axios
-    .get(API_URL + "countUser")
+    .get(API_URL + "countUsers")
     .then(response => response.data);
 };
 

@@ -15,7 +15,7 @@ import { Outlet, Link } from 'react-router-dom';  // Sử dụng Link từ react
 // Cấu hình các mục navigation với đường dẫn tương ứng
 const NAVIGATION = [
   {
-    segment: 'statistic/dashboard',
+    segment: 'statistic',
     title: 'Tổng quan',
     icon: <DashboardIcon />,
   },
@@ -35,11 +35,6 @@ const NAVIGATION = [
         icon: <DescriptionIcon />,
       },
     ],
-  },
-  {
-    segment: 'statistic/static',
-    title: 'Thống kê',
-    icon: <BarChartIcon />,
   },
 ];
 // Tạo theme cho dashboard
@@ -74,7 +69,7 @@ function Statistic(props) {
         <AppProvider
           navigation={NAVIGATION}
           branding={{
-            title: 'Thống kê và báo cáo',  // Tiêu đề của Dashboard
+            title: 'Báo cáo',  // Tiêu đề của Dashboard
           }}
           // router={router}
           theme={demoTheme}
