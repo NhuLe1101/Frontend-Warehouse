@@ -1,17 +1,6 @@
 import React, { useState, useEffect } from "react";
 import {
-  Box,
-  Typography,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Paper,
-  Button,
-  Snackbar,
-  Alert,
+  Box, Typography, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button, Snackbar, Alert, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions,
 } from "@mui/material";
 import CompartmentService from "./../../api/compartment";
 import Swal from "sweetalert2";
@@ -35,7 +24,7 @@ const DeliveryReport = () => {
       .catch((error) => {
         setSnackbarMessage(
           "Error fetching data: " +
-            (error.response?.data?.message || "Network error")
+          (error.response?.data?.message || "Network error")
         );
         setSnackbarSeverity("error");
         setOpenSnackbar(true);
@@ -74,7 +63,7 @@ const DeliveryReport = () => {
       .catch((error) => {
         setSnackbarMessage(
           error.response?.data.message ||
-            "Có lỗi xảy ra trong quá trình xác nhận checkout"
+          "Có lỗi xảy ra trong quá trình xác nhận checkout"
         );
         setSnackbarSeverity("error");
         setOpenSnackbar(true);
@@ -129,26 +118,41 @@ const DeliveryReport = () => {
     }
   };
 
-  const handleCancelCheckoutGroup = (group) => {
-    Promise.all(
-      group.items.map((record) => CompartmentService.cancelCheckout(record.id))
-    )
-      .then(() => {
-        setSnackbarMessage(
-          "Xuất hàng đã bị hủy và sản phẩm đã được trả lại vào ngăn!"
-        );
-        setSnackbarSeverity("success");
-        setOpenSnackbar(true);
-        fetchPendingCheckoutItems(); // Cập nhật lại danh sách sau khi hủy
-      })
-      .catch((error) => {
-        setSnackbarMessage(
-          error.response?.data.message ||
-            "Có lỗi xảy ra trong quá trình hủy checkout"
-        );
-        setSnackbarSeverity("error");
-        setOpenSnackbar(true);
-      });
+  const [openDialog, setOpenDialog] = useState(false);
+  const [selectedGroup, setSelectedGroup] = useState(null);
+
+  const handleOpenDialog = (group) => {
+    setSelectedGroup(group);
+    setOpenDialog(true);
+  };
+
+  const handleCloseDialog = () => {
+    setOpenDialog(false);
+    setSelectedGroup(null);
+  };
+
+  const handleConfirmCancelCheckout = () => {
+    if (selectedGroup) {
+      Promise.all(
+        selectedGroup.items.map((record) => CompartmentService.cancelCheckout(record.id))
+      )
+        .then(() => {
+          setSnackbarMessage("Xuất hàng đã bị hủy và sản phẩm đã được trả lại vào ngăn!");
+          setSnackbarSeverity("success");
+          setOpenSnackbar(true);
+          fetchPendingCheckoutItems(); // Cập nhật lại danh sách sau khi hủy
+        })
+        .catch((error) => {
+          setSnackbarMessage(
+            error.response?.data.message || "Có lỗi xảy ra trong quá trình hủy checkout"
+          );
+          setSnackbarSeverity("error");
+          setOpenSnackbar(true);
+        })
+        .finally(() => {
+          handleCloseDialog();
+        });
+    }
   };
 
   const handleSnackbarClose = (event, reason) => {
@@ -171,16 +175,9 @@ const DeliveryReport = () => {
           <Box key={index} sx={{ mb: 4 }}>
             <Box sx={{ textAlign: "left", mb: 2 }}>
               <Typography variant="h6">Biển số xe: {group.delivery}</Typography>
-              <Typography variant="h6">
-                Mã xác nhận: {group.referenceNo}
-              </Typography>
-              <Typography variant="h6">
-                Ngày xuất hàng: {group.checkoutDate}
-              </Typography>
-              <Typography variant="h6">
-                Nhân viên xuất hàng: {group.employeeName}
-              </Typography>{" "}
-              {/* Lấy tên nhân viên từ bản ghi */}
+              <Typography variant="h6">Mã xác nhận: {group.referenceNo}</Typography>
+              <Typography variant="h6">Ngày xuất hàng: {group.checkoutDate}</Typography>
+              <Typography variant="h6">Nhân viên xuất hàng: {group.employeeName}</Typography>
             </Box>
 
             <TableContainer component={Paper}>
@@ -206,9 +203,7 @@ const DeliveryReport = () => {
                       <TableCell>{record.item.weight}</TableCell>
                       <TableCell>{record.item.type}</TableCell>
                       <TableCell>{record.compartment.nameComp}</TableCell>
-                      <TableCell>
-                        {record.compartment.shelf.nameShelf}
-                      </TableCell>
+                      <TableCell>{record.compartment.shelf.nameShelf}</TableCell>
                       <TableCell>{record.storageDuration}</TableCell>
                     </TableRow>
                   ))}
@@ -221,7 +216,7 @@ const DeliveryReport = () => {
                 variant="contained"
                 color="error"
                 sx={{ mr: 2 }}
-                onClick={() => handleCancelCheckoutGroup(group)}
+                onClick={() => handleOpenDialog(group)}
               >
                 Hủy
               </Button>
@@ -244,6 +239,29 @@ const DeliveryReport = () => {
           </Box>
         ))
       )}
+
+      {/* Dialog xác nhận */}
+      <Dialog
+        open={openDialog}
+        onClose={handleCloseDialog}
+        aria-labelledby="confirm-cancel-dialog-title"
+        aria-describedby="confirm-cancel-dialog-description"
+      >
+        <DialogTitle id="confirm-cancel-dialog-title">Xác nhận hủy</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="confirm-cancel-dialog-description">
+            Bạn có chắc chắn muốn hủy xuất hàng? Hành động này không thể hoàn tác.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseDialog} color="primary">
+            Hủy
+          </Button>
+          <Button onClick={handleConfirmCancelCheckout} color="error" autoFocus>
+            Đồng ý
+          </Button>
+        </DialogActions>
+      </Dialog>
 
       <Snackbar
         open={openSnackbar}

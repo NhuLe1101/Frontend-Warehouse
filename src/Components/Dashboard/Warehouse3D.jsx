@@ -19,7 +19,7 @@ function Grid() {
         <primitive object={new GridHelper(30, 30, 'white', 'gray')} />
     );
 }
-function Warehouse2D() {
+function Warehouse3D() {
     return (
       <Canvas
         orthographic
@@ -60,4 +60,4 @@ function Warehouse2D() {
     );
   }
 
-export default Warehouse2D;
+export default Warehouse3D;
