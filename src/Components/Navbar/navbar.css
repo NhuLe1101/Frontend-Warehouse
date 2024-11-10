@@ -9,6 +9,7 @@
   position: fixed;
   top: 0;
   z-index: 1000;
+  overflow: hidden;
 }
 
 .navbar .logo {
@@ -186,4 +187,5 @@
   align-items: center;
   font-size: 20px;
 }
+
 /*# sourceMappingURL=navbar.css.map */
