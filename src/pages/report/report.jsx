@@ -15,12 +15,12 @@ import { Outlet, Link } from 'react-router-dom';  // Sử dụng Link từ react
 // Cấu hình các mục navigation với đường dẫn tương ứng
 const NAVIGATION = [
   {
-    segment: 'statistic',
+    segment: 'report',
     title: 'Tổng quan',
     icon: <DashboardIcon />,
   },
   {
-    segment: 'statistic/report',
+    segment: 'report/reports',
     title: 'Báo cáo',
     icon: <SummarizeIcon />,
     children: [
@@ -55,7 +55,7 @@ const demoTheme = createTheme({
 });
 
 // Component chính của Statistic
-function Statistic(props) {
+function Report(props) {
   const { window } = props;
 
   // Sử dụng router demo từ toolpad
@@ -84,8 +84,8 @@ function Statistic(props) {
   );
 }
 
-Statistic.propTypes = {
+Report.propTypes = {
   window: PropTypes.func,
 };
 
-export default Statistic;
+export default Report;

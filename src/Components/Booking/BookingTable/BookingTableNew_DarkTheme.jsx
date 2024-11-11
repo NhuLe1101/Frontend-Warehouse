@@ -30,7 +30,7 @@ const darkTheme = createTheme({
   },
 });
 
-const BookingTableNew = () => {
+const BookingTableNew = ({ setLoading }) => {
   const [bookings, setBookings] = useState([]);
   const [isEditing, setIsEditing] = useState(false);
   const [selectedBooking, setSelectedBooking] = useState(null);
@@ -117,9 +117,18 @@ const BookingTableNew = () => {
   };
 
   useEffect(() => {
+    setLoading(true); 
     BookingService.getAllBookings()
-      .then((data) => setBookings(data))
-      .catch((error) => console.error("Có lỗi xảy ra:", error));
+      .then((data) => {
+        setBookings(data); 
+        setLoading(false); 
+      })
+      .catch((error) => {
+        console.error("Có lỗi xảy ra:", error);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   }, []);
 
   const handleChangePage = (event, newPage) => {
@@ -130,6 +139,7 @@ const BookingTableNew = () => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
+
 
   return (
     <Fragment>

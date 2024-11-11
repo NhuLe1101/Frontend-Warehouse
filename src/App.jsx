@@ -14,10 +14,10 @@ import Product from './pages/product/Product';
 import Navbar from './Components/Navbar/Navbar';
 import Footer from './Components/Footer/Footer';
 import PrivateRoute from './Components/PrivateRoute/PrivateRoute';
-import Statistic from './pages/statistic/Statistic';
 import Dashboard from './Components/Dashboard/Dashboard';
 import CheckoutListReport from './Components/CheckoutListReport/CheckoutListReport';
 import DeliveryReport from './Components/DeliveryReport/DeliveryReport';
+import Report from './pages/report/report';
 const App = () => {
   const Layout = () => {
     return (
@@ -53,12 +53,12 @@ const App = () => {
           element: <Product />,
         },
         {
-          path: "/statistic",
-          element: <Statistic />,
+          path: "/report",
+          element: <Report />,
           children: [
             { path: "", Component: Dashboard },
-            { path: "report/checkout-list", Component: CheckoutListReport },
-            { path: "report/delivery-confirmation", Component: DeliveryReport },
+            { path: "reports/checkout-list", Component: CheckoutListReport },
+            { path: "reports/delivery-confirmation", Component: DeliveryReport },
           ],
         },
         {

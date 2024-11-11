@@ -1,19 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { IconButton, Badge, Snackbar, Alert, Popper, Paper, List, ListItem, ListItemText } from '@mui/material';
-import { ListItemIcon } from '@mui/material';
+import { IconButton, Badge, Popper, Paper, List, ListItem, ListItemIcon, ListItemText, Menu, MenuItem, Snackbar } from '@mui/material';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import AccessAlarmIcon from '@mui/icons-material/AccessAlarm';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import SockJS from 'sockjs-client';
-import { Stomp } from '@stomp/stompjs';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+import CircleIcon from '@mui/icons-material/Circle';
+import { Alert } from '@mui/material';
 import AuthService from '../../api/auth-login';
 import './navbar.css';
 import moment from 'moment';
-
+import NotificationService from '../../api/notification';
 
 const Navbar = () => {
   const [anchorEl, setAnchorEl] = useState(null);
+  const [menuAnchorEl, setMenuAnchorEl] = useState(null);
+  const [selectedNotification, setSelectedNotification] = useState(null);
   const location = useLocation();
   const [currentUser, setCurrentUser] = useState(undefined);
   const [notifications, setNotifications] = useState([]);
@@ -25,10 +27,8 @@ const Navbar = () => {
     const user = AuthService.getCurrentUser();
     if (user) {
       setCurrentUser(user);
-
       // Gọi API để lấy danh sách thông báo ban đầu
-      fetch('http://localhost:8080/api/notifications')
-        .then(response => response.json())
+      NotificationService.getNotifications()
         .then(data => {
           console.log('Fetched notifications:', data);
           setNotifications(data);
@@ -38,24 +38,14 @@ const Navbar = () => {
         });
 
       // Kết nối với WebSocket server
-      const socket = new SockJS('http://localhost:8080/ws');
-      const stompClient = Stomp.over(socket);
-
-      stompClient.connect({}, () => {
-        console.log('Connected to WebSocket');
-        stompClient.subscribe('/topic/notifications', (message) => {
-          console.log('Received message:', message.body);
-          const notification = JSON.parse(message.body); // Nếu thông báo là JSON
-          setNotifications((prev) => [notification, ...prev]);
-          setNewNotification(notification);
-          setOpenSnackbar(true);
-        });
-      }, (error) => {
-        console.error('Error connecting to WebSocket:', error);
+      const disconnectWebSocket = NotificationService.connectWebSocket((notification) => {
+        setNotifications((prev) => [notification, ...prev]);
+        setNewNotification(notification);
+        setOpenSnackbar(true);
       });
 
       return () => {
-        stompClient.disconnect();
+        disconnectWebSocket();
       };
     }
   }, []);
@@ -69,6 +59,42 @@ const Navbar = () => {
 
   const handleSnackbarClose = () => {
     setOpenSnackbar(false);
+  };
+
+  const handleMenuClick = (event, notification) => {
+    setMenuAnchorEl(event.currentTarget);
+    setSelectedNotification(notification);
+  };
+
+  const handleMenuClose = () => {
+    setMenuAnchorEl(null);
+    setSelectedNotification(null);
+  };
+
+  const markAsRead = (id) => {
+    NotificationService.markAsRead(id)
+      .then(() => {
+        setNotifications((prev) =>
+          prev.map((notification) =>
+            notification.id === id ? { ...notification, status: 'READ' } : notification
+          )
+        );
+        handleMenuClose();
+      })
+      .catch((error) => {
+        console.error('Error marking notification as read:', error);
+      });
+  };
+
+  const deleteNotification = (id) => {
+    NotificationService.deleteNotification(id)
+      .then(() => {
+        setNotifications((prev) => prev.filter((notification) => notification.id !== id));
+        handleMenuClose();
+      })
+      .catch((error) => {
+        console.error('Error deleting notification:', error);
+      });
   };
 
   return (
@@ -91,8 +117,8 @@ const Navbar = () => {
         <li className={location.pathname === '/product' ? 'active' : ''}>
           <Link to="/product">Sản phẩm</Link>
         </li>
-        <li className={location.pathname === '/statistic' ? 'active' : ''}>
-          <Link to="/statistic">Báo cáo</Link>
+        <li className={location.pathname === '/report' ? 'active' : ''}>
+          <Link to="/report">Báo cáo</Link>
         </li>
         <li className={location.pathname === '/warehouse' ? 'active' : ''}>
           <Link to="/warehouse">Kho hàng</Link>
@@ -101,23 +127,36 @@ const Navbar = () => {
       {currentUser ? (
         <div className='login-success'>
           <IconButton color="inherit" onClick={handleNotificationClick}>
-            <Badge badgeContent={showBadge ? notifications.length : 0} color="error">
+            <Badge badgeContent={showBadge ? notifications.filter(n => n.status === 'UNREAD').length : 0} color="error">
               <NotificationsIcon style={{ color: '#fff' }} />
             </Badge>
           </IconButton>
           <Popper open={Boolean(anchorEl)} anchorEl={anchorEl} placement="bottom-start" style={{ zIndex: 1300 }}>
-            <Paper style={{ maxHeight: '400px', width: '350px', overflowY: 'auto' }}>
+            <Paper style={{ maxHeight: '400px', width: '400px', overflowY: 'auto' }}>
               {notifications.length > 0 ? (
                 <List>
                   {notifications.map((notification, index) => (
-                    <ListItem key={index}>
-                      <ListItemIcon>
-                        {notification.type === 'CHECKOUT_REMINDER' && <AccessAlarmIcon color="error" />}
-                        {notification.type === 'ITEM_CHECKOUT' && <CheckCircleIcon color="success" />}
-                      </ListItemIcon>
-                      <ListItemText
-                        primary={notification.message}
-                        secondary={moment(notification.timestamp).format('DD/MM/YYYY HH:mm')} />
+                    <ListItem key={index} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                      <div style={{ display: 'flex', alignItems: 'center' }}>
+                        <ListItemIcon>
+                          {notification.type === 'CHECKOUT_REMINDER' && <AccessAlarmIcon color="error" />}
+                          {notification.type === 'ITEM_CHECKOUT' && <CheckCircleIcon color="success" />}
+                        </ListItemIcon>
+                        <ListItemText
+                          primary={notification.message}
+                          secondary={moment(notification.timestamp).format('DD/MM/YYYY HH:mm')}
+                        />
+                      </div>
+                      <div style={{ display: 'flex', alignItems: 'center' }}>
+                        <IconButton onClick={(e) => handleMenuClick(e, notification)}>
+                          <MoreVertIcon />
+                        </IconButton>
+
+                        {/* Circle icon để hiển thị nếu chưa đọc */}
+                        {notification.status === 'UNREAD' && (
+                          <CircleIcon style={{ color: '#5aa7ff', marginLeft: '5px', fontSize: '1rem' }} />
+                        )}
+                      </div>
                     </ListItem>
                   ))}
                 </List>
@@ -126,6 +165,14 @@ const Navbar = () => {
               )}
             </Paper>
           </Popper>
+          <Menu
+            anchorEl={menuAnchorEl}
+            open={Boolean(menuAnchorEl)}
+            onClose={handleMenuClose}
+          >
+            <MenuItem onClick={() => markAsRead(selectedNotification.id)}>Đánh dấu đã đọc</MenuItem>
+            <MenuItem onClick={() => deleteNotification(selectedNotification.id)}>Xóa thông báo</MenuItem>
+          </Menu>
           <li className='profileName-user'>
             <span>{currentUser.profileName}</span>
           </li>
@@ -143,7 +190,7 @@ const Navbar = () => {
       {/* Snackbar hiển thị thông báo mới cho toàn user */}
       <Snackbar
         open={openSnackbar}
-        autoHideDuration={10000} 
+        autoHideDuration={10000}
         onClose={handleSnackbarClose}
         anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
       >
@@ -151,7 +198,6 @@ const Navbar = () => {
           {newNotification?.message}
         </Alert>
       </Snackbar>
-
     </div>
   );
 };
