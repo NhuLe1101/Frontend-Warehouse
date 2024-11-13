@@ -1,7 +1,7 @@
 .navbar {
   width: 100%;
   height: 56px;
-  background-color: #1E1E2C;
+  background-color: #1e1e2c;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -18,7 +18,7 @@
 }
 
 .navbar .logo a {
-  color: #FFFFFF;
+  color: #ffffff;
   text-decoration: none;
   font-size: 18px;
   font-weight: bold;
@@ -39,7 +39,7 @@
 }
 
 .navbar .nav-links li a {
-  color: #FFFFFF;
+  color: #ffffff;
   text-decoration: none;
   line-height: 56px;
   padding: 0 8px;
@@ -56,7 +56,7 @@
   transform: translateX(-50%);
   width: 80%;
   border-radius: 8px;
-  border-bottom: 4px solid #FFFFFF;
+  border-bottom: 4px solid #ffffff;
 }
 
 .navbar .nav-links li.active a::after {
@@ -67,12 +67,12 @@
   transform: translateX(-50%);
   border-radius: 8px;
   width: 80%;
-  border-bottom: 4px solid #FFFFFF;
+  border-bottom: 4px solid #ffffff;
 }
 
 .navbar .login {
   text-decoration: none;
-  color: #FFFFFF;
+  color: #ffffff;
 }
 
 .navbar li {
@@ -82,7 +82,7 @@
 }
 
 .navbar li a {
-  color: #FFFFFF;
+  color: #ffffff;
   text-decoration: none;
   line-height: 56px;
   padding: 0 8px;
@@ -97,7 +97,7 @@
   left: 50%;
   transform: translateX(-50%);
   width: 80%;
-  border-bottom: 4px solid #FFFFFF;
+  border-bottom: 4px solid #ffffff;
 }
 
 .navbar li.active a::after {
@@ -107,7 +107,7 @@
   left: 50%;
   transform: translateX(-50%);
   width: 80%;
-  border-bottom: 4px solid #FFFFFF;
+  border-bottom: 4px solid #ffffff;
 }
 
 .navbar .menu-icon {
@@ -116,20 +116,21 @@
 
 .navbar .menu-icon img {
   font-size: 24px;
-  color: #FFFFFF;
+  color: #ffffff;
   cursor: pointer;
+  padding-top: 6px;
 }
 
-@media (max-width: 1023px) {
+@media (max-width: 1320px) {
   .navbar .menu-icon {
     display: block;
     right: 0;
     position: absolute;
-    margin-right: 64px;
+    margin-right: 48px;
   }
 
   .navbar .login {
-    display: none;
+    display: flex;
   }
 
   .navbar .nav-links {
@@ -137,10 +138,10 @@
     flex-direction: column;
     position: fixed;
     top: 56px;
-    left: 0;
-    width: 100%;
+    right: 0;
+    width: 20rem;
     height: auto;
-    background-color: #1E1E2C;
+    background-color: #1e1e2c;
     padding: 10px 0;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
     align-items: center;
@@ -156,7 +157,7 @@
   }
 
   .navbar .nav-links li a {
-    color: #FFFFFF;
+    color: #ffffff;
     text-decoration: none;
     font-size: 16px;
     transition: color 0.3s;
@@ -170,18 +171,18 @@
     left: 50%;
     transform: translateX(-50%);
     width: 90%;
-    border-bottom: 4px solid #FFFFFF;
+    border-bottom: 4px solid #ffffff;
   }
 }
-.login-success{
+.login-success {
   display: flex;
 }
-.profileName-user{
+.profileName-user {
   color: white;
   display: flex;
   align-items: center;
 }
-.login-success .dot-login{
+.login-success .dot-login {
   color: white;
   display: flex;
   align-items: center;
