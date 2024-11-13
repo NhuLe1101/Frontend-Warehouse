@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Swal from "sweetalert2";
 import emailjs from "emailjs-com";
 import "./home.scss";
+import Loader from "../../Components/Loader/Loader";
 
 const Home = () => {
+  const [loading, setLoading] = useState(true);
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
@@ -13,6 +15,20 @@ const Home = () => {
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 1000);
+    const handleLoad = () => {
+      setLoading(false);
+      clearTimeout(timer); 
+    };
+    window.addEventListener('load', handleLoad);
+    return () => {
+      window.removeEventListener('load', handleLoad);
+      clearTimeout(timer);
+    };
+  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -68,6 +84,9 @@ const Home = () => {
       }
     );
   };
+  if (loading) {
+    return <Loader />;
+  }
   return (
     <div className="home">
       <main>

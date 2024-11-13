@@ -10,13 +10,14 @@ import ShelfModel from '../../Components/Model3D/ShelfModel';
 import TruckModel from '../../Components/Model3D/TruckModel';
 import Compartment from '../../Components/Model3D/Compartment';
 import WarehouseView from '../../Components/WarehouseView/WarehouseView';
-// import QRCodeScanner from '../../Components/QRCodeScanner/QRCodeScanner';
+import Loader from '../../Components/Loader/Loader';
 
 const Warehouse = () => {
   const [compartments, setCompartments] = useState([]);
   const [popupVisible, setPopupVisible] = useState(false);
   const [selectedCompartment, setSelectedCompartment] = useState(null);
   const [selectedView, setSelectedView] = useState('default'); // View lựa chọn: default, available, checkout
+  const [loading, setLoading] = useState(false);
 
   const fetchCompartmentFromServer = (compartmentIdentifier) => {
     return fetch(`http://localhost:8080/api/compartments/${compartmentIdentifier.shelfId}/${compartmentIdentifier.nameComp}`)
@@ -83,12 +84,17 @@ const Warehouse = () => {
   const [shelves, setShelves] = useState([]);
 
   useEffect(() => {
+    setLoading(true); 
     ShelfService.getAllShelves()
       .then(data => {
         setShelves(data);
+        setLoading(false); 
       })
       .catch(error => {
         console.error("Error fetching shelves: ", error);
+      })
+      .finally(() => {
+        setLoading(false);
       });
   }, []);
 
@@ -133,7 +139,9 @@ const Warehouse = () => {
   const compartmentWidth = 0.5;
   const layerHeights = [0.4, 0.4, 0.4, 0.4, 0.4];
   const baseHeightOffset = 0.35;
-
+  if (loading) {
+    return <Loader />;
+  }
   return (
     <div className='warehouse' style={{ marginTop: '0px' }}>
       <WarehouseView selectedView={selectedView} setSelectedView={setSelectedView} />
