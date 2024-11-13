@@ -3,7 +3,6 @@ import ProductTable from '../../Components/Product/ProductTable'
 import './product.css';
 import ProductService from '../../api/product';
 import SelectSmall from '../../Components/Product/Select/SelectComponent';
-import Loader from '../../Components/Loader/Loader';
 const Product = () => {
   const [productsByName, setProductsByName] = useState(null);
   const [searchData, setSearchData] = useState(null);
@@ -60,11 +59,6 @@ const Product = () => {
       console.log(productsByName);
     }
   }, [productsByName]);
-  const [loading, setLoading] = useState(false);
-
-  if (loading) {
-    return <Loader />;
-  }
 
   return (
     <div className='product_page' style={{ height: 'fit-content', marginTop: '56px', padding: '0 4.2rem 4.2rem 4.2rem', backgroundColor: '#262838' }}>
@@ -90,7 +84,7 @@ const Product = () => {
         </div>
       </div>
       {/* seacrh: end */}
-      <ProductTable productsByName={productsByName} setLoading={setLoading}></ProductTable>
+      <ProductTable productsByName={productsByName}></ProductTable>
     </div>
   )
 }
