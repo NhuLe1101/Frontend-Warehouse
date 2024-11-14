@@ -34,10 +34,9 @@ export default function ProductTable({
   isPopup,
   onSelectProduct,
   productsByName,
-  setLoading,
 }) {
   const [products, setProducts] = React.useState([]);
-  // const [loading, setLoading] = React.useState(true); // State cho trạng thái loading
+  const [loading, setLoading] = React.useState(false); // State cho trạng thái loading
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [allProduct, setAllProduct] = useState([]);
@@ -56,26 +55,23 @@ export default function ProductTable({
   }, []);
 
   React.useEffect(() => {
-    setLoading(true); 
     if (productsByName) {
       setProducts(Array.isArray(productsByName) ? productsByName : allProduct);
-      setLoading(false);
+      setLoading(true);
     } else {
       ProductService.getProductsByStatus()
         .then((data) => {
           setProducts(Array.isArray(data) ? data : []);
-          setLoading(false); 
         })
         .catch((error) => {
           console.error("Error fetching products:", error);
-        })
-        .finally(() => {
-          setLoading(false);
         });
     }
   }, [productsByName]);
 
-
+  if (loading) {
+    return <p>Loading...</p>;
+  }
 
   return (
     <ThemeProvider theme={darkTheme}>

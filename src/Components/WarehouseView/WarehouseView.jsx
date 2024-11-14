@@ -27,13 +27,13 @@ const WarehouseView = ({ selectedView, setSelectedView }) => {
                         sx={{ color: 'white' }}
                     />
                     <FormControlLabel
-                        value="available"
+                        value="dueToday"
                         control={<Radio sx={{ color: 'white', '&.Mui-checked': { color: '#ffffff' } }} />}
-                        label="Có sản phẩm"
+                        label="Đến hạn xuất hàng"
                         sx={{ color: 'white' }}
                     />
                     <FormControlLabel
-                        value="checkout"
+                        value="overdue"
                         control={<Radio sx={{ color: 'white', '&.Mui-checked': { color: '#ffffff' } }} />}
                         label="Quá hạn xuất hàng"
                         sx={{ color: 'white' }}
