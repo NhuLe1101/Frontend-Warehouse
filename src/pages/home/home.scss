@@ -6,7 +6,8 @@
   margin-top: 56px;
   background-color: #262838;
   color: #fff;
-
+  overflow: hidden;
+  height: fit-content;
   &_intro {
     display: flex;
     height: 100vh;
@@ -100,8 +101,8 @@
         align-items: center;
         color: #000;
         &_circle {
-          width: 6rem;
-          height: 6rem;
+          width: 12rem;
+          height: 12rem;
           background: white;
           border-radius: 100%;
           position: relative;
@@ -142,8 +143,8 @@
   &_feature {
     display: flex;
     flex-direction: column;
-    min-width: 100vh;
-    height: fit-content;
+    min-height: 100vh;
+    height: 200vh;
     background-color: #262838;
     padding-left: 4rem;
     padding-right: 4rem;

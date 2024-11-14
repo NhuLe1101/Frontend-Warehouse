@@ -71,7 +71,7 @@ const ContactForm = () => {
   };
 
   return (
-    <section className="home_contact" id="contact">
+    <section className="home_contact" id="contact-form">
       <div className="home_contact_left">
         <h2>LIÊN HỆ VỚI CHÚNG TÔI NGAY</h2>
       </div>

@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 const transition = { duration: 1, ease: "easeInOut" };
 const Feature = () => {
   return (
-    <section className="home_feature">
+    <section className="home_feature" id="feature">
       <h2 className="home_feature_title">
         CHÚNG TÔI SỞ HŨU HỆ THỐNG QUẢN LÝ KHO HÀNG HIỆN ĐẠI BẬC NHẤT VIỆT NAM
       </h2>
