@@ -9,6 +9,7 @@ import {
   TableHead,
   TableBody,
 } from "@mui/material";
+import Button from '@mui/material/Button';
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { useEffect, useState } from "react";
@@ -106,13 +107,13 @@ export default function TableRowComponent({
         </TableCell>
         {isPopup && (
           <TableCell>
-            <button
+            <Button
               variant="contained"
               color="primary"
               onClick={handleButtonClick}
             >
-              Select
-            </button>
+              Chọn
+            </Button>
           </TableCell>
         )}
       </TableRow>
