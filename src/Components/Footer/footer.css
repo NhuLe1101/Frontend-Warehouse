@@ -1,10 +1,10 @@
 .footer {
   height: -moz-fit-content;
-  height: fit-content;
+  height: 50vh;
   display: flex;
   flex-direction: column;
   padding: 16px 20px;
-  background-color: #1E1E2C;
+  background-color: #1e1e2c;
   width: 100%;
 }
 .footer .content {
@@ -21,7 +21,8 @@
   margin-top: 16px;
   text-align: center;
 }
-.footer p, .footer h3 {
+.footer p,
+.footer h3 {
   color: #fff;
   line-height: 2.5;
-}/*# sourceMappingURL=footer.css.map */
+} /*# sourceMappingURL=footer.css.map */

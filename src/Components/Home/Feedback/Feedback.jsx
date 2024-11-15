@@ -24,7 +24,7 @@ const Feedback = () => {
     },
   ];
   return (
-    <section className="home_feedback">
+    <section className="home_feedback" id="feedback">
       <h2 className="home_feedback_title">ĐÁNH GIÁ CỦA KHÁCH HÀNG</h2>
       <Swiper
         modules={[Pagination]}

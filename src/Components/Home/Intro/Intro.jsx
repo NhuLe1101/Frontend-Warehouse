@@ -3,9 +3,16 @@ import Button from "@mui/material/Button";
 import { Link } from "react-scroll";
 import { motion } from "framer-motion";
 const transition = { duration: 1, ease: "easeInOut" };
+
 const Intro = () => {
+  const handleContactClick = () => {
+    window.scrollTo({
+      top: window.innerHeight * 2.5,
+      behavior: "smooth",
+    });
+  };
   return (
-    <section className="home_intro">
+    <section className="home_intro" id="intro">
       <div className="home_intro_left">
         <h2>CHÀO MỪNG BẠN ĐẾN VỚI CHÚNG TÔI</h2>
         <p>
@@ -17,9 +24,9 @@ const Intro = () => {
         <p>Số điện thoại: +84 123 456 78</p>
         <p>whs@gmail.com</p>
         <div className="home_intro_left_button">
-          <Link to="contact" smooth={true} spy={true}>
-            <Button variant="outlined">Liên hệ ngay</Button>
-          </Link>
+          <Button variant="outlined" onClick={handleContactClick}>
+            Liên hệ ngay
+          </Button>
         </div>
       </div>
       <div className="home_intro_right">

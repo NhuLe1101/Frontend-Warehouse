@@ -7,6 +7,7 @@ import Feature from "../../Components/Home/Feature/Feature";
 import Feedback from "../../Components/Home/Feedback/Feedback";
 import ContactForm from "../../Components/Home/ContactForm/ContactForm";
 import Map from "../../Components/Home/Map/Map";
+import SmoothScroll from "../../Components/Home/SmoothScroll/SmoothScroll";
 
 const Home = () => {
   const [loading, setLoading] = useState(true);
@@ -29,15 +30,18 @@ const Home = () => {
   if (loading) {
     return <Loader />;
   }
+
   return (
-    <div className="home">
-      <Intro />
-      <ServiceInfo />
-      <Feature />
-      <Feedback />
-      <ContactForm />
-      <Map />
-    </div>
+    <SmoothScroll>
+      <div className="home">
+        <Intro />
+        <ServiceInfo />
+        <Feature />
+        <Feedback />
+        <ContactForm />
+        <Map />
+      </div>
+    </SmoothScroll>
   );
 };
 
