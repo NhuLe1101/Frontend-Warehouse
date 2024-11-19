@@ -11,6 +11,32 @@ import SmoothScroll from "../../Components/Home/SmoothScroll/SmoothScroll";
 
 const Home = () => {
   const [loading, setLoading] = useState(true);
+  const [showScroll, setShowScroll] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 2000);
+
+    const checkScrollTop = () => {
+      if (!showScroll && window.pageYOffset > 400) {
+        setShowScroll(true);
+      } else if (showScroll && window.pageYOffset <= 400) {
+        setShowScroll(false);
+      }
+    };
+
+    window.addEventListener("scroll", checkScrollTop);
+
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener("scroll", checkScrollTop);
+    };
+  }, [showScroll]);
+
+  const scrollTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -40,6 +66,11 @@ const Home = () => {
         <Feedback />
         <ContactForm />
         <Map />
+        {showScroll && (
+          <button onClick={scrollTop} className="scrollTop">
+            Scroll to Top
+          </button>
+        )}
       </div>
     </SmoothScroll>
   );
