@@ -163,7 +163,7 @@ const DeliveryReport = () => {
   return (
     <Box sx={{ py: 4, width: "80%", margin: "0 auto" }}>
       <Typography variant="h4" sx={{ mb: 2, textAlign: "center" }}>
-        Delivery Report
+        Báo cáo thông tin đơn xuất hàng
       </Typography>
 
       {checkoutGroups.length === 0 ? (

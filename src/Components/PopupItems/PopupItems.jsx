@@ -150,7 +150,7 @@ const PopupItems = ({ compartmentData, onClose, isItemPresent }) => {
                 setSnackbarSeverity('success');
                 setOpenSnackbar(true);
                 setTimeout(() => {
-                    onClose();
+                    window.location.reload(); 
                 }, 3000);
             })
             .catch((error) => {
