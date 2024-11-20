@@ -11,12 +11,12 @@ const getNotifications = () => {
 
 // Đánh dấu thông báo là đã đọc
 const markAsRead = (id) => {
-  return axios.put(`${API_URL}${id}/mark-as-read`).then(response => response.data);
+  return axios.put(`${API_URL}/${id}/mark-as-read`).then(response => response.data);
 };
 
 // Xóa thông báo
 const deleteNotification = (id) => {
-  return axios.delete(`${API_URL}${id}`).then(response => response.data);
+  return axios.delete(`${API_URL}/${id}`).then(response => response.data);
 };
 
 // Đăng ký WebSocket cho thông báo (có thể triển khai như một hàm kết nối WebSocket)

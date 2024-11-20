@@ -1,11 +1,12 @@
 import React from 'react';
 import { Box, Typography, Card, CardContent, Grid, useTheme } from '@mui/material';
 import { FormControlLabel, Switch } from '@mui/material';
-import { People, Inventory, PersonAdd } from '@mui/icons-material';
+import { People, Inventory, PersonAdd, Warehouse } from '@mui/icons-material';
 import './dashboard.css'
 import AuthService from './../../api/auth-login';
 import ProductService from './../../api/product';
 import BookingService from '../../api/booking';
+import Warehouse3D from './Warehouse3D';
 import { useState, useEffect } from 'react';
 import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch';
 import { Line } from "react-chartjs-2";
@@ -162,10 +163,10 @@ const Dashboard = () => {
 
         {/* Main content area */}
         {is3D ? (
-          <Box sx={{ width: '100%', height: '100%' }}>
+          <Box sx={{ width: '100%', height: '50vh' }}>
             {/* Component 3D sẽ được thêm ở đây */}
             <Typography align="center" sx={{ marginTop: '50px' }}>
-              Chế độ 3D đang được phát triển...
+              <Warehouse3D></Warehouse3D>
             </Typography>
           </Box>
         ) : (

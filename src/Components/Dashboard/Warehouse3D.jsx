@@ -2,37 +2,57 @@ import React from 'react';
 import { Canvas } from '@react-three/fiber';
 import { Text, OrbitControls } from '@react-three/drei';
 import { GridHelper } from 'three';
-
-function Shelf({ position, color, label }) {
-    return (
-        <mesh position={position}>
-            <planeGeometry args={[2, 1]} />
-            <meshStandardMaterial color={color} />
-            <Text position={[0, 0, 0.1]} fontSize={0.3} color="white">
-                {label}
-            </Text>
-        </mesh>
-    );
-}
+import { useThree } from "@react-three/fiber";
+import ShelfModel from '../Model3D/ShelfModel';
+// function Shelf({ position, color, label }) {
+//     return (
+//         <mesh position={position}>
+//             <planeGeometry args={[2, 1]} />
+//             <meshStandardMaterial color={color} />
+//             <Text position={[0, 0, 0.1]} fontSize={0.3} color="white">
+//                 {label}
+//             </Text>
+//         </mesh>
+//     );
+// }
 function Grid() {
     return (
         <primitive object={new GridHelper(30, 30, 'white', 'gray')} />
     );
 }
+// const Compartment = ({ position, color, nameComp }) => {
+//   return (
+//     <mesh position={position}>
+//       <boxGeometry args={[0.4, 0.35, 0.4]} />
+//       <meshStandardMaterial color={color} roughness={0.6} metalness={0.1} />
+
+//       {/* Hiển thị tên của compartment */}
+//       <Text
+//         position={[0, 0.1, 0.25]}
+//         fontSize={0.07}
+//         color="white"
+//         anchorX="center"
+//         anchorY="middle"
+//       >
+//        N101
+//       </Text>
+//     </mesh>
+//   );
+// };
 function Warehouse3D() {
     return (
       <Canvas
         orthographic
         camera={{ zoom: 50, position: [0, 5, 10] }}
-        style={{ backgroundColor: '#1a1a2e' }}
+        style={{ backgroundColor: '#CCCCCC' }}
       >
         <ambientLight />
         <pointLight position={[10, 10, 10]} />
   
         {/* Vẽ các kệ */}
-        <Shelf position={[-6, 4, 0]} color="#333366" label="Shelf A" />
-        <Shelf position={[-3, 4, 0]} color="#333366" label="Shelf B" />
-        <Shelf position={[0, 4, 0]} color="#333366" label="Shelf C" />
+        {/* <Compartment position={[0, 0, 0]} color="#e6b07a" nameComp="Compartment 1" /> */}
+        <ShelfModel position={[0, 0, 0]} />
+
   
         {/* Vẽ các khu vực khác */}
         <mesh position={[5, 0, 0]}>
@@ -52,7 +72,7 @@ function Warehouse3D() {
         </mesh>
   
         {/* Grid */}
-        <Grid />
+        {/* <Grid /> */}
   
         {/* Thêm OrbitControls để hỗ trợ zoom */}
         <OrbitControls />

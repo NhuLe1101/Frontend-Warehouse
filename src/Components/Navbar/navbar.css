@@ -196,5 +196,7 @@
   align-items: center;
   font-size: 20px;
 }
-
+.notification-container{
+  display: flex;
+}
 /*# sourceMappingURL=navbar.css.map */

@@ -1,27 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import {
-  IconButton,
-  Badge,
-  Popper,
-  Paper,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
-  Menu,
-  MenuItem,
-  Snackbar,
-} from "@mui/material";
-import NotificationsIcon from "@mui/icons-material/Notifications";
-import AccessAlarmIcon from "@mui/icons-material/AccessAlarm";
-import CheckCircleIcon from "@mui/icons-material/CheckCircle";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
-import CircleIcon from "@mui/icons-material/Circle";
-import { Alert } from "@mui/material";
+import Notification from "./Notification";
+import { IconButton } from "@mui/material";
 import AuthService from "../../api/auth-login";
 import "./navbar.css";
-import moment from "moment";
 import NotificationService from "../../api/notification";
 
 const Navbar = () => {
@@ -34,22 +16,16 @@ const Navbar = () => {
   const [newNotification, setNewNotification] = useState(null);
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [showBadge, setShowBadge] = useState(true);
-  const [menuVisible, setMenuVisible] = useState(false); // State for menu visibility
+  const [menuVisible, setMenuVisible] = useState(false);
+
   useEffect(() => {
     const user = AuthService.getCurrentUser();
     if (user) {
       setCurrentUser(user);
-      // Gọi API để lấy danh sách thông báo ban đầu
       NotificationService.getNotifications()
-        .then((data) => {
-          console.log("Fetched notifications:", data);
-          setNotifications(data);
-        })
-        .catch((error) => {
-          console.error("Error fetching notifications:", error);
-        });
+        .then((data) => setNotifications(data))
+        .catch((error) => console.error("Error fetching notifications:", error));
 
-      // Kết nối với WebSocket server
       const disconnectWebSocket = NotificationService.connectWebSocket(
         (notification) => {
           setNotifications((prev) => [notification, ...prev]);
@@ -66,14 +42,10 @@ const Navbar = () => {
 
   const handleNotificationClick = (event) => {
     setAnchorEl(anchorEl ? null : event.currentTarget);
-    if (showBadge) {
-      setShowBadge(false);
-    }
+    if (showBadge) setShowBadge(false);
   };
 
-  const handleSnackbarClose = () => {
-    setOpenSnackbar(false);
-  };
+  const handleSnackbarClose = () => setOpenSnackbar(false);
 
   const handleMenuClick = (event, notification) => {
     setMenuAnchorEl(event.currentTarget);
@@ -87,37 +59,31 @@ const Navbar = () => {
 
   const markAsRead = (id) => {
     NotificationService.markAsRead(id)
-      .then(() => {
+      .then(() =>
         setNotifications((prev) =>
           prev.map((notification) =>
             notification.id === id
               ? { ...notification, status: "READ" }
               : notification
           )
-        );
-        handleMenuClose();
-      })
-      .catch((error) => {
-        console.error("Error marking notification as read:", error);
-      });
+        )
+      )
+      .catch((error) => console.error("Error marking notification as read:", error));
+    handleMenuClose();
   };
 
   const deleteNotification = (id) => {
     NotificationService.deleteNotification(id)
-      .then(() => {
+      .then(() =>
         setNotifications((prev) =>
           prev.filter((notification) => notification.id !== id)
-        );
-        handleMenuClose();
-      })
-      .catch((error) => {
-        console.error("Error deleting notification:", error);
-      });
+        )
+      )
+      .catch((error) => console.error("Error deleting notification:", error));
+    handleMenuClose();
   };
 
-  const toggleMenu = () => {
-    setMenuVisible(!menuVisible);
-  };
+  const toggleMenu = () => setMenuVisible(!menuVisible);
 
   return (
     <div className="navbar">
@@ -138,10 +104,7 @@ const Navbar = () => {
         </li>
       )}
       {currentUser && (
-        <ul
-          className={`nav-links`}
-          style={menuVisible ? { display: "flex" } : null}
-        >
+        <ul className={`nav-links`} style={menuVisible ? { display: "flex" } : null}>
           <li className={location.pathname === "/" ? "active" : ""}>
             <Link to="/">Trang chủ</Link>
           </li>
@@ -161,96 +124,21 @@ const Navbar = () => {
       )}
       {currentUser && (
         <div className="login-success">
-          <IconButton color="inherit" onClick={handleNotificationClick}>
-            <Badge
-              badgeContent={
-                showBadge
-                  ? notifications.filter((n) => n.status === "UNREAD").length
-                  : 0
-              }
-              color="error"
-            >
-              <NotificationsIcon style={{ color: "#fff" }} />
-            </Badge>
-          </IconButton>
-          <Popper
-            open={Boolean(anchorEl)}
+          <Notification
+            notifications={notifications}
+            handleNotificationClick={handleNotificationClick}
+            handleSnackbarClose={handleSnackbarClose}
+            handleMenuClick={handleMenuClick}
+            handleMenuClose={handleMenuClose}
+            markAsRead={markAsRead}
+            deleteNotification={deleteNotification}
+            newNotification={newNotification}
+            openSnackbar={openSnackbar}
             anchorEl={anchorEl}
-            placement="bottom-start"
-            style={{ zIndex: 1300 }}
-          >
-            <Paper
-              style={{ maxHeight: "400px", width: "400px", overflowY: "auto" }}
-            >
-              {notifications.length > 0 ? (
-                <List>
-                  {notifications.map((notification, index) => (
-                    <ListItem
-                      key={index}
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "space-between",
-                      }}
-                    >
-                      <div style={{ display: "flex", alignItems: "center" }}>
-                        <ListItemIcon>
-                          {notification.type === "CHECKOUT_REMINDER" && (
-                            <AccessAlarmIcon color="error" />
-                          )}
-                          {notification.type === "ITEM_CHECKOUT" && (
-                            <CheckCircleIcon color="success" />
-                          )}
-                        </ListItemIcon>
-                        <ListItemText
-                          primary={notification.message}
-                          secondary={moment(notification.timestamp).format(
-                            "DD/MM/YYYY HH:mm"
-                          )}
-                        />
-                      </div>
-                      <div style={{ display: "flex", alignItems: "center" }}>
-                        <IconButton
-                          onClick={(e) => handleMenuClick(e, notification)}
-                        >
-                          <MoreVertIcon />
-                        </IconButton>
-
-                        {/* Circle icon để hiển thị nếu chưa đọc */}
-                        {notification.status === "UNREAD" && (
-                          <CircleIcon
-                            style={{
-                              color: "#5aa7ff",
-                              marginLeft: "5px",
-                              fontSize: "1rem",
-                            }}
-                          />
-                        )}
-                      </div>
-                    </ListItem>
-                  ))}
-                </List>
-              ) : (
-                <div style={{ padding: "10px", textAlign: "center" }}>
-                  Không có thông báo
-                </div>
-              )}
-            </Paper>
-          </Popper>
-          <Menu
-            anchorEl={menuAnchorEl}
-            open={Boolean(menuAnchorEl)}
-            onClose={handleMenuClose}
-          >
-            <MenuItem onClick={() => markAsRead(selectedNotification.id)}>
-              Đánh dấu đã đọc
-            </MenuItem>
-            <MenuItem
-              onClick={() => deleteNotification(selectedNotification.id)}
-            >
-              Xóa thông báo
-            </MenuItem>
-          </Menu>
+            menuAnchorEl={menuAnchorEl}
+            selectedNotification={selectedNotification}
+            showBadge={showBadge}
+          />
           <li className="profileName-user">
             <span>{currentUser.profileName}</span>
           </li>
@@ -265,18 +153,6 @@ const Navbar = () => {
           </li>
         </div>
       )}
-
-      {/* Snackbar hiển thị thông báo mới cho toàn user */}
-      <Snackbar
-        open={openSnackbar}
-        autoHideDuration={10000}
-        onClose={handleSnackbarClose}
-        anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
-      >
-        <Alert onClose={handleSnackbarClose} severity="info">
-          {newNotification?.message}
-        </Alert>
-      </Snackbar>
     </div>
   );
 };
