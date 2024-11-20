@@ -10,19 +10,19 @@ const ServiceInfo = () => {
       <div className="home_services_experience">
         <div className="home_services_experience_achievement">
           <div className="home_services_experience_achievement_circle">
-            100+
+            100%
           </div>
-          <span>Khách hàng</span>
+          <span>Khách hàng hài lòng</span>
         </div>
         <div className="home_services_experience_achievement">
           <div className="home_services_experience_achievement_circle">
-            8000+
+            10 năm
           </div>
-          <span>Sản phẩm nhập - xuất kho</span>
+          <span>Kinh nghiệm</span>
         </div>
         <div className="home_services_experience_achievement">
           <div className="home_services_experience_achievement_circle">
-            +2000 m2
+            +20000 m2
           </div>
           <span>Diện tích kho</span>
         </div>
