@@ -8,7 +8,8 @@ const Map = () => {
         loading="lazy"
         referrerPolicy="no-referrer-when-downgrade"
         className="home_map_iframe"
-      ></iframe>
+        title="Google Map Location"
+      />
     </section>
   );
 };
