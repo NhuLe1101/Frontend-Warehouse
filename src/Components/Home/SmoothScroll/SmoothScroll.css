@@ -1,10 +1,14 @@
 .parent {
-  min-height: 100vh;
+  height: fit-content;
   overflow: hidden;
   position: relative;
   width: 100%;
 }
 
 .scrolling-container {
-  will-change: transform;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
 }

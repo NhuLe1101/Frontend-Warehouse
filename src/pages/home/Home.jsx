@@ -58,21 +58,19 @@ const Home = () => {
   }
 
   return (
-    <SmoothScroll>
-      <div className="home">
-        <Intro />
-        <ServiceInfo />
-        <Feature />
-        <Feedback />
-        <ContactForm />
-        <Map />
-        {/* {showScroll && (
+    <div className="home">
+      <Intro />
+      <ServiceInfo />
+      <Feature />
+      <Feedback />
+      <ContactForm />
+      <Map />
+      {/* {showScroll && (
           <button onClick={scrollTop} className="scrollTop">
             Scroll to Top
           </button>
         )} */}
-      </div>
-    </SmoothScroll>
+    </div>
   );
 };
 

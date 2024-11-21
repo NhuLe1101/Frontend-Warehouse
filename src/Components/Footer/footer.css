@@ -1,6 +1,5 @@
 .footer {
-  height: -moz-fit-content;
-  height: 50vh;
+  height: fit-content;
   display: flex;
   flex-direction: column;
   padding: 16px 20px;
