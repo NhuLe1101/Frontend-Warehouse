@@ -66,11 +66,11 @@ const Home = () => {
         <Feedback />
         <ContactForm />
         <Map />
-        {showScroll && (
+        {/* {showScroll && (
           <button onClick={scrollTop} className="scrollTop">
             Scroll to Top
           </button>
-        )}
+        )} */}
       </div>
     </SmoothScroll>
   );

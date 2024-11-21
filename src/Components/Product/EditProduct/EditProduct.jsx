@@ -51,17 +51,19 @@ const EditProduct = ({ product, onClose }) => {
   };
   if (!product) return null;
 
-  function formatId(id) {
-    if (id < 10) {
-      return "SP000" + id;
-    } else if (id < 100) {
-      return "SP00" + id;
-    } else if (id < 1000) {
-      return "SP0" + id;
-    } else {
-      return "SP" + id;
-    }
-  }
+  // function formatId(id) {
+  //   if (id < 10) {
+  //     return "SP000" + id;
+  //   } else if (id < 100) {
+  //     return "SP00" + id;
+  //   } else if (id < 1000) {
+  //     return "SP0" + id;
+  //   } else {
+  //     return "SP" + id;
+  //   }
+  // }
+
+  console.log(formData);
 
   return (
     <div className="popup-pd">
@@ -73,7 +75,7 @@ const EditProduct = ({ product, onClose }) => {
             <input
               type="text"
               name="stt"
-              value={formatId(formData.itemId)}
+              value={formData.itemId}
               readOnly
               disabled
               style={{ border: "none" }}

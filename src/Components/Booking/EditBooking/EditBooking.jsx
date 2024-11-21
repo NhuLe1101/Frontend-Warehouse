@@ -55,17 +55,17 @@ const EditBooking = ({ booking, onClose, onOpen }) => {
 
   if (!booking) return null;
 
-  function formatId(id) {
-    if (id < 10) {
-      return "BK000" + id;
-    } else if (id < 100) {
-      return "BK00" + id;
-    } else if (id < 1000) {
-      return "BK0" + id;
-    } else {
-      return "BK" + id;
-    }
-  }
+  // function formatId(id) {
+  //   if (id < 10) {
+  //     return "BK000" + id;
+  //   } else if (id < 100) {
+  //     return "BK00" + id;
+  //   } else if (id < 1000) {
+  //     return "BK0" + id;
+  //   } else {
+  //     return "BK" + id;
+  //   }
+  // }
   return (
     <BootstrapDialog
       onClose={onClose}
@@ -95,7 +95,7 @@ const EditBooking = ({ booking, onClose, onOpen }) => {
             <input
               type="text"
               name="id"
-              value={formatId(formData.id)}
+              value={formData.id}
               onChange={handleInputChange}
               readOnly
               disabled
