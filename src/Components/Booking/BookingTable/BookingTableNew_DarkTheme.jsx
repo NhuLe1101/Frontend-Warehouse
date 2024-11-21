@@ -30,7 +30,7 @@ const darkTheme = createTheme({
   },
 });
 
-const BookingTableNew = ({ setLoading }) => {
+const BookingTableNew = () => {
   const [bookings, setBookings] = useState([]);
   const [isEditing, setIsEditing] = useState(false);
   const [selectedBooking, setSelectedBooking] = useState(null);
@@ -122,18 +122,14 @@ const BookingTableNew = ({ setLoading }) => {
   };
 
   useEffect(() => {
-    setLoading(true); 
     BookingService.getAllBookings()
       .then((data) => {
         setBookings(data); 
-        setLoading(false); 
       })
       .catch((error) => {
         console.error("Có lỗi xảy ra:", error);
       })
-      .finally(() => {
-        setLoading(false);
-      });
+      
   }, []);
 
   const handleChangePage = (event, newPage) => {
