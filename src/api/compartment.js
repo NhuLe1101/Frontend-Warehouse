@@ -1,7 +1,8 @@
 import axios from 'axios';
 import authHeader from './auth-header';
 
-const API_URL = 'http://localhost:8080/api/compartments';
+// const API_URL = 'http://localhost:8080/api/compartments';
+const API_URL = `${process.env.REACT_APP_API_URL}/api/compartments/`;
 
 // Hàm thêm item vào compartment
 const addItemToCompartment = (compartmentId, itemId, quantity) => {
