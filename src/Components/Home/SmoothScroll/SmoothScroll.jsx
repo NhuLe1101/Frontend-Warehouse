@@ -30,7 +30,7 @@ const SmoothScroll = ({ children }) => {
   }, [windowSize.height]);
 
   const setBodyHeight = () => {
-    document.body.style.height = "360vh";
+    document.body.style.height = "auto";
   };
 
   const smoothScrollingHandler = () => {

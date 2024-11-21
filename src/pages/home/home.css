@@ -55,6 +55,7 @@
     flex-direction: column;
     padding: 2rem;
     justify-content: space-evenly;
+    height: fit-content;
   }
   .home_intro_left {
     width: 100%;
@@ -82,6 +83,7 @@
 .home_services_title h2 {
   font-size: 2rem;
   text-align: center;
+  margin-bottom: 0.5rem;
 }
 .home_services_experience {
   display: flex;
@@ -123,6 +125,19 @@
   color: #fff;
   font-weight: 500;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+@media screen and (max-width: 1000px) {
+  .home_services {
+    height: fit-content;
+  }
+  .home_services_experience {
+    flex-direction: column;
+    gap: 2rem;
+  }
+  .home_services_title h2 {
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+  }
 }
 .home_feature {
   display: flex;
@@ -198,6 +213,29 @@
 }
 .home_feature_2_right p {
   text-align: justify;
+}
+@media screen and (max-width: 1000px) {
+  .home_feature {
+    height: fit-content;
+  }
+  .home_feature_1, .home_feature_2, .home_feature_3 {
+    flex-direction: column;
+    padding: 0;
+    justify-content: space-evenly;
+    align-items: center;
+  }
+  .home_feature_1_left, .home_feature_2_left, .home_feature_3_left {
+    width: 100%;
+    padding: 0;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+  }
+  .home_feature_1_right, .home_feature_2_right, .home_feature_3_right {
+    width: 100%;
+    padding: 0;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+  }
 }
 .home_feedback {
   display: flex;
@@ -291,6 +329,26 @@
   border-radius: 8px;
   border-width: 0;
   font-size: 14px;
+}
+@media screen and (max-width: 1000px) {
+  .home_contact {
+    flex-direction: column;
+    padding: 2rem;
+    justify-content: space-evenly;
+    height: fit-content;
+  }
+  .home_contact_left {
+    width: 100%;
+    padding: 0;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+  }
+  .home_contact_right {
+    width: 100%;
+    padding: 0;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+  }
 }
 .home_map {
   display: flex;
