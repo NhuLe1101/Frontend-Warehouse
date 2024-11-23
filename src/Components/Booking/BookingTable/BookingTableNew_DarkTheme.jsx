@@ -78,7 +78,7 @@ const BookingTableNew = () => {
           },
         });
 
-        fetch(`http://localhost:8080/api/booking/delete/${bookingId}`, {
+        fetch("${API_URL}/api/booking/delete/${bookingId}", {
           method: "DELETE",
         })
           .then((response) => {
