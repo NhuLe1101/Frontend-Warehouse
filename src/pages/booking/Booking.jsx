@@ -4,9 +4,7 @@ import { Button, Dialog, DialogContent } from '@mui/material';
 import FileUploadIcon from '@mui/icons-material/FileUpload';
 import BookingTableNew from '../../Components/Booking/BookingTable/BookingTableNew_DarkTheme';
 import BtnAddNewBooking from '../../Components/Booking/BtnAddNewBooking/BtnAddNewBooking';
-import Loader from '../../Components/Loader/Loader';
 const Booking = () => {
-  const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
 
   const handleClickOpen = () => {
@@ -16,10 +14,6 @@ const Booking = () => {
   const handleClose = () => {
     setOpen(false);
   };
-
-  if (loading) {
-    return <Loader />;
-  }
 
     return (
       <div className='booking' style={{ marginTop: '56px' }}>
@@ -40,7 +34,7 @@ const Booking = () => {
           </DialogContent>
         </Dialog>
 
-        <BookingTableNew setLoading={setLoading} />
+        <BookingTableNew />
 
       </div>
     )

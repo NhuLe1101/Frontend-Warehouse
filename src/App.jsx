@@ -4,7 +4,6 @@ import {
   createBrowserRouter,
   RouterProvider,
   Outlet,
-  Route,
 } from "react-router-dom";
 import Home from './pages/home/Home';
 import Warehouse from './pages/warehouse/Warehouse';
@@ -13,7 +12,6 @@ import Booking from './pages/booking/Booking';
 import Product from './pages/product/Product';
 import Navbar from './Components/Navbar/Navbar';
 import Footer from './Components/Footer/Footer';
-import PrivateRoute from './Components/PrivateRoute/PrivateRoute';
 import Dashboard from './Components/Dashboard/Dashboard';
 import CheckoutListReport from './Components/CheckoutListReport/CheckoutListReport';
 import DeliveryReport from './Components/DeliveryReport/DeliveryReport';

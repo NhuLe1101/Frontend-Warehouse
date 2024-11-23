@@ -2,7 +2,7 @@ import axios from "axios";
 import SockJS from 'sockjs-client';
 import { Stomp } from '@stomp/stompjs';
 
-const API_URL = "http://localhost:8080/api/notifications";
+const API_URL = `${process.env.REACT_APP_API_URL}/api/notifications`;
 
 // Lấy danh sách thông báo
 const getNotifications = () => {
@@ -19,9 +19,9 @@ const deleteNotification = (id) => {
   return axios.delete(`${API_URL}/${id}`).then(response => response.data);
 };
 
-// Đăng ký WebSocket cho thông báo (có thể triển khai như một hàm kết nối WebSocket)
+// Đăng ký WebSocket cho thông báo
 const connectWebSocket = (onMessageReceived) => {
-  const socket = new SockJS('http://localhost:8080/ws');
+  const socket = new SockJS(`${process.env.REACT_APP_API_URL}/ws`);
   const stompClient = Stomp.over(socket);
 
   stompClient.connect({}, () => {

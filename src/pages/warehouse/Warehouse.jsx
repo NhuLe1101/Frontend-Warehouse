@@ -17,8 +17,11 @@ const Warehouse = () => {
   const [selectedCompartment, setSelectedCompartment] = useState(null);
   const [selectedView, setSelectedView] = useState('default');
 
+  const API_URL = process.env.REACT_APP_API_URL;
+
   const fetchCompartmentFromServer = (compartmentIdentifier) => {
-    return fetch(`http://localhost:8080/api/compartments/${compartmentIdentifier.shelfId}/${compartmentIdentifier.nameComp}`)
+    // return fetch(`http://localhost:8080/api/compartments/${compartmentIdentifier.shelfId}/${compartmentIdentifier.nameComp}`)
+    return fetch(`${API_URL}/api/compartments/${compartmentIdentifier.shelfId}/${compartmentIdentifier.nameComp}`)
       .then(response => {
         if (!response.ok) {
           return null;
@@ -32,7 +35,8 @@ const Warehouse = () => {
   };
 
   const createCompartment = (compartmentData) => {
-    return fetch(`http://localhost:8080/api/compartments/${compartmentData.shelfId}`, {
+    // return fetch(`http://localhost:8080/api/compartments/${compartmentData.shelfId}`, {
+    return fetch(`${API_URL}/api/compartments/${compartmentData.shelfId}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -92,7 +96,8 @@ const Warehouse = () => {
   }, []);
 
   useEffect(() => {
-    fetch('http://localhost:8080/api/compartments')
+    // fetch('http://localhost:8080/api/compartments')
+    fetch(`${API_URL}/api/compartments`)
       .then(response => response.json())
       .then(data => {
         if (Array.isArray(data)) {
@@ -111,30 +116,30 @@ const Warehouse = () => {
       console.error("Compartments is not an array:", compartments);
       compartments = [];
     }
-  
+
     const compartment = compartments.find(
       (c) => c.shelf.shelfId === shelfId && c.nameComp === nameComp
     );
-  
+
     if (!compartment) {
       return '#e6b07a'; // Màu mặc định nếu không có ngăn chứa nào phù hợp
     }
-  
+
     const checkoutDate = new Date(compartment.item?.checkout);
     const today = new Date();
     today.setHours(0, 0, 0, 0);
     checkoutDate.setHours(0, 0, 0, 0);
-  
+
     if (selectedView === 'dueToday' && compartment.item && checkoutDate.getTime() === today.getTime()) {
       return '#4CAF50'; // Màu xanh cho item có ngày checkout là hôm nay
     } else if (selectedView === 'overdue' && compartment.item && checkoutDate.getTime() < today.getTime()) {
       return '#FF0000'; // Màu đỏ cho item đã lố ngày checkout
     }
-  
+
     return '#e6b07a'; // Màu mặc định nếu không khớp điều kiện nào
   };
-  
-  
+
+
 
   const compartmentWidth = 0.5;
   const layerHeights = [0.4, 0.4, 0.4, 0.4, 0.4];

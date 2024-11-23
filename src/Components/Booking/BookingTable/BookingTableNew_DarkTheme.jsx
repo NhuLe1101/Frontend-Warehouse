@@ -30,12 +30,13 @@ const darkTheme = createTheme({
   },
 });
 
-const BookingTableNew = ({ setLoading }) => {
+const BookingTableNew = () => {
   const [bookings, setBookings] = useState([]);
   const [isEditing, setIsEditing] = useState(false);
   const [selectedBooking, setSelectedBooking] = useState(null);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
+  const API_URL = process.env.REACT_APP_API_URL;
 
   const downloadClicked = (rowIndex) => {
     Swal.fire({
@@ -46,7 +47,8 @@ const BookingTableNew = ({ setLoading }) => {
       },
     }).then(() => {
       const excelFile = bookings[rowIndex].excelFile.split("\\").pop();
-      window.open(`http://localhost:8080/api/booking/download/${excelFile}`);
+      // window.open(`http://localhost:8080/api/booking/download/${excelFile}`);
+      window.open(`${API_URL}/api/booking/download/${excelFile}`);
     });
   };
 
@@ -118,7 +120,9 @@ const BookingTableNew = ({ setLoading }) => {
 
     try {
       const response = await fetch(
-        "http://localhost:8080/api/jasper/generate-pdf-booking",
+        // "http://localhost:8080/api/jasper/generate-pdf-booking",
+        // eslint-disable-next-line no-template-curly-in-string
+        "${API_URL}/api/jasper/generate-pdf-booking",
         {
           method: "POST",
           headers: {
@@ -168,17 +172,12 @@ const BookingTableNew = ({ setLoading }) => {
   };
 
   useEffect(() => {
-    setLoading(true);
     BookingService.getAllBookings()
       .then((data) => {
         setBookings(data);
-        setLoading(false);
       })
       .catch((error) => {
         console.error("Có lỗi xảy ra:", error);
-      })
-      .finally(() => {
-        setLoading(false);
       });
   }, []);
 
