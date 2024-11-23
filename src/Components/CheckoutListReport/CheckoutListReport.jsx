@@ -45,6 +45,7 @@ const CheckoutListReport = () => {
       })
       .then((data) => {
         setCheckoutGroups(data);
+        console.log(data);
       })
       .catch((error) => {
         setSnackbarMessage(
@@ -84,15 +85,14 @@ const CheckoutListReport = () => {
       const blob = await response.blob();
       const url = window.URL.createObjectURL(blob);
 
-      // Mở PDF trong một tab mới
       const newWindow = window.open(url, "_blank");
       if (newWindow) {
         newWindow.addEventListener("load", () => {
-          newWindow.print(); // Tự động gọi hộp thoại in
+          newWindow.print();
         });
       }
 
-      Swal.close(); // Đóng thông báo sau khi mở PDF
+      Swal.close();
     } catch (error) {
       Swal.fire({
         icon: "error",
@@ -156,6 +156,10 @@ const CheckoutListReport = () => {
     }
   );
 
+  const combinedItems = filteredCheckoutGroups.flatMap(
+    ([date, items]) => items
+  );
+
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <Box sx={{ py: 4, width: "80%", margin: "0 auto" }}>
@@ -198,7 +202,7 @@ const CheckoutListReport = () => {
             onChange={(date) => handleDateChange(date, "end")}
           />
         </div>
-        {filteredCheckoutGroups.length === 0 ? (
+        {combinedItems.length === 0 ? (
           <Typography
             variant="h6"
             sx={{ textAlign: "center", color: "gray", mt: 2 }}
@@ -206,47 +210,46 @@ const CheckoutListReport = () => {
             Không có dữ liệu.
           </Typography>
         ) : (
-          filteredCheckoutGroups.map(([date, items], index) => (
-            <Box key={index} sx={{ mb: 4 }}>
-              <Box sx={{ textAlign: "left", mb: 2, mt: 2 }}>
-                <Typography variant="h8">Ngày xuất hàng: {date}</Typography>
-              </Box>
-
-              <TableContainer component={Paper}>
-                <Table>
-                  <TableHead>
-                    <TableRow>
-                      <TableCell>STT</TableCell>
-                      <TableCell>Tên sản phẩm</TableCell>
-                      <TableCell>Số lượng</TableCell>
-                      <TableCell>Tổng thời gian lưu kho (ngày)</TableCell>
+          <Box sx={{ mb: 4, mt: 4 }}>
+            <TableContainer component={Paper}>
+              <Table>
+                <TableHead>
+                  <TableRow>
+                    <TableCell>STT</TableCell>
+                    <TableCell>Tên sản phẩm</TableCell>
+                    <TableCell>Số lượng</TableCell>
+                    <TableCell>Ngày xuất kho</TableCell>
+                    <TableCell align="center">
+                      Tổng thời gian lưu kho (ngày)
+                    </TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {combinedItems.map((record, idx) => (
+                    <TableRow key={record.id}>
+                      <TableCell>{idx + 1}</TableCell>
+                      <TableCell>{record.item.name}</TableCell>
+                      <TableCell>{record.quantity}</TableCell>
+                      <TableCell>{record.checkoutDate}</TableCell>
+                      <TableCell align="center">
+                        {record.storageDuration}
+                      </TableCell>
                     </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {items.map((record, idx) => (
-                      <TableRow key={record.id}>
-                        <TableCell>{idx + 1}</TableCell>
-                        <TableCell>{record.item.name}</TableCell>
-                        <TableCell>{record.quantity}</TableCell>
-                        <TableCell>{record.storageDuration}</TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-              </TableContainer>
-
-              <Box sx={{ display: "flex", justifyContent: "center", mt: 2 }}>
-                <Button
-                  variant="contained"
-                  color="secondary"
-                  sx={{ ml: 2 }}
-                  onClick={() => handlePrintCheckoutGroup(items)}
-                >
-                  In chi tiết
-                </Button>
-              </Box>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+            <Box sx={{ display: "flex", justifyContent: "center", mt: 2 }}>
+              <Button
+                variant="contained"
+                color="secondary"
+                sx={{ ml: 2 }}
+                onClick={() => handlePrintCheckoutGroup(combinedItems)}
+              >
+                In chi tiết
+              </Button>
             </Box>
-          ))
+          </Box>
         )}
 
         <Snackbar

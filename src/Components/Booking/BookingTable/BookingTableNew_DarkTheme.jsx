@@ -13,7 +13,7 @@ import {
 } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import BookingService from "../../../api/booking";
-import { FaDownload, FaEdit, FaPrint } from "react-icons/fa";
+import { FaDownload, FaEdit, FaPrint, FaRegTrashAlt } from "react-icons/fa";
 import EditBooking from "../EditBooking/EditBooking";
 import Swal from "sweetalert2";
 
@@ -53,6 +53,57 @@ const BookingTableNew = ({ setLoading }) => {
   const handleEditClick = (rowIndex) => {
     setSelectedBooking(bookings[rowIndex]);
     setIsEditing(true);
+  };
+
+  const handleCancleClick = (bookingId) => {
+    Swal.fire({
+      title: "Bạn thật sự muốn huỷ?",
+      text: "Nếu huỷ, những sản phẩm thuộc Booking này sẽ bị huỷ theo!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Xác nhận",
+      cancelButtonText: "Đóng",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          title: "Đang huỷ...",
+          text: "Vui lòng chờ trong giây lát.",
+          allowOutsideClick: false,
+          onBeforeOpen: () => {
+            Swal.showLoading();
+          },
+        });
+
+        fetch(`http://localhost:8080/api/booking/delete/${bookingId}`, {
+          method: "DELETE",
+        })
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Huỷ không thành công");
+            }
+            return new Promise((resolve) => {
+              setTimeout(() => {
+                resolve(response.json());
+              }, 1000);
+            });
+          })
+          .then((data) => {
+            Swal.fire("Đã huỷ!", "Huỷ thành công", "success");
+            setTimeout(() => {
+              window.location.reload();
+            }, 2000);
+          })
+          .catch((error) => {
+            Swal.fire(
+              "Error!",
+              "There was an error deleting your booking.",
+              "error"
+            );
+          });
+      }
+    });
   };
 
   const handlePrintClick = async (rowIndex) => {
@@ -117,11 +168,11 @@ const BookingTableNew = ({ setLoading }) => {
   };
 
   useEffect(() => {
-    setLoading(true); 
+    setLoading(true);
     BookingService.getAllBookings()
       .then((data) => {
-        setBookings(data); 
-        setLoading(false); 
+        setBookings(data);
+        setLoading(false);
       })
       .catch((error) => {
         console.error("Có lỗi xảy ra:", error);
@@ -140,7 +191,6 @@ const BookingTableNew = ({ setLoading }) => {
     setPage(0);
   };
 
-
   return (
     <Fragment>
       <ThemeProvider theme={darkTheme}>
@@ -153,7 +203,7 @@ const BookingTableNew = ({ setLoading }) => {
                 <TableCell>EMAIL</TableCell>
                 <TableCell>SỐ ĐIỆN THOẠI</TableCell>
                 <TableCell>FILE BOOKING</TableCell>
-                <TableCell colSpan={2}>THAO TÁC</TableCell>
+                <TableCell colSpan={3}>THAO TÁC</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -194,6 +244,16 @@ const BookingTableNew = ({ setLoading }) => {
                           onClick={() => handlePrintClick(index)}
                         >
                           Xuất PDF
+                        </Button>
+                      </TableCell>
+                      <TableCell>
+                        <Button
+                          variant="contained"
+                          color="error"
+                          startIcon={<FaRegTrashAlt />}
+                          onClick={() => handleCancleClick(booking.id)}
+                        >
+                          Huỷ
                         </Button>
                       </TableCell>
                     </TableRow>

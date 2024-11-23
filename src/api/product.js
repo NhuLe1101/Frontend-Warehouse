@@ -205,7 +205,10 @@ const getMonthlyItemCount = () => {
       return response.data; // Trả về dữ liệu thống kê theo tháng (gồm tháng và tổng số lượng)
     })
     .catch((error) => {
-      console.error("Có lỗi xảy ra khi lấy dữ liệu thống kê theo tháng:", error);
+      console.error(
+        "Có lỗi xảy ra khi lấy dữ liệu thống kê theo tháng:",
+        error
+      );
       if (error.response) {
         console.log(error.response.data.message);
         return error.response.data.message;

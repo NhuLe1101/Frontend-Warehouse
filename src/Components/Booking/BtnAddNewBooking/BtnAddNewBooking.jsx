@@ -2,7 +2,7 @@ import React, { Fragment, useState } from "react";
 import Dropzone from "react-dropzone";
 import { FaUpload } from "react-icons/fa";
 import BookingService from "../../../api/booking";
-import "./btnaddnewbooking.css";
+import "./BtnAddNewBooking.css";
 import Swal from "sweetalert2";
 import CloseIcon from "@mui/icons-material/Close";
 

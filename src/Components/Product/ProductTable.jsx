@@ -57,7 +57,6 @@ export default function ProductTable({
   React.useEffect(() => {
     if (productsByName) {
       setProducts(Array.isArray(productsByName) ? productsByName : allProduct);
-      setLoading(true);
     } else {
       ProductService.getProductsByStatus()
         .then((data) => {

@@ -9,7 +9,7 @@ import {
   TableHead,
   TableBody,
 } from "@mui/material";
-import Button from '@mui/material/Button';
+import Button from "@mui/material/Button";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { useEffect, useState } from "react";
@@ -50,7 +50,7 @@ export default function TableRowComponent({
           setLoading(false);
         })
         .catch((error) => {
-          setError(error.message);
+          setError("Hàng chưa lên kệ");
           setLoading(false);
         });
     }
