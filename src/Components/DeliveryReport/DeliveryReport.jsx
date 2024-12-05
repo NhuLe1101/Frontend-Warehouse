@@ -10,7 +10,8 @@ const DeliveryReport = () => {
   const [snackbarMessage, setSnackbarMessage] = useState("");
   const [snackbarSeverity, setSnackbarSeverity] = useState("info");
   const [openSnackbar, setOpenSnackbar] = useState(false);
-
+  const API_URL = process.env.REACT_APP_API_URL;
+  
   useEffect(() => {
     fetchPendingCheckoutItems();
   }, []);
@@ -82,7 +83,8 @@ const DeliveryReport = () => {
 
     try {
       const response = await fetch(
-        "http://localhost:8080/api/jasper/generate-pdf-delivery-report",
+        //"http://localhost:8080/api/jasper/generate-pdf-delivery-report",
+        "${API_URL}/api/jasper/generate-pdf-checkout-item",
         {
           method: "POST",
           headers: {
