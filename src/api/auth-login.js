@@ -1,6 +1,7 @@
 import axios from "axios";
 
-const API_URL = `${process.env.REACT_APP_API_URL}/api/auth/`;
+const API_URL = "http://localhost:8080/api/auth/";
+//const API_URL = `${process.env.REACT_APP_API_URL}/api/auth/`;
 
 const login = (username, password) => {
   return axios
@@ -17,19 +18,17 @@ const login = (username, password) => {
 };
 
 const logout = () => {
-  sessionStorage.removeItem('user');
+  sessionStorage.removeItem("user");
 };
 
 const getCurrentUser = () => {
-  if (typeof window !== 'undefined') {
+  if (typeof window !== "undefined") {
     return JSON.parse(sessionStorage.getItem("user"));
   }
 };
 
 const countUsers = () => {
-  return axios
-    .get(API_URL + "countUsers")
-    .then(response => response.data);
+  return axios.get(API_URL + "countUsers").then((response) => response.data);
 };
 
 const AuthService = {

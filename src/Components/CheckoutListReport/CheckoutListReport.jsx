@@ -30,12 +30,14 @@ const CheckoutListReport = () => {
   const [startDate, setStartDate] = useState(today.subtract(1, "day"));
   const [endDate, setEndDate] = useState(today);
   const [selectedRange, setSelectedRange] = useState("today");
+  const API_URL = process.env.REACT_APP_API_URL;
 
   useEffect(() => {
     fetchPendingCheckoutItems();
   }, []);
 
   const fetchPendingCheckoutItems = () => {
+    //fetch("${API_URL}/api/jasper/checkout-records/grouped")
     fetch("http://localhost:8080/api/jasper/checkout-records/grouped")
       .then((response) => {
         if (!response.ok) {
@@ -68,6 +70,7 @@ const CheckoutListReport = () => {
 
     try {
       const response = await fetch(
+        //"${API_URL}/api/jasper/generate-pdf-checkout-item",
         "http://localhost:8080/api/jasper/generate-pdf-checkout-item",
         {
           method: "POST",
@@ -127,19 +130,19 @@ const CheckoutListReport = () => {
     switch (value) {
       case "today":
         setStartDate(today.subtract(1, "day"));
-        setEndDate(today);
+        setEndDate(today.endOf("day"));
         break;
       case "3days":
         setStartDate(today.subtract(3, "day"));
-        setEndDate(today);
+        setEndDate(today.endOf("day"));
         break;
       case "7days":
         setStartDate(today.subtract(7, "day"));
-        setEndDate(today);
+        setEndDate(today.endOf("day"));
         break;
       case "30days":
         setStartDate(today.subtract(30, "day"));
-        setEndDate(today);
+        setEndDate(today.endOf("day"));
         break;
       default:
         break;

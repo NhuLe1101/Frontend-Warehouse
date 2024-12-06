@@ -47,8 +47,8 @@ const BookingTableNew = () => {
       },
     }).then(() => {
       const excelFile = bookings[rowIndex].excelFile.split("\\").pop();
-      // window.open(`http://localhost:8080/api/booking/download/${excelFile}`);
-      window.open(`${API_URL}/api/booking/download/${excelFile}`);
+      window.open(`http://localhost:8080/api/booking/download/${excelFile}`);
+      //window.open(`${API_URL}/api/booking/download/${excelFile}`);
     });
   };
 
@@ -78,7 +78,8 @@ const BookingTableNew = () => {
           },
         });
 
-        fetch("${API_URL}/api/booking/delete/${bookingId}", {
+        //fetch("${API_URL}/api/booking/delete/${bookingId}", {
+        fetch(`http://localhost:8080/api/booking/delete/${bookingId}`, {
           method: "DELETE",
         })
           .then((response) => {
@@ -98,11 +99,7 @@ const BookingTableNew = () => {
             }, 2000);
           })
           .catch((error) => {
-            Swal.fire(
-              "Error!",
-              "There was an error deleting your booking.",
-              "error"
-            );
+            Swal.fire("Thất bại!", "Huỷ không thành công", "error");
           });
       }
     });
@@ -120,9 +117,9 @@ const BookingTableNew = () => {
 
     try {
       const response = await fetch(
-        // "http://localhost:8080/api/jasper/generate-pdf-booking",
+        "http://localhost:8080/api/jasper/generate-pdf-booking",
         // eslint-disable-next-line no-template-curly-in-string
-        "${API_URL}/api/jasper/generate-pdf-booking",
+        //"${API_URL}/api/jasper/generate-pdf-booking",
         {
           method: "POST",
           headers: {
@@ -222,7 +219,7 @@ const BookingTableNew = () => {
                           startIcon={<FaDownload />}
                           onClick={() => downloadClicked(index)}
                         >
-                          Booking File
+                          Tải xuống
                         </Button>
                       </TableCell>
                       <TableCell>

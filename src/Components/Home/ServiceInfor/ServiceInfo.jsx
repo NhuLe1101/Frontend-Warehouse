@@ -4,8 +4,7 @@ const ServiceInfo = () => {
   return (
     <section className="home_services" id="service-info">
       <div className="home_services_title">
-        <h2>NHỮNG CON SỐ ẤN TƯỢNG MÀ CHÚNG TÔI ĐẠT ĐƯỢC TRONG</h2>
-        <h2 className="">6 THÁNG QUA</h2>
+        <h2>NHỮNG CON SỐ ẤN TƯỢNG MÀ CHÚNG TÔI ĐẠT ĐƯỢC</h2>
       </div>
       <div className="home_services_experience">
         <div className="home_services_experience_achievement">

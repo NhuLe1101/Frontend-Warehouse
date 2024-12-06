@@ -62,7 +62,7 @@ const Home = () => {
       <Intro />
       <ServiceInfo />
       <Feature />
-      <Feedback />
+      {/* <Feedback /> */}
       <ContactForm />
       <Map />
       {/* {showScroll && (
