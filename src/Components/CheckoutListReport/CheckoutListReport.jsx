@@ -31,13 +31,11 @@ const CheckoutListReport = () => {
   const [endDate, setEndDate] = useState(today);
   const [selectedRange, setSelectedRange] = useState("today");
   const API_URL = process.env.REACT_APP_API_URL;
-
   useEffect(() => {
     fetchPendingCheckoutItems();
   }, []);
 
   const fetchPendingCheckoutItems = () => {
-    //fetch("${API_URL}/api/jasper/checkout-records/grouped")
     fetch("http://localhost:8080/api/jasper/checkout-records/grouped")
       .then((response) => {
         if (!response.ok) {
@@ -70,7 +68,6 @@ const CheckoutListReport = () => {
 
     try {
       const response = await fetch(
-        //"${API_URL}/api/jasper/generate-pdf-checkout-item",
         "http://localhost:8080/api/jasper/generate-pdf-checkout-item",
         {
           method: "POST",
