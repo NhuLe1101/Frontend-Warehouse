@@ -20,36 +20,35 @@ const Warehouse = () => {
   const API_URL = process.env.REACT_APP_API_URL;
 
   const fetchCompartmentFromServer = (compartmentIdentifier) => {
-    return (
-      fetch(
-        `http://localhost:8080/api/compartments/${compartmentIdentifier.shelfId}/${compartmentIdentifier.nameComp}`
-      )
-        //return fetch(`${API_URL}/api/compartments/${compartmentIdentifier.shelfId}/${compartmentIdentifier.nameComp}`)
-        .then((response) => {
-          if (!response.ok) {
-            return null;
-          }
-          return response.json();
-        })
-        .catch((error) => {
-          console.error("Error fetching compartment from server:", error);
-          throw error;
-        })
-    );
+    // return (
+    //   fetch(
+    //     `http://localhost:8080/api/compartments/${compartmentIdentifier.shelfId}/${compartmentIdentifier.nameComp}`
+    //   )
+    return fetch(
+      `${API_URL}/api/compartments/${compartmentIdentifier.shelfId}/${compartmentIdentifier.nameComp}`
+    )
+      .then((response) => {
+        if (!response.ok) {
+          return null;
+        }
+        return response.json();
+      })
+      .catch((error) => {
+        console.error("Error fetching compartment from server:", error);
+        throw error;
+      });
   };
 
   const createCompartment = (compartmentData) => {
-    return fetch(
-      `http://localhost:8080/api/compartments/${compartmentData.shelfId}`,
-      {
-        //return fetch(`${API_URL}/api/compartments/${compartmentData.shelfId}`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(compartmentData),
-      }
-    )
+    // return fetch(
+    //   `http://localhost:8080/api/compartments/${compartmentData.shelfId}`,{
+    return fetch(`${API_URL}/api/compartments/${compartmentData.shelfId}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(compartmentData),
+    })
       .then((response) => {
         if (!response.ok) {
           throw new Error("Failed to create compartment");
@@ -103,8 +102,8 @@ const Warehouse = () => {
   }, []);
 
   useEffect(() => {
-    fetch("http://localhost:8080/api/compartments")
-      //fetch(`${API_URL}/api/compartments`)
+    //fetch("http://localhost:8080/api/compartments")
+    fetch(`${API_URL}/api/compartments`)
       .then((response) => response.json())
       .then((data) => {
         if (Array.isArray(data)) {

@@ -1,7 +1,7 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:8080/api/product/";
-//const API_URL = `${process.env.REACT_APP_API_URL}/api/product/`;
+//const API_URL = "http://localhost:8080/api/product/";
+const API_URL = `${process.env.REACT_APP_API_URL}/api/product/`;
 
 const getAllProducts = () => {
   return axios
@@ -21,9 +21,9 @@ const getAllProducts = () => {
     });
 };
 
-const getProductsByStatus = () => {
+const getListProducts = () => {
   return axios
-    .get(API_URL + "byStatus")
+    .get(API_URL + "get-list-products")
     .then((response) => {
       console.log(response.data);
       return response.data;
@@ -129,10 +129,10 @@ const getProductsByCheckoutDecrease = () => {
     });
 };
 
-const getProductsByName = (name) => {
+const searchItem = (data) => {
   return axios
     .get(`${API_URL}search`, {
-      params: { name }, // Gửi tham số name qua query params
+      params: { data }, // Gửi tham số data qua query params
     })
     .then((response) => {
       console.log(response.data);
@@ -221,13 +221,13 @@ const getMonthlyItemCount = () => {
 const ProductService = {
   getAllProducts,
   updateProduct,
-  getProductsByName,
+  searchItem,
   getProductsIsNullCompartment,
   getProductsByCheckinDecrease,
   getProductsByCheckinIncrease,
   getProductsByCheckoutDecrease,
   getProductsByCheckoutIncrease,
-  getProductsByStatus,
+  getListProducts,
   getTotalItemsInStock,
   getMonthlyItemCount,
 };

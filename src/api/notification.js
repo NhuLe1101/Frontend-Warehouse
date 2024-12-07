@@ -2,8 +2,8 @@ import axios from "axios";
 import SockJS from "sockjs-client";
 import { Stomp } from "@stomp/stompjs";
 
-const API_URL = "http://localhost:8080/api/notifications/";
-//const API_URL = `${process.env.REACT_APP_API_URL}/api/notifications`;
+//const API_URL = "http://localhost:8080/api/notifications/";
+const API_URL = `${process.env.REACT_APP_API_URL}/api/notifications`;
 
 // Lấy danh sách thông báo
 const getNotifications = () => {

@@ -99,8 +99,8 @@ const DeliveryReport = () => {
 
     try {
       const response = await fetch(
-        "http://localhost:8080/api/jasper/generate-pdf-delivery-report",
-        //"${API_URL}/api/jasper/generate-pdf-delivery-report",
+        //"http://localhost:8080/api/jasper/generate-pdf-delivery-report",
+        `${API_URL}/api/jasper/generate-pdf-delivery-report`,
         {
           method: "POST",
           headers: {

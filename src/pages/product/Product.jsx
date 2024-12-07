@@ -48,9 +48,9 @@ const Product = () => {
     setSearchData(event.target.value);
   };
 
-  const searchProduct = async (data) => {
+  const searchItem = async (data) => {
     setSearchData(data);
-    const products = await ProductService.getProductsByName(data);
+    const products = await ProductService.searchItem(data);
     setProductsByName(products);
   };
 
@@ -99,13 +99,13 @@ const Product = () => {
                 onChange={handleInputChange}
                 onKeyDown={(event) => {
                   if (event.key === "Enter") {
-                    searchProduct(searchData);
+                    searchItem(searchData);
                   }
                 }}
               />
               <button
                 id="btn_search_product"
-                onClick={() => searchProduct(searchData)}
+                onClick={() => searchItem(searchData)}
               >
                 <img src="icons/icons8-search-24.png" alt="" width={"18px"} />
               </button>
