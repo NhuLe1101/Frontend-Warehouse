@@ -163,9 +163,9 @@ const Dashboard = () => {
 
         {/* Main content area */}
         {is3D ? (
-          <Box sx={{ width: '100%', height: '50vh' }}>
+          <Box sx={{ width: '100%' }}>
             {/* Component 3D sẽ được thêm ở đây */}
-            <Typography align="center" sx={{ marginTop: '50px' }}>
+            <Typography align="center">
               <Warehouse3D></Warehouse3D>
             </Typography>
           </Box>
