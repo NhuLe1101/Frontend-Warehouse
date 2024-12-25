@@ -37,6 +37,13 @@ const EditProduct = ({ product, onClose }) => {
   };
 
   const handleSaveClick = async () => {
+    if (!formData.name || !formData.quantity || !formData.weight) {
+      Swal.fire({
+        icon: "error",
+        text: "Thông tin không hợp lệ! Vui lòng điền đầy đủ các trường bắt buộc.",
+      });
+      return;
+    }
     try {
       console.log(formData);
       const message = await ProductService.updateProduct(formData);

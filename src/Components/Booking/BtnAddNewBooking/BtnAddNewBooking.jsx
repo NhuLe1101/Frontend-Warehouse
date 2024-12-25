@@ -5,6 +5,7 @@ import BookingService from "../../../api/booking";
 import "./BtnAddNewBooking.css";
 import Swal from "sweetalert2";
 import CloseIcon from "@mui/icons-material/Close";
+import Papa from "papaparse";
 
 const BtnAddNewBooking = ({ onClose }) => {
   const [fileName, setFileName] = useState("");
@@ -34,12 +35,47 @@ const BtnAddNewBooking = ({ onClose }) => {
       return;
     }
 
-    try {
-      const message = await BookingService.upload(file);
-      AlertSuccess();
-    } catch (error) {
-      console.error("Có lỗi xảy ra khi lưu tập tin:", error);
-    }
+    const reader = new FileReader();
+    reader.onload = async (event) => {
+      const csvData = event.target.result;
+      Papa.parse(csvData, {
+        complete: async (results) => {
+          const headers = results.meta.fields.map((header) =>
+            header.trim().toLowerCase()
+          );
+          console.log("Headers:", headers);
+          const expectedHeaders = [
+            "name",
+            "type",
+            "quantity",
+            "weight (g)",
+            "checkin date",
+            "checkout date",
+            "image",
+            "useremail",
+            "delivery",
+          ];
+
+          const isValid = expectedHeaders.every((header) =>
+            headers.includes(header)
+          );
+
+          if (!isValid) {
+            AlertFail("Thêm thất bại, vui lòng kiểm tra lại file");
+            return;
+          }
+
+          try {
+            const message = await BookingService.upload(file);
+            AlertSuccess();
+          } catch (error) {
+            console.error("Có lỗi xảy ra khi lưu tập tin:", error);
+          }
+        },
+        header: true,
+      });
+    };
+    reader.readAsText(file);
   };
 
   return (
@@ -51,7 +87,7 @@ const BtnAddNewBooking = ({ onClose }) => {
             setFile(uploadedFile);
             setFileName(uploadedFile.name);
           } else {
-            AlertFail("Vui lòng chỉ chọn tệp CSV.");
+            AlertFail("Tập tin sai định dạng. Hãy chọn file .csv!");
           }
         }}
         accept=".csv"

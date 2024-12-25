@@ -32,6 +32,13 @@ const EditBooking = ({ booking, onClose, onOpen }) => {
     });
   };
 
+  const AlertFail = (message) => {
+    Swal.fire({
+      icon: "error",
+      text: message,
+    });
+  };
+
   useEffect(() => {
     setFormData(booking);
   }, [booking]);
@@ -42,30 +49,21 @@ const EditBooking = ({ booking, onClose, onOpen }) => {
   };
 
   const handleSaveClick = async () => {
+    if (!formData.customerEmail) {
+      AlertFail("Thông tin không hợp lệ, email không được trống");
+      return;
+    }
+
     try {
-      //console.log(formData);
       await BookingService.updateBooking(formData);
-      //setSaveStatus('success');
       AlertSuccess();
     } catch (error) {
-      //setSaveStatus('error');
-      console.error("Có lỗi xảy ra khi upload dữ liệu:", error);
+      console.error("Có lỗi xảy ra khi cập nhật:", error);
     }
   };
 
   if (!booking) return null;
 
-  // function formatId(id) {
-  //   if (id < 10) {
-  //     return "BK000" + id;
-  //   } else if (id < 100) {
-  //     return "BK00" + id;
-  //   } else if (id < 1000) {
-  //     return "BK0" + id;
-  //   } else {
-  //     return "BK" + id;
-  //   }
-  // }
   return (
     <BootstrapDialog
       onClose={onClose}
