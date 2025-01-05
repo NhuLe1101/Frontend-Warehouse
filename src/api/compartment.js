@@ -1,8 +1,8 @@
 import axios from "axios";
 import authHeader from "./auth-header";
 
-const API_URL = "http://localhost:8080/api/compartments";
-// const API_URL = `${process.env.REACT_APP_API_URL}/api/compartments/`;
+// const API_URL = "http://localhost:8080/api/compartments";
+const API_URL = `${process.env.REACT_APP_API_URL}/api/compartments/`;
 const parseItemId = (itemId) => {
   if (itemId.startsWith("SP")) {
     // Loại bỏ tiền tố "SP" và chuyển phần số còn lại thành kiểu số (Long trong JavaScript là Number)

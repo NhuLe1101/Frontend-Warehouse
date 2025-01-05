@@ -1,7 +1,7 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:8080/api/booking/";
-// const API_URL = `${process.env.REACT_APP_API_URL}/api/booking/`;
+// const API_URL = "http://localhost:8080/api/booking/";
+const API_URL = `${process.env.REACT_APP_API_URL}/api/booking/`;
 
 // Upload booking
 const upload = (file) => {

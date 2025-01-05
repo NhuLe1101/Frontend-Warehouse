@@ -17,15 +17,15 @@ const Warehouse = () => {
   const [selectedCompartment, setSelectedCompartment] = useState(null);
   const [selectedView, setSelectedView] = useState("default");
 
-  // const API_URL = process.env.REACT_APP_API_URL;
+  const API_URL = process.env.REACT_APP_API_URL;
 
   const fetchCompartmentFromServer = (compartmentIdentifier) => {
+    // return fetch(
+    //   `http://localhost:8080/api/compartments/${compartmentIdentifier.shelfId}/${compartmentIdentifier.nameComp}`
+    // )
     return fetch(
-      `http://localhost:8080/api/compartments/${compartmentIdentifier.shelfId}/${compartmentIdentifier.nameComp}`
+      `${API_URL}/api/compartments/${compartmentIdentifier.shelfId}/${compartmentIdentifier.nameComp}`
     )
-      // return fetch(
-      //   `${API_URL}/api/compartments/${compartmentIdentifier.shelfId}/${compartmentIdentifier.nameComp}`
-      // )
       .then((response) => {
         if (!response.ok) {
           return null;
@@ -39,9 +39,9 @@ const Warehouse = () => {
   };
 
   const createCompartment = (compartmentData) => {
-    return fetch(
-      `http://localhost:8080/api/compartments/${compartmentData.shelfId}`, {
-      // return fetch(`${API_URL}/api/compartments/${compartmentData.shelfId}`, {
+    // return fetch(
+    //  `http://localhost:8080/api/compartments/${compartmentData.shelfId}`, {
+    return fetch(`${API_URL}/api/compartments/${compartmentData.shelfId}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -101,8 +101,8 @@ const Warehouse = () => {
   }, []);
 
   useEffect(() => {
-    fetch("http://localhost:8080/api/compartments")
-      // fetch(`${API_URL}/api/compartments`)
+    // fetch("http://localhost:8080/api/compartments")
+    fetch(`${API_URL}/api/compartments`)
       .then((response) => response.json())
       .then((data) => {
         if (Array.isArray(data)) {
